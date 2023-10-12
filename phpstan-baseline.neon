@@ -1,0 +1,6 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to function is_object\\(\\) with EliasHaeussler\\\\Typo3SitemapLocator\\\\Sitemap\\\\Provider\\\\Provider will always evaluate to true\\.$#"
+			count: 1
+			path: Classes/Sitemap/SitemapLocator.php
