@@ -21,15 +21,28 @@ declare(strict_types=1);
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-use EliasHaeussler\PHPStanConfig;
+namespace EliasHaeussler\Typo3SitemapLocator\Tests\Unit\Exception;
 
-return PHPStanConfig\Config\Config::create(__DIR__)
-    ->in(
-        'Classes',
-        'Configuration',
-        'Tests',
-    )
-    ->withBaseline()
-    ->level(8)
-    ->toArray()
-;
+use EliasHaeussler\Typo3SitemapLocator as Src;
+use TYPO3\TestingFramework;
+
+/**
+ * ProviderIsNotSupportedTest
+ *
+ * @author Elias Häußler <elias@haeussler.dev>
+ * @license GPL-2.0-or-later
+ * @covers \EliasHaeussler\Typo3SitemapLocator\Exception\ProviderIsNotSupported
+ */
+final class ProviderIsNotSupportedTest extends TestingFramework\Core\Unit\UnitTestCase
+{
+    /**
+     * @test
+     */
+    public function constructorReturnsExceptionForInvalidType(): void
+    {
+        $subject = new Src\Exception\ProviderIsNotSupported(null);
+
+        self::assertSame('Providers must be of type object, "NULL" given.', $subject->getMessage());
+        self::assertSame(1697105930, $subject->getCode());
+    }
+}

@@ -4,3 +4,38 @@ parameters:
 			message: "#^Call to function is_object\\(\\) with EliasHaeussler\\\\Typo3SitemapLocator\\\\Sitemap\\\\Provider\\\\Provider will always evaluate to true\\.$#"
 			count: 1
 			path: Classes/Sitemap/SitemapLocator.php
+
+		-
+			message: "#^EliasHaeussler\\\\Typo3SitemapLocator\\\\Tests\\\\Functional\\\\Fixtures\\\\Classes\\\\DummyPackageManager\\:\\:__construct\\(\\) does not call parent constructor from TYPO3\\\\CMS\\\\Core\\\\Package\\\\PackageManager\\.$#"
+			count: 1
+			path: Tests/Functional/Fixtures/Classes/DummyPackageManager.php
+
+		-
+			message: "#^EliasHaeussler\\\\Typo3SitemapLocator\\\\Tests\\\\Functional\\\\Fixtures\\\\Classes\\\\DummySiteFinder\\:\\:__construct\\(\\) does not call parent constructor from TYPO3\\\\CMS\\\\Core\\\\Site\\\\SiteFinder\\.$#"
+			count: 1
+			path: Tests/Functional/Fixtures/Classes/DummySiteFinder.php
+
+		-
+			message: "#^Parameter \\#3 \\$providers of class EliasHaeussler\\\\Typo3SitemapLocator\\\\Sitemap\\\\SitemapLocator constructor expects iterable\\<EliasHaeussler\\\\Typo3SitemapLocator\\\\Sitemap\\\\Provider\\\\Provider\\>, array\\<int, stdClass\\> given\\.$#"
+			count: 1
+			path: Tests/Functional/Sitemap/SitemapLocatorTest.php
+
+		-
+			message: "#^Parameter \\#3 \\$providers of class EliasHaeussler\\\\Typo3SitemapLocator\\\\Sitemap\\\\SitemapLocator constructor expects iterable\\<EliasHaeussler\\\\Typo3SitemapLocator\\\\Sitemap\\\\Provider\\\\Provider\\>, array\\<int, string\\> given\\.$#"
+			count: 1
+			path: Tests/Functional/Sitemap/SitemapLocatorTest.php
+
+		-
+			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteConfiguration constructor invoked with 1 parameter, 2\\-3 required\\.$#"
+			count: 1
+			path: Tests/Functional/Utility/HttpUtilityTest.php
+
+		-
+			message: "#^EliasHaeussler\\\\Typo3SitemapLocator\\\\Tests\\\\Unit\\\\Fixtures\\\\DummyRequestFactory\\:\\:__construct\\(\\) does not call parent constructor from TYPO3\\\\CMS\\\\Core\\\\Http\\\\RequestFactory\\.$#"
+			count: 1
+			path: Tests/Unit/Fixtures/DummyRequestFactory.php
+
+		-
+			message: "#^Parameter \\#3 \\$options \\(array\\<string, mixed\\>\\) of method EliasHaeussler\\\\Typo3SitemapLocator\\\\Tests\\\\Unit\\\\Fixtures\\\\DummyRequestFactory\\:\\:request\\(\\) should be contravariant with parameter \\$options \\(array\\) of method TYPO3\\\\CMS\\\\Core\\\\Http\\\\RequestFactory\\:\\:request\\(\\)$#"
+			count: 1
+			path: Tests/Unit/Fixtures/DummyRequestFactory.php

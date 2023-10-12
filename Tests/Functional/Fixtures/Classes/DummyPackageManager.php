@@ -21,15 +21,29 @@ declare(strict_types=1);
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-use EliasHaeussler\PHPStanConfig;
+namespace EliasHaeussler\Typo3SitemapLocator\Tests\Functional\Fixtures\Classes;
 
-return PHPStanConfig\Config\Config::create(__DIR__)
-    ->in(
-        'Classes',
-        'Configuration',
-        'Tests',
-    )
-    ->withBaseline()
-    ->level(8)
-    ->toArray()
-;
+use TYPO3\CMS\Core;
+
+/**
+ * DummyPackageManager
+ *
+ * @author Elias Häußler <elias@haeussler.dev>
+ * @license GPL-2.0-or-later
+ * @internal
+ */
+final class DummyPackageManager extends Core\Package\PackageManager
+{
+    /**
+     * @param list<string> $loadedExtensions
+     * @noinspection PhpMissingParentConstructorInspection
+     */
+    public function __construct(
+        public array $loadedExtensions = [],
+    ) {}
+
+    public function isPackageActive($packageKey): bool
+    {
+        return \in_array($packageKey, $this->loadedExtensions, true);
+    }
+}

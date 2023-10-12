@@ -21,15 +21,30 @@ declare(strict_types=1);
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-use EliasHaeussler\PHPStanConfig;
+namespace EliasHaeussler\Typo3SitemapLocator\Tests\Functional\Fixtures\Classes;
 
-return PHPStanConfig\Config\Config::create(__DIR__)
-    ->in(
-        'Classes',
-        'Configuration',
-        'Tests',
-    )
-    ->withBaseline()
-    ->level(8)
-    ->toArray()
-;
+use TYPO3\CMS\Core;
+
+/**
+ * DummySiteFinder
+ *
+ * @author Elias Häußler <elias@haeussler.dev>
+ * @license GPL-2.0-or-later
+ * @internal
+ */
+final class DummySiteFinder extends Core\Site\SiteFinder
+{
+    public ?Core\Site\Entity\Site $expectedSite = null;
+
+    /** @noinspection PhpMissingParentConstructorInspection */
+    public function __construct()
+    {
+        // Parent call missing on purpose.
+    }
+
+    public function getSiteByIdentifier(string $identifier): Core\Site\Entity\Site
+    {
+        return $this->expectedSite
+            ?? throw new Core\Exception\SiteNotFoundException('No site found for identifier ' . $identifier, 1521716628);
+    }
+}

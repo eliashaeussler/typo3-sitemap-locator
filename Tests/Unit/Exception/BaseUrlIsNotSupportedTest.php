@@ -21,15 +21,28 @@ declare(strict_types=1);
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-use EliasHaeussler\PHPStanConfig;
+namespace EliasHaeussler\Typo3SitemapLocator\Tests\Unit\Exception;
 
-return PHPStanConfig\Config\Config::create(__DIR__)
-    ->in(
-        'Classes',
-        'Configuration',
-        'Tests',
-    )
-    ->withBaseline()
-    ->level(8)
-    ->toArray()
-;
+use EliasHaeussler\Typo3SitemapLocator as Src;
+use TYPO3\TestingFramework;
+
+/**
+ * BaseUrlIsNotSupportedTest
+ *
+ * @author Elias Häußler <elias@haeussler.dev>
+ * @license GPL-2.0-or-later
+ * @covers \EliasHaeussler\Typo3SitemapLocator\Exception\BaseUrlIsNotSupported
+ */
+final class BaseUrlIsNotSupportedTest extends TestingFramework\Core\Unit\UnitTestCase
+{
+    /**
+     * @test
+     */
+    public function forBaseUrlReturnsExceptionForBaseUrl(): void
+    {
+        $subject = new Src\Exception\BaseUrlIsNotSupported('foo');
+
+        self::assertSame('The given base URL "foo" is not supported.', $subject->getMessage());
+        self::assertSame(1697106072, $subject->getCode());
+    }
+}
