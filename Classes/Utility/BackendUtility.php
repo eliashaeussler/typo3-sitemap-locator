@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace EliasHaeussler\Typo3SitemapLocator\Utility;
 
+use TYPO3\CMS\Backend;
 use TYPO3\CMS\Core;
 
 /**
@@ -39,5 +40,26 @@ final class BackendUtility
         $backendUser = $GLOBALS['BE_USER'];
 
         return $backendUser;
+    }
+
+    public static function getPageTitle(int $pageId): ?string
+    {
+        $record = Core\Utility\GeneralUtility::makeInstance(Core\Database\ConnectionPool::class)
+            ->getConnectionForTable('pages')
+            ->select(['*'], 'pages', ['uid' => $pageId])
+            ->fetchAssociative()
+        ;
+
+        if ($record === false) {
+            return null;
+        }
+
+        $title = Backend\Utility\BackendUtility::getRecordTitle('pages', $record, false, false);
+
+        if (trim($title) === '') {
+            return null;
+        }
+
+        return $title;
     }
 }

@@ -26,6 +26,7 @@ use Rector\Config\RectorConfig;
 use Rector\Core\ValueObject\PhpVersion;
 use Rector\Php80\Rector\Class_\AnnotationToAttributeRector;
 use Rector\Privatization\Rector\Class_\FinalizeClassesWithoutChildrenRector;
+use Rector\Symfony\Rector\Class_\CommandDescriptionToPropertyRector;
 
 return static function (RectorConfig $rectorConfig): void {
     Config::create($rectorConfig, PhpVersion::PHP_81)
@@ -49,6 +50,7 @@ return static function (RectorConfig $rectorConfig): void {
             __DIR__ . '/Classes/Sitemap/Provider/RobotsTxtProvider.php',
             __DIR__ . '/Classes/Sitemap/Provider/SiteProvider.php',
         ])
+        ->skip(CommandDescriptionToPropertyRector::class)
         ->skip(FinalizeClassesWithoutChildrenRector::class, [
             // We keep domain models open for extensions
             __DIR__ . '/Classes/Domain/Model/*',

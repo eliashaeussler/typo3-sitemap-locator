@@ -21,20 +21,20 @@ declare(strict_types=1);
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-use EliasHaeussler\PHPStanConfig;
+use Composer\Autoload;
+use EliasHaeussler\Typo3SitemapLocator\Command;
+use Symfony\Component\Console;
+use TYPO3\CMS\Core;
 
-$symfonySet = PHPStanConfig\Set\SymfonySet::create()
-    ->withConsoleApplicationLoader('Tests/Build/console-application.php')
-;
+/** @var Autoload\ClassLoader $classLoader */
+$classLoader = require \dirname(__DIR__, 2) . '/.Build/vendor/autoload.php';
 
-return PHPStanConfig\Config\Config::create(__DIR__)
-    ->in(
-        'Classes',
-        'Configuration',
-        'Tests',
-    )
-    ->withBaseline()
-    ->level(8)
-    ->withSets($symfonySet)
-    ->toArray()
-;
+// Build environment and initialize the service container
+Core\Core\SystemEnvironmentBuilder::run(0, Core\Core\SystemEnvironmentBuilder::REQUESTTYPE_CLI);
+$container = Core\Core\Bootstrap::init($classLoader);
+
+// Initialize application and add command
+$application = new Console\Application();
+$application->add($container->get(Command\LocateSitemapsCommand::class));
+
+return $application;

@@ -21,20 +21,21 @@ declare(strict_types=1);
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-use EliasHaeussler\PHPStanConfig;
+namespace EliasHaeussler\Typo3SitemapLocator\Exception;
 
-$symfonySet = PHPStanConfig\Set\SymfonySet::create()
-    ->withConsoleApplicationLoader('Tests/Build/console-application.php')
-;
-
-return PHPStanConfig\Config\Config::create(__DIR__)
-    ->in(
-        'Classes',
-        'Configuration',
-        'Tests',
-    )
-    ->withBaseline()
-    ->level(8)
-    ->withSets($symfonySet)
-    ->toArray()
-;
+/**
+ * NoSitesAreConfigured
+ *
+ * @author Elias Häußler <elias@haeussler.dev>
+ * @license GPL-2.0-or-later
+ */
+final class NoSitesAreConfigured extends Exception
+{
+    public function __construct()
+    {
+        parent::__construct(
+            'There are no sites configured in your system.',
+            1697184946,
+        );
+    }
+}

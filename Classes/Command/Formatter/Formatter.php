@@ -21,20 +21,34 @@ declare(strict_types=1);
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-use EliasHaeussler\PHPStanConfig;
+namespace EliasHaeussler\Typo3SitemapLocator\Command\Formatter;
 
-$symfonySet = PHPStanConfig\Set\SymfonySet::create()
-    ->withConsoleApplicationLoader('Tests/Build/console-application.php')
-;
+use EliasHaeussler\Typo3SitemapLocator\Domain;
+use TYPO3\CMS\Core;
 
-return PHPStanConfig\Config\Config::create(__DIR__)
-    ->in(
-        'Classes',
-        'Configuration',
-        'Tests',
-    )
-    ->withBaseline()
-    ->level(8)
-    ->withSets($symfonySet)
-    ->toArray()
-;
+/**
+ * Formatter
+ *
+ * @author Elias Häußler <elias@haeussler.dev>
+ * @license GPL-2.0-or-later
+ * @internal
+ */
+interface Formatter
+{
+    /**
+     * @param list<Domain\Model\Sitemap> $sitemaps
+     */
+    public function formatSitemaps(
+        Core\Site\Entity\Site $site,
+        Core\Site\Entity\SiteLanguage $siteLanguage,
+        array $sitemaps,
+    ): void;
+
+    /**
+     * @param array<int, list<Domain\Model\Sitemap>> $sitemaps
+     */
+    public function formatAllSitemaps(
+        Core\Site\Entity\Site $site,
+        array $sitemaps,
+    ): void;
+}

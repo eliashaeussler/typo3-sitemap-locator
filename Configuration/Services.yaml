@@ -15,6 +15,12 @@ services:
     arguments:
       $cache: '@cache.sitemap_locator'
 
+  EliasHaeussler\Typo3SitemapLocator\Command\LocateSitemapsCommand:
+    tags:
+      - name: console.command
+        command: sitemap-locator:locate
+        description: 'Locate XML sitemaps of a given site and optional site language.'
+
   EliasHaeussler\Typo3SitemapLocator\EventListener\SiteConfigurationListener:
     tags:
       - name: event.listener
