@@ -7,6 +7,7 @@ services:
   EliasHaeussler\Typo3SitemapLocator\:
     resource: '../Classes/*'
     exclude:
+      - '../Domain/Event/*'
       - '../Domain/Exception/*'
       - '../Domain/Model/*'
 
