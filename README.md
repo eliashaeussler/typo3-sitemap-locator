@@ -50,10 +50,8 @@ Please have a look at the
 
 ## 💎 Credits
 
-The extension icon is a modified version of the original
-[`apps-pagetree-page-content-from-page-root`](https://typo3.github.io/TYPO3.Icons/icons/apps/apps-pagetree-page-content-from-page-root.html)
-icon from TYPO3 core which is originally licensed under
-[MIT License](https://github.com/TYPO3/TYPO3.Icons/blob/main/LICENSE).
+Extension icon by
+[UIcons](https://www.freepik.com/icon/radar_10461820#fromView=search&term=compass&page=1&position=62&track=ais).
 
 ## ⭐ License
 
