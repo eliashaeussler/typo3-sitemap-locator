@@ -9,6 +9,7 @@
 [![CGL](https://img.shields.io/github/actions/workflow/status/eliashaeussler/typo3-sitemap-locator/cgl.yaml?label=cgl&logo=github)](https://github.com/eliashaeussler/typo3-sitemap-locator/actions/workflows/cgl.yaml)
 [![Tests](https://img.shields.io/github/actions/workflow/status/eliashaeussler/typo3-sitemap-locator/tests.yaml?label=tests&logo=github)](https://github.com/eliashaeussler/typo3-sitemap-locator/actions/workflows/tests.yaml)
 [![Supported TYPO3 versions](https://typo3-badges.dev/badge/sitemap_locator/typo3/shields.svg)](https://extensions.typo3.org/extension/sitemap_locator)
+[![Slack](https://img.shields.io/badge/slack-%23ext--sitemap__locator-4a154b?logo=slack)](https://typo3.slack.com/archives/C060KATSL5V)
 
 </div>
 
