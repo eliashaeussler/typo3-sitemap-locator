@@ -25,8 +25,10 @@ namespace EliasHaeussler\Typo3SitemapLocator\Sitemap;
 
 use EliasHaeussler\Typo3SitemapLocator\Cache;
 use EliasHaeussler\Typo3SitemapLocator\Domain;
+use EliasHaeussler\Typo3SitemapLocator\Event;
 use EliasHaeussler\Typo3SitemapLocator\Exception;
 use EliasHaeussler\Typo3SitemapLocator\Utility;
+use Psr\EventDispatcher;
 use TYPO3\CMS\Core;
 
 /**
@@ -45,6 +47,7 @@ final class SitemapLocator
     public function __construct(
         private readonly Core\Http\RequestFactory $requestFactory,
         private readonly Cache\SitemapsCache $cache,
+        private readonly EventDispatcher\EventDispatcherInterface $eventDispatcher,
         private readonly iterable $providers,
     ) {
         $this->validateProviders();
@@ -76,10 +79,14 @@ final class SitemapLocator
             throw new Exception\SitemapIsMissing($site);
         }
 
-        // Store resolved sitemaps in cache
-        $this->cache->set($sitemaps);
+        // Dispatch event
+        $event = new Event\SitemapsLocatedEvent($site, $siteLanguage, $sitemaps);
+        $this->eventDispatcher->dispatch($event);
 
-        return $sitemaps;
+        // Store resolved sitemaps in cache
+        $this->cache->set($event->getSitemaps());
+
+        return $event->getSitemaps();
     }
 
     /**

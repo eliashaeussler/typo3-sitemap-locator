@@ -16,12 +16,12 @@ parameters:
 			path: Tests/Functional/Fixtures/Classes/DummySiteFinder.php
 
 		-
-			message: "#^Parameter \\#3 \\$providers of class EliasHaeussler\\\\Typo3SitemapLocator\\\\Sitemap\\\\SitemapLocator constructor expects iterable\\<EliasHaeussler\\\\Typo3SitemapLocator\\\\Sitemap\\\\Provider\\\\Provider\\>, array\\<int, stdClass\\> given\\.$#"
+			message: "#^Parameter \\#4 \\$providers of class EliasHaeussler\\\\Typo3SitemapLocator\\\\Sitemap\\\\SitemapLocator constructor expects iterable\\<EliasHaeussler\\\\Typo3SitemapLocator\\\\Sitemap\\\\Provider\\\\Provider\\>, array\\<int, stdClass\\> given\\.$#"
 			count: 1
 			path: Tests/Functional/Sitemap/SitemapLocatorTest.php
 
 		-
-			message: "#^Parameter \\#3 \\$providers of class EliasHaeussler\\\\Typo3SitemapLocator\\\\Sitemap\\\\SitemapLocator constructor expects iterable\\<EliasHaeussler\\\\Typo3SitemapLocator\\\\Sitemap\\\\Provider\\\\Provider\\>, array\\<int, string\\> given\\.$#"
+			message: "#^Parameter \\#4 \\$providers of class EliasHaeussler\\\\Typo3SitemapLocator\\\\Sitemap\\\\SitemapLocator constructor expects iterable\\<EliasHaeussler\\\\Typo3SitemapLocator\\\\Sitemap\\\\Provider\\\\Provider\\>, array\\<int, string\\> given\\.$#"
 			count: 1
 			path: Tests/Functional/Sitemap/SitemapLocatorTest.php
 

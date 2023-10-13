@@ -28,6 +28,7 @@ use EliasHaeussler\Typo3SitemapLocator\Tests;
 use Exception;
 use Generator;
 use stdClass;
+use Symfony\Component\EventDispatcher;
 use TYPO3\CMS\Core;
 use TYPO3\TestingFramework;
 
@@ -45,6 +46,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
     ];
 
     private Src\Cache\SitemapsCache $cache;
+    private EventDispatcher\EventDispatcher $eventDispatcher;
     private Tests\Unit\Fixtures\DummyRequestFactory $requestFactory;
     private Src\Sitemap\SitemapLocator $subject;
 
@@ -53,10 +55,12 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
         parent::setUp();
 
         $this->cache = $this->get(Src\Cache\SitemapsCache::class);
+        $this->eventDispatcher = new EventDispatcher\EventDispatcher();
         $this->requestFactory = new Tests\Unit\Fixtures\DummyRequestFactory();
         $this->subject = new Src\Sitemap\SitemapLocator(
             $this->requestFactory,
             $this->cache,
+            $this->eventDispatcher,
             [new Src\Sitemap\Provider\DefaultProvider()],
         );
 
@@ -80,7 +84,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
             new Src\Exception\ProviderIsNotSupported('foo'),
         );
 
-        new Src\Sitemap\SitemapLocator($this->requestFactory, $this->cache, $providers);
+        new Src\Sitemap\SitemapLocator($this->requestFactory, $this->cache, $this->eventDispatcher, $providers);
     }
 
     /**
@@ -96,7 +100,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
             new Src\Exception\ProviderIsInvalid(new stdClass()),
         );
 
-        new Src\Sitemap\SitemapLocator($this->requestFactory, $this->cache, $providers);
+        new Src\Sitemap\SitemapLocator($this->requestFactory, $this->cache, $this->eventDispatcher, $providers);
     }
 
     /**
@@ -144,6 +148,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
         $subject = new Src\Sitemap\SitemapLocator(
             $this->requestFactory,
             $this->cache,
+            $this->eventDispatcher,
             []
         );
 
@@ -172,6 +177,36 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
         self::assertSame([], $this->cache->get($site, $siteLanguage));
         self::assertEquals($sitemap, $this->subject->locateBySite($site, $siteLanguage));
         self::assertEquals($sitemap, $this->cache->get($site, $siteLanguage));
+    }
+
+    /**
+     * @test
+     */
+    public function locateBySiteDispatchesEventWithLocatedSitemap(): void
+    {
+        $site = self::getSite();
+
+        $expected = [
+            new Src\Domain\Model\Sitemap(
+                new Core\Http\Uri('https://www.example.com/sitemap.xml'),
+                $site,
+                $site->getDefaultLanguage(),
+            ),
+        ];
+
+        $this->eventDispatcher->addListener(
+            Src\Event\SitemapsLocatedEvent::class,
+            static function (Src\Event\SitemapsLocatedEvent $event) use ($site, $expected): void {
+                self::assertSame($site, $event->getSite());
+                self::assertNull($event->getSiteLanguage());
+                self::assertEquals($expected, $event->getSitemaps());
+
+                // Reset sitemaps to test event behavior
+                $event->setSitemaps([]);
+            },
+        );
+
+        self::assertSame([], $this->subject->locateBySite($site));
     }
 
     /**

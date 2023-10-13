@@ -21,31 +21,51 @@ declare(strict_types=1);
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace EliasHaeussler\Typo3SitemapLocator;
+namespace EliasHaeussler\Typo3SitemapLocator\Event;
 
+use EliasHaeussler\Typo3SitemapLocator\Domain;
 use TYPO3\CMS\Core;
 
 /**
- * Extension
+ * SitemapsLocatedEvent
  *
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-2.0-or-later
- * @codeCoverageIgnore
  */
-final class Extension
+final class SitemapsLocatedEvent
 {
-    public const KEY = 'sitemap_locator';
+    /**
+     * @param list<Domain\Model\Sitemap> $sitemaps
+     */
+    public function __construct(
+        private readonly Core\Site\Entity\Site $site,
+        private readonly ?Core\Site\Entity\SiteLanguage $siteLanguage,
+        private array $sitemaps,
+    ) {}
+
+    public function getSite(): Core\Site\Entity\Site
+    {
+        return $this->site;
+    }
+
+    public function getSiteLanguage(): ?Core\Site\Entity\SiteLanguage
+    {
+        return $this->siteLanguage;
+    }
 
     /**
-     * Register additional caches.
-     *
-     * FOR USE IN ext_localconf.php.
+     * @return list<Domain\Model\Sitemap>
      */
-    public static function registerCaches(): void
+    public function getSitemaps(): array
     {
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][self::KEY] = [
-            'backend' => Core\Cache\Backend\SimpleFileBackend::class,
-            'frontend' => Core\Cache\Frontend\PhpFrontend::class,
-        ];
+        return $this->sitemaps;
+    }
+
+    /**
+     * @param list<Domain\Model\Sitemap> $sitemaps
+     */
+    public function setSitemaps(array $sitemaps): void
+    {
+        $this->sitemaps = $sitemaps;
     }
 }
