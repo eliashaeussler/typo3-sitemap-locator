@@ -39,7 +39,7 @@ final class SitemapIsMissingTest extends TestingFramework\Core\Unit\UnitTestCase
     /**
      * @test
      */
-    public function forMissingSitemapReturnsExceptionForMissingSitemap(): void
+    public function constructorReturnsExceptionForMissingSitemap(): void
     {
         $site = new Core\Site\Entity\Site('foo', 1, []);
         $subject = new Src\Exception\SitemapIsMissing($site);

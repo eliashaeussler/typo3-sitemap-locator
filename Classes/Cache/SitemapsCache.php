@@ -67,6 +67,7 @@ final class SitemapsCache
                     new Core\Http\Uri($sitemapUrl),
                     $site,
                     $siteLanguage ?? $site->getDefaultLanguage(),
+                    true,
                 ),
                 array_filter($sitemaps, 'is_string'),
             ),

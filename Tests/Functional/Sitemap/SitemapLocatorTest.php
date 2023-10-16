@@ -115,6 +115,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
                 new Core\Http\Uri($expectedUrl),
                 $site,
                 $siteLanguage ?? $site->getDefaultLanguage(),
+                true,
             ),
         ];
 
@@ -166,7 +167,8 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
     public function locateBySiteReturnsLocatedSitemap(?Core\Site\Entity\SiteLanguage $siteLanguage, string $expectedUrl): void
     {
         $site = self::getSite();
-        $sitemap = [
+
+        $uncachedSitemaps = [
             new Src\Domain\Model\Sitemap(
                 new Core\Http\Uri($expectedUrl),
                 $site,
@@ -174,9 +176,18 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
             ),
         ];
 
+        $cachedSitemaps = [
+            new Src\Domain\Model\Sitemap(
+                new Core\Http\Uri($expectedUrl),
+                $site,
+                $siteLanguage ?? $site->getDefaultLanguage(),
+                true,
+            ),
+        ];
+
         self::assertSame([], $this->cache->get($site, $siteLanguage));
-        self::assertEquals($sitemap, $this->subject->locateBySite($site, $siteLanguage));
-        self::assertEquals($sitemap, $this->cache->get($site, $siteLanguage));
+        self::assertEquals($uncachedSitemaps, $this->subject->locateBySite($site, $siteLanguage));
+        self::assertEquals($cachedSitemaps, $this->cache->get($site, $siteLanguage));
     }
 
     /**
@@ -270,6 +281,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
                 new Core\Http\Uri('https://www.example.com/'),
                 $site,
                 $site->getLanguageById(1),
+                true,
             ),
         ];
 

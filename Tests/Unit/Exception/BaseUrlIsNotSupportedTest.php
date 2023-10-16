@@ -38,7 +38,7 @@ final class BaseUrlIsNotSupportedTest extends TestingFramework\Core\Unit\UnitTes
     /**
      * @test
      */
-    public function forBaseUrlReturnsExceptionForBaseUrl(): void
+    public function constructorReturnsExceptionForBaseUrl(): void
     {
         $subject = new Src\Exception\BaseUrlIsNotSupported('foo');
 

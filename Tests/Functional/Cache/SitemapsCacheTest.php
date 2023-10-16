@@ -144,11 +144,13 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
                 new Core\Http\Uri('https://www.example.com/baz'),
                 $site,
                 $site->getDefaultLanguage(),
+                true,
             ),
             new Src\Domain\Model\Sitemap(
                 new Core\Http\Uri('https://www.example.com/bar'),
                 $site,
                 $site->getDefaultLanguage(),
+                true,
             ),
         ];
 
@@ -185,11 +187,13 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
                 new Core\Http\Uri('https://www.example.com/baz'),
                 $site,
                 $siteLanguage,
+                true,
             ),
             new Src\Domain\Model\Sitemap(
                 new Core\Http\Uri('https://www.example.com/bar'),
                 $site,
                 $siteLanguage,
+                true,
             ),
         ];
 
@@ -217,9 +221,24 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
             ),
         ];
 
+        $expected = [
+            new Src\Domain\Model\Sitemap(
+                new Core\Http\Uri('https://www.example.com/baz'),
+                $site,
+                $site->getDefaultLanguage(),
+                true,
+            ),
+            new Src\Domain\Model\Sitemap(
+                new Core\Http\Uri('https://www.example.com/bar'),
+                $site,
+                $site->getDefaultLanguage(),
+                true,
+            ),
+        ];
+
         $this->subject->set($sitemaps);
 
-        self::assertEquals($sitemaps, $this->subject->get($site, $site->getDefaultLanguage()));
+        self::assertEquals($expected, $this->subject->get($site, $site->getDefaultLanguage()));
         self::assertTrue($this->cache->has('foo'));
     }
 
@@ -244,9 +263,24 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
             ),
         ];
 
+        $expected = [
+            new Src\Domain\Model\Sitemap(
+                new Core\Http\Uri('https://www.example.com/baz'),
+                $site,
+                $site->getDefaultLanguage(),
+                true,
+            ),
+            new Src\Domain\Model\Sitemap(
+                new Core\Http\Uri('https://www.example.com/bar'),
+                $site,
+                $site->getDefaultLanguage(),
+                true,
+            ),
+        ];
+
         $this->subject->set($sitemaps);
 
-        self::assertEquals($sitemaps, $this->subject->get($site, $site->getDefaultLanguage()));
+        self::assertEquals($expected, $this->subject->get($site, $site->getDefaultLanguage()));
         self::assertTrue($this->cache->has('foo'));
     }
 

@@ -38,6 +38,7 @@ class Sitemap
         protected readonly Message\UriInterface $uri,
         protected readonly Core\Site\Entity\Site $site,
         protected readonly Core\Site\Entity\SiteLanguage $siteLanguage,
+        protected readonly bool $cached = false,
     ) {}
 
     public function getUri(): Message\UriInterface
@@ -53,5 +54,10 @@ class Sitemap
     public function getSiteLanguage(): Core\Site\Entity\SiteLanguage
     {
         return $this->siteLanguage;
+    }
+
+    public function isCached(): bool
+    {
+        return $this->cached;
     }
 }
