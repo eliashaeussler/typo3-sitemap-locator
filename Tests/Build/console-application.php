@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 use Composer\Autoload;
 use EliasHaeussler\Typo3SitemapLocator\Command;
+use EliasHaeussler\Typo3SitemapLocator\Sitemap;
 use Symfony\Component\Console;
 use TYPO3\CMS\Core;
 
@@ -38,6 +39,11 @@ $container = Core\Core\Bootstrap::init($classLoader);
 
 // Initialize application and add command
 $application = new Console\Application();
-$application->add($container->get(Command\LocateSitemapsCommand::class));
+$application->add(
+    new Command\LocateSitemapsCommand(
+        $container->get(Sitemap\SitemapLocator::class),
+        $container->get(Core\Site\SiteFinder::class),
+    ),
+);
 
 return $application;
