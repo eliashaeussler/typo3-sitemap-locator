@@ -14,6 +14,7 @@ webimage_extra_packages: [php8.2-pcov]
 use_dns_when_possible: true
 composer_version: "2"
 web_environment:
+    - TYPO3_CONTEXT=Development/DDEV
     - typo3DatabaseHost=db
     - typo3DatabaseUsername=root
     - typo3DatabasePassword=root
