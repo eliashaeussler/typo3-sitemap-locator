@@ -27,6 +27,7 @@ services:
         identifier: 'sitemapLocatorSiteConfigurationListener'
 
   EliasHaeussler\Typo3SitemapLocator\Sitemap\SitemapLocator:
+    public: true
     arguments:
       $providers: !tagged_iterator { tag: 'sitemap_locator.sitemap_provider', default_priority_method: 'getPriority' }
 
