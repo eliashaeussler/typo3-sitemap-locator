@@ -20,8 +20,8 @@
  */
 
 $GLOBALS['SiteConfiguration']['site_language']['columns']['xml_sitemap_path'] = [
-    'label' => 'LLL:EXT:sitemap_locator/Resources/Private/Language/locallang_db.xlf:sites.xml_sitemap_path.label',
-    'description' => 'LLL:EXT:sitemap_locator/Resources/Private/Language/locallang_db.xlf:sites.xml_sitemap_path.description',
+    'label' => 'LLL:EXT:sitemap_locator/Resources/Private/Language/locallang_db.xlf:site_language.xml_sitemap_path.label',
+    'description' => 'LLL:EXT:sitemap_locator/Resources/Private/Language/locallang_db.xlf:site_language.xml_sitemap_path.description',
     'displayCond' => 'FIELD:languageId:>:0',
     'config' => [
         'type' => 'input',
