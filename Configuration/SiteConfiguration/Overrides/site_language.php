@@ -37,8 +37,22 @@ $GLOBALS['SiteConfiguration']['site_language']['columns']['xml_sitemap_path'] = 
     ],
 ];
 
+$GLOBALS['SiteConfiguration']['site_language']['columns']['xml_sitemap_status'] = [
+    'label' => 'LLL:EXT:sitemap_locator/Resources/Private/Language/locallang_db.xlf:site_language.xml_sitemap_status.label',
+    'displayCond' => 'FIELD:languageId:>:0',
+    'config' => [
+        'type' => 'user',
+        'renderType' => 'xmlSitemapLocation',
+    ],
+];
+
 $GLOBALS['SiteConfiguration']['site_language']['types']['1']['showitem'] = str_replace(
     '--palette--;;default,',
-    '--palette--;;default, xml_sitemap_path,',
+    '--palette--;;default, --palette--;;xml_sitemap,',
     (string)$GLOBALS['SiteConfiguration']['site_language']['types']['1']['showitem'],
 );
+
+$GLOBALS['SiteConfiguration']['site_language']['palettes']['xml_sitemap'] = [
+    'label' => 'LLL:EXT:sitemap_locator/Resources/Private/Language/locallang_db.xlf:palettes.xml_sitemap',
+    'showitem' => 'xml_sitemap_path, xml_sitemap_status',
+];

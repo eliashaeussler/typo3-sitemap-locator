@@ -1,6 +1,19 @@
 parameters:
 	ignoreErrors:
 		-
+			message: """
+				#^Access to deprecated property \\$iconFactory of class TYPO3\\\\CMS\\\\Backend\\\\Form\\\\Element\\\\AbstractFormElement\\:
+				since TYPO3 v12\\.4\\. will be removed in TYPO3 v13\\.0\\.$#
+			"""
+			count: 1
+			path: Classes/Form/Element/XmlSitemapLocationElement.php
+
+		-
+			message: "#^Method EliasHaeussler\\\\Typo3SitemapLocator\\\\Form\\\\Element\\\\XmlSitemapLocationElement\\:\\:__construct\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: Classes/Form/Element/XmlSitemapLocationElement.php
+
+		-
 			message: "#^Call to function is_object\\(\\) with EliasHaeussler\\\\Typo3SitemapLocator\\\\Sitemap\\\\Provider\\\\Provider will always evaluate to true\\.$#"
 			count: 1
 			path: Classes/Sitemap/SitemapLocator.php

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+	<file source-language="en" datatype="plaintext" original="EXT:sitemap_locator/Resources/Private/Language/locallang.xlf" date="2023-10-16T19::33:44Z" product-name="sitemap_locator">
+		<header/>
+		<body>
+			<trans-unit id="xml_sitemap_location.alert.new_site" resname="xml_sitemap_location.alert.new_site">
+				<source>Sitemaps will be located once record is saved.</source>
+			</trans-unit>
+			<trans-unit id="xml_sitemap_location.alert.no_sitemaps" resname="xml_sitemap_location.alert.no_sitemaps">
+				<source>No sitemaps were located for this site.</source>
+			</trans-unit>
+			<trans-unit id="xml_sitemap_location.alert.missing" resname="xml_sitemap_location.alert.missing">
+				<source>XML sitemap was resolved to this path, but does not exist.</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

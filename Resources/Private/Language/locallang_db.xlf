@@ -3,17 +3,27 @@
 	<file source-language="en" datatype="plaintext" original="EXT:sitemap_locator/Resources/Private/Language/locallang_db.xlf" date="2023-10-12T12:44:27Z" product-name="sitemap_locator">
 		<header/>
 		<body>
+			<trans-unit id="palettes.xml_sitemap" resname="palettes.xml_sitemap">
+				<source>XML sitemap</source>
+			</trans-unit>
+
 			<trans-unit id="site.xml_sitemap_path.label" resname="site.xml_sitemap_path.label">
 				<source>Path to XML sitemap</source>
 			</trans-unit>
 			<trans-unit id="site.xml_sitemap_path.description" resname="site.xml_sitemap_path.description">
 				<source>Specify the path to the XML sitemap, relative to the entry point of the site.</source>
 			</trans-unit>
+			<trans-unit id="site.xml_sitemap_status.label" resname="site.xml_sitemap_status.label">
+				<source>Located XML sitemaps</source>
+			</trans-unit>
 			<trans-unit id="site_language.xml_sitemap_path.label" resname="site_language.xml_sitemap_path.label">
 				<source>Path to XML sitemap</source>
 			</trans-unit>
 			<trans-unit id="site_language.xml_sitemap_path.description" resname="site_language.xml_sitemap_path.description">
 				<source>Specify the path to the XML sitemap, relative to the entry point of the site language.</source>
+			</trans-unit>
+			<trans-unit id="site_language.xml_sitemap_status.label" resname="site_language.xml_sitemap_status.label">
+				<source>Located XML sitemaps</source>
 			</trans-unit>
 		</body>
 	</file>

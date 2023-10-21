@@ -36,8 +36,21 @@ $GLOBALS['SiteConfiguration']['site']['columns']['xml_sitemap_path'] = [
     ],
 ];
 
+$GLOBALS['SiteConfiguration']['site']['columns']['xml_sitemap_status'] = [
+    'label' => 'LLL:EXT:sitemap_locator/Resources/Private/Language/locallang_db.xlf:site.xml_sitemap_status.label',
+    'config' => [
+        'type' => 'user',
+        'renderType' => 'xmlSitemapLocation',
+    ],
+];
+
 $GLOBALS['SiteConfiguration']['site']['types']['0']['showitem'] = str_replace(
     'base,',
-    'base, xml_sitemap_path,',
+    'base, --palette--;;xml_sitemap,',
     (string)$GLOBALS['SiteConfiguration']['site']['types']['0']['showitem'],
 );
+
+$GLOBALS['SiteConfiguration']['site']['palettes']['xml_sitemap'] = [
+    'label' => 'LLL:EXT:sitemap_locator/Resources/Private/Language/locallang_db.xlf:palettes.xml_sitemap',
+    'showitem' => 'xml_sitemap_path, xml_sitemap_status',
+];

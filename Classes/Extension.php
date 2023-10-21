@@ -48,4 +48,18 @@ final class Extension
             'frontend' => Core\Cache\Frontend\PhpFrontend::class,
         ];
     }
+
+    /**
+     * Register custom FormEngine elements.
+     *
+     * FOR USE IN ext_localconf.php.
+     */
+    public static function registerFormElements(): void
+    {
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1697474412] = [
+            'nodeName' => 'xmlSitemapLocation',
+            'priority' => 40,
+            'class' => Form\Element\XmlSitemapLocationElement::class,
+        ];
+    }
 }

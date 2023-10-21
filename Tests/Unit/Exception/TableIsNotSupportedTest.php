@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the TYPO3 CMS extension "sitemap_locator".
  *
@@ -19,5 +21,28 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-\EliasHaeussler\Typo3SitemapLocator\Extension::registerCaches();
-\EliasHaeussler\Typo3SitemapLocator\Extension::registerFormElements();
+namespace EliasHaeussler\Typo3SitemapLocator\Tests\Unit\Exception;
+
+use EliasHaeussler\Typo3SitemapLocator as Src;
+use TYPO3\TestingFramework;
+
+/**
+ * TableIsNotSupportedTest
+ *
+ * @author Elias Häußler <elias@haeussler.dev>
+ * @license GPL-2.0-or-later
+ * @covers \EliasHaeussler\Typo3SitemapLocator\Exception\TableIsNotSupported
+ */
+final class TableIsNotSupportedTest extends TestingFramework\Core\Unit\UnitTestCase
+{
+    /**
+     * @test
+     */
+    public function constructorReturnsExceptionForTable(): void
+    {
+        $subject = new Src\Exception\TableIsNotSupported('foo');
+
+        self::assertSame('The table "foo" is not supported by this operation.', $subject->getMessage());
+        self::assertSame(1697481609, $subject->getCode());
+    }
+}

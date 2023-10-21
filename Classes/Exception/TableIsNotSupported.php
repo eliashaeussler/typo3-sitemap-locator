@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the TYPO3 CMS extension "sitemap_locator".
  *
@@ -19,5 +21,21 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-\EliasHaeussler\Typo3SitemapLocator\Extension::registerCaches();
-\EliasHaeussler\Typo3SitemapLocator\Extension::registerFormElements();
+namespace EliasHaeussler\Typo3SitemapLocator\Exception;
+
+/**
+ * TableIsNotSupported
+ *
+ * @author Elias Häußler <elias@haeussler.dev>
+ * @license GPL-2.0-or-later
+ */
+final class TableIsNotSupported extends Exception
+{
+    public function __construct(string $tableName)
+    {
+        parent::__construct(
+            sprintf('The table "%s" is not supported by this operation.', $tableName),
+            1697481609,
+        );
+    }
+}
