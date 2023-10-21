@@ -22,6 +22,7 @@ declare(strict_types=1);
  */
 
 use Composer\Autoload;
+use EliasHaeussler\Typo3SitemapLocator\Cache;
 use EliasHaeussler\Typo3SitemapLocator\Command;
 use EliasHaeussler\Typo3SitemapLocator\Sitemap;
 use Symfony\Component\Console;
@@ -37,13 +38,22 @@ $classLoader->register(true);
 Core\Core\SystemEnvironmentBuilder::run(0, Core\Core\SystemEnvironmentBuilder::REQUESTTYPE_CLI);
 $container = Core\Core\Bootstrap::init($classLoader);
 
+// Create command
+$locateCommand = new Command\LocateSitemapsCommand(
+    new Sitemap\SitemapLocator(
+        $container->get(Core\Http\RequestFactory::class),
+        new Cache\SitemapsCache(
+            new Core\Cache\Frontend\NullFrontend('sitemap_locator'),
+        ),
+        new Core\EventDispatcher\NoopEventDispatcher(),
+        [],
+    ),
+    new Core\Site\SiteFinder(),
+);
+$locateCommand->setName('sitemap-locator:locate');
+
 // Initialize application and add command
 $application = new Console\Application();
-$application->add(
-    new Command\LocateSitemapsCommand(
-        $container->get(Sitemap\SitemapLocator::class),
-        $container->get(Core\Site\SiteFinder::class),
-    ),
-);
+$application->add($locateCommand);
 
 return $application;
