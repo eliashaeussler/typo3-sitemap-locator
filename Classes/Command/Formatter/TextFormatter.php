@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace EliasHaeussler\Typo3SitemapLocator\Command\Formatter;
 
 use EliasHaeussler\Typo3SitemapLocator\Domain;
+use EliasHaeussler\Typo3SitemapLocator\Sitemap;
 use Symfony\Component\Console;
 use TYPO3\CMS\Core;
 
@@ -38,13 +39,29 @@ final class TextFormatter implements Formatter
 {
     public function __construct(
         private readonly Console\Output\OutputInterface&Console\Style\StyleInterface $output,
+        private readonly Sitemap\SitemapLocator $sitemapLocator,
     ) {}
 
     public function formatSitemaps(
         Core\Site\Entity\Site $site,
         Core\Site\Entity\SiteLanguage $siteLanguage,
         array $sitemaps,
-    ): void {
+        bool $validate = false,
+    ): bool {
+        if ($sitemaps === []) {
+            $this->output->warning(
+                sprintf(
+                    'No XML sitemaps found for site "%s" (%d) and language "%s" (%d).',
+                    $site->getIdentifier(),
+                    $site->getRootPageId(),
+                    $siteLanguage->getTitle(),
+                    $siteLanguage->getLanguageId(),
+                ),
+            );
+
+            return false;
+        }
+
         $this->output->title(
             sprintf(
                 'XML sitemap%s for site "%s" (%d) and language "%s" (%d):',
@@ -55,18 +72,29 @@ final class TextFormatter implements Formatter
                 $siteLanguage->getLanguageId(),
             ),
         );
-        $this->output->listing(
-            array_map(
-                static fn(Domain\Model\Sitemap $sitemap) => (string)$sitemap->getUri(),
-                $sitemaps,
-            )
-        );
+
+        return $this->listSitemapUrls($sitemaps, $validate);
     }
 
     public function formatAllSitemaps(
         Core\Site\Entity\Site $site,
         array $sitemaps,
-    ): void {
+        bool $validate = false,
+    ): bool {
+        $isValid = true;
+
+        if ($sitemaps === []) {
+            $this->output->warning(
+                sprintf(
+                    'No XML sitemaps found for site "%s" (%d).',
+                    $site->getIdentifier(),
+                    $site->getRootPageId(),
+                ),
+            );
+
+            return false;
+        }
+
         $this->output->title(
             sprintf(
                 'XML sitemap%s for site "%s" (%d)',
@@ -82,12 +110,36 @@ final class TextFormatter implements Formatter
             $this->output->section(
                 sprintf('Language "%s" (%d)', $siteLanguage->getTitle(), $siteLanguage->getLanguageId()),
             );
-            $this->output->listing(
-                array_map(
-                    static fn(Domain\Model\Sitemap $sitemap) => (string)$sitemap->getUri(),
-                    $sitemapsOfLanguage,
-                ),
-            );
+
+            if (!$this->listSitemapUrls($sitemapsOfLanguage, $validate)) {
+                $isValid = false;
+            }
         }
+
+        return $isValid;
+    }
+
+    /**
+     * @param list<Domain\Model\Sitemap> $sitemaps
+     */
+    private function listSitemapUrls(array $sitemaps, bool $validate = false): bool
+    {
+        $isValid = true;
+        $sitemapUrls = [];
+
+        foreach ($sitemaps as $sitemap) {
+            $sitemapUrl = (string)$sitemap->getUri();
+
+            if ($validate && !$this->sitemapLocator->isValidSitemap($sitemap)) {
+                $isValid = false;
+                $sitemapUrl .= ' (<error>invalid</error>)';
+            }
+
+            $sitemapUrls[] = $sitemapUrl;
+        }
+
+        $this->output->listing($sitemapUrls);
+
+        return $isValid;
     }
 }

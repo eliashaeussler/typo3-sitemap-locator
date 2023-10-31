@@ -162,7 +162,7 @@ final class XmlSitemapLocationElement extends Backend\Form\Element\AbstractFormE
             $sitemapPath,
         );
 
-        if ($this->sitemapLocator->sitemapExists($sitemap)) {
+        if ($this->sitemapLocator->isValidSitemap($sitemap)) {
             return $this->renderCallout('success', 'actions-check', $body);
         }
 

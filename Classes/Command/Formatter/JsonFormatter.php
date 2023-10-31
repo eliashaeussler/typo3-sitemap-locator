@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace EliasHaeussler\Typo3SitemapLocator\Command\Formatter;
 
 use EliasHaeussler\Typo3SitemapLocator\Domain;
+use EliasHaeussler\Typo3SitemapLocator\Sitemap;
 use Symfony\Component\Console;
 use TYPO3\CMS\Core;
 
@@ -38,13 +39,17 @@ final class JsonFormatter implements Formatter
 {
     public function __construct(
         private readonly Console\Output\OutputInterface&Console\Style\StyleInterface $output,
+        private readonly Sitemap\SitemapLocator $sitemapLocator,
     ) {}
 
     public function formatSitemaps(
         Core\Site\Entity\Site $site,
         Core\Site\Entity\SiteLanguage $siteLanguage,
         array $sitemaps,
-    ): void {
+        bool $validate = false,
+    ): bool {
+        $isValid = true;
+
         $this->render([
             'site' => [
                 'identifier' => $site->getIdentifier(),
@@ -54,31 +59,40 @@ final class JsonFormatter implements Formatter
                 'languageId' => $siteLanguage->getLanguageId(),
                 'title' => $siteLanguage->getTitle(),
             ],
-            'sitemaps' => array_map(
-                static fn(Domain\Model\Sitemap $sitemap) => (string)$sitemap->getUri(),
-                $sitemaps,
-            ),
+            'sitemaps' => $this->listSitemapUrls($sitemaps, $isValid, $validate),
         ]);
+
+        // Fail if no sitemaps were located
+        if ($sitemaps === []) {
+            $isValid = false;
+        }
+
+        return $isValid;
     }
 
     public function formatAllSitemaps(
         Core\Site\Entity\Site $site,
         array $sitemaps,
-    ): void {
+        bool $validate = false,
+    ): bool {
+        $isValid = true;
         $sitemapResult = [];
 
         foreach ($sitemaps as $languageId => $sitemapsOfLanguage) {
             $siteLanguage = $site->getLanguageById($languageId);
+            $isCurrentSitemapValid = true;
+
             $sitemapResult[$languageId] = [
                 'siteLanguage' => [
                     'languageId' => $siteLanguage->getLanguageId(),
                     'title' => $siteLanguage->getTitle(),
                 ],
-                'sitemaps' => array_map(
-                    static fn(Domain\Model\Sitemap $sitemap) => (string)$sitemap->getUri(),
-                    $sitemapsOfLanguage,
-                ),
+                'sitemaps' => $this->listSitemapUrls($sitemapsOfLanguage, $isCurrentSitemapValid, $validate),
             ];
+
+            if (!$isCurrentSitemapValid) {
+                $isValid = false;
+            }
         }
 
         $this->render([
@@ -88,6 +102,46 @@ final class JsonFormatter implements Formatter
             ],
             'sitemaps' => $sitemapResult,
         ]);
+
+        // Fail if no sitemaps were located
+        if ($sitemaps === []) {
+            $isValid = false;
+        }
+
+        return $isValid;
+    }
+
+    /**
+     * @param list<Domain\Model\Sitemap> $sitemaps
+     * @phpstan-return ($validate is true ? list<array{url: string, valid: bool}> : list<string>)
+     */
+    private function listSitemapUrls(array $sitemaps, bool &$isValid = true, bool $validate = false): array
+    {
+        $sitemapUrls = [];
+
+        foreach ($sitemaps as $sitemap) {
+            $sitemapUrl = (string)$sitemap->getUri();
+
+            // On disabled validation, display only the sitemap URL
+            if (!$validate) {
+                $sitemapUrls[] = $sitemapUrl;
+                continue;
+            }
+
+            // On enabled validation, display URL and validation result
+            $isCurrentSitemapValid = $this->sitemapLocator->isValidSitemap($sitemap);
+            $sitemapUrls[] = [
+                'url' => $sitemapUrl,
+                'valid' => $isCurrentSitemapValid,
+            ];
+
+            // Fail if located sitemap does not exist
+            if (!$isCurrentSitemapValid) {
+                $isValid = false;
+            }
+        }
+
+        return $sitemapUrls;
     }
 
     /**

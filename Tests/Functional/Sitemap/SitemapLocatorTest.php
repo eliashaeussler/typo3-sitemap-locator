@@ -293,7 +293,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
     /**
      * @test
      */
-    public function sitemapExistsReturnsFalseOnInaccessibleSitemap(): void
+    public function isValidSitemapReturnsFalseOnInaccessibleSitemap(): void
     {
         $this->requestFactory->exception = new Exception();
 
@@ -304,13 +304,13 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
             $site->getDefaultLanguage(),
         );
 
-        self::assertFalse($this->subject->sitemapExists($sitemap));
+        self::assertFalse($this->subject->isValidSitemap($sitemap));
     }
 
     /**
      * @test
      */
-    public function sitemapExistsReturnsFalseOnFailedRequest(): void
+    public function isValidSitemapReturnsFalseOnFailedRequest(): void
     {
         $this->requestFactory->response = new Core\Http\Response(null, 404);
 
@@ -321,13 +321,13 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
             $site->getDefaultLanguage(),
         );
 
-        self::assertFalse($this->subject->sitemapExists($sitemap));
+        self::assertFalse($this->subject->isValidSitemap($sitemap));
     }
 
     /**
      * @test
      */
-    public function sitemapExistsReturnsTrueOnSuccessfulRequest(): void
+    public function isValidSitemapReturnsTrueOnSuccessfulRequest(): void
     {
         $this->requestFactory->response = new Core\Http\Response();
 
@@ -338,7 +338,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
             $site->getDefaultLanguage(),
         );
 
-        self::assertTrue($this->subject->sitemapExists($sitemap));
+        self::assertTrue($this->subject->isValidSitemap($sitemap));
     }
 
     /**

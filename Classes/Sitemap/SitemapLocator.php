@@ -107,7 +107,7 @@ final class SitemapLocator
         return $sitemaps;
     }
 
-    public function sitemapExists(Domain\Model\Sitemap $sitemap): bool
+    public function isValidSitemap(Domain\Model\Sitemap $sitemap): bool
     {
         try {
             $response = $this->requestFactory->request((string)$sitemap->getUri(), 'HEAD');

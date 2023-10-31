@@ -70,6 +70,12 @@ final class LocateSitemapsCommand extends Console\Command\Command
             'Locate XML sitemaps of all available site languages of the given site.',
         );
         $this->addOption(
+            'validate',
+            null,
+            Console\Input\InputOption::VALUE_NONE,
+            'Validate if located XML sitemaps actually exist and are properly accessible.',
+        );
+        $this->addOption(
             'json',
             'j',
             Console\Input\InputOption::VALUE_NONE,
@@ -81,8 +87,8 @@ final class LocateSitemapsCommand extends Console\Command\Command
     {
         $this->io = new Console\Style\SymfonyStyle($input, $output);
         $this->formatter = $input->getOption('json')
-            ? new Formatter\JsonFormatter($this->io)
-            : new Formatter\TextFormatter($this->io)
+            ? new Formatter\JsonFormatter($this->io, $this->sitemapLocator)
+            : new Formatter\TextFormatter($this->io, $this->sitemapLocator)
         ;
     }
 
@@ -131,6 +137,7 @@ final class LocateSitemapsCommand extends Console\Command\Command
         $siteIdentifier = $input->getArgument('site');
         $language = $input->getOption('language');
         $all = $input->getOption('all');
+        $validate = $input->getOption('validate');
 
         // Fetch site
         try {
@@ -149,7 +156,7 @@ final class LocateSitemapsCommand extends Console\Command\Command
 
         // Locate sitemaps of all available languages
         if ($all) {
-            return $this->locateAllBySite($site);
+            return $this->locateAllBySite($site, $validate) ? self::SUCCESS : self::FAILURE;
         }
 
         // Fetch site language
@@ -168,11 +175,14 @@ final class LocateSitemapsCommand extends Console\Command\Command
         }
 
         // Locate sitemaps of configured language
-        return $this->locateBySite($site, $siteLanguage);
+        return $this->locateBySite($site, $siteLanguage, $validate) ? self::SUCCESS : self::FAILURE;
     }
 
-    private function locateBySite(Core\Site\Entity\Site $site, Core\Site\Entity\SiteLanguage $siteLanguage): int
-    {
+    private function locateBySite(
+        Core\Site\Entity\Site $site,
+        Core\Site\Entity\SiteLanguage $siteLanguage,
+        bool $validate = false,
+    ): bool {
         try {
             $sitemaps = $this->sitemapLocator->locateBySite($site, $siteLanguage);
         } catch (Exception\BaseUrlIsNotSupported|Exception\SitemapIsMissing $exception) {
@@ -180,16 +190,16 @@ final class LocateSitemapsCommand extends Console\Command\Command
                 sprintf('Unable to locate XML sitemaps due to the following exception: %s', $exception->getMessage()),
             );
 
-            return self::FAILURE;
+            return false;
         }
 
-        $this->formatter->formatSitemaps($site, $siteLanguage, $sitemaps);
-
-        return self::SUCCESS;
+        return $this->formatter->formatSitemaps($site, $siteLanguage, $sitemaps, $validate);
     }
 
-    private function locateAllBySite(Core\Site\Entity\Site $site): int
-    {
+    private function locateAllBySite(
+        Core\Site\Entity\Site $site,
+        bool $validate = false,
+    ): bool {
         try {
             $sitemaps = $this->sitemapLocator->locateAllBySite($site);
         } catch (Exception\BaseUrlIsNotSupported|Exception\SitemapIsMissing $exception) {
@@ -197,12 +207,10 @@ final class LocateSitemapsCommand extends Console\Command\Command
                 sprintf('Unable to locate XML sitemaps due to the following exception: %s', $exception->getMessage()),
             );
 
-            return self::FAILURE;
+            return false;
         }
 
-        $this->formatter->formatAllSitemaps($site, $sitemaps);
-
-        return self::SUCCESS;
+        return $this->formatter->formatAllSitemaps($site, $sitemaps, $validate);
     }
 
     /**

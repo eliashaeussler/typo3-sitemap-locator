@@ -42,7 +42,8 @@ interface Formatter
         Core\Site\Entity\Site $site,
         Core\Site\Entity\SiteLanguage $siteLanguage,
         array $sitemaps,
-    ): void;
+        bool $validate = false,
+    ): bool;
 
     /**
      * @param array<int, list<Domain\Model\Sitemap>> $sitemaps
@@ -50,5 +51,6 @@ interface Formatter
     public function formatAllSitemaps(
         Core\Site\Entity\Site $site,
         array $sitemaps,
-    ): void;
+        bool $validate = false,
+    ): bool;
 }
