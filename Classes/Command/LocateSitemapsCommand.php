@@ -26,6 +26,7 @@ namespace EliasHaeussler\Typo3SitemapLocator\Command;
 use EliasHaeussler\Typo3SitemapLocator\Exception;
 use EliasHaeussler\Typo3SitemapLocator\Sitemap;
 use EliasHaeussler\Typo3SitemapLocator\Utility;
+use InvalidArgumentException;
 use Symfony\Component\Console;
 use TYPO3\CMS\Core;
 
@@ -99,26 +100,26 @@ final class LocateSitemapsCommand extends Console\Command\Command
             return;
         }
 
-        // Validate sites
-        $sites = $this->siteFinder->getAllSites();
-        if ($sites === []) {
-            throw new Exception\NoSitesAreConfigured();
-        }
-
         // Site
-        $siteIdentifier = $this->io->choice('Please select an available site', $this->decorateAvailableSites($sites));
+        $siteIdentifier = $this->io->choice('Please select an available site', $this->decorateAvailableSites());
         $input->setArgument('site', $siteIdentifier);
 
         // Site language
         if (!$input->getOption('all') && !$this->io->confirm('Locate sitemaps of all available languages?', false)) {
             $site = $this->siteFinder->getSiteByIdentifier($siteIdentifier);
+            $availableSiteLanguages = $this->decorateAvailableSiteLanguages($site);
+            $question = new Console\Question\ChoiceQuestion(
+                'Please select a site language',
+                $availableSiteLanguages,
+                $site->getDefaultLanguage()->getLanguageId(),
+            );
+            $question->setValidator(
+                fn(string|int $siteLanguage) => $this->validateSiteLanguage($siteLanguage, $site, $availableSiteLanguages),
+            );
+
             $input->setOption(
                 'language',
-                $this->io->choice(
-                    'Please select a site language',
-                    $this->decorateAvailableSiteLanguages($site),
-                    $site->getDefaultLanguage()->getLanguageId(),
-                ),
+                $this->io->askQuestion($question),
             );
         } else {
             $input->setOption('all', true);
@@ -205,13 +206,20 @@ final class LocateSitemapsCommand extends Console\Command\Command
     }
 
     /**
-     * @param array<Core\Site\Entity\Site> $sites
      * @return array<string, string>
+     * @throws Exception\NoSitesAreConfigured
      */
-    private function decorateAvailableSites(array $sites): array
+    private function decorateAvailableSites(): array
     {
+        $sites = $this->siteFinder->getAllSites();
         $decoratedSites = [];
 
+        // Validate sites
+        if ($sites === []) {
+            throw new Exception\NoSitesAreConfigured();
+        }
+
+        // Decorate sites
         foreach ($sites as $site) {
             $decoratedSites[$site->getIdentifier()] = sprintf(
                 '%s (%d)',
@@ -240,5 +248,32 @@ final class LocateSitemapsCommand extends Console\Command\Command
         }
 
         return $decoratedSiteLanguages;
+    }
+
+    /**
+     * @param array<int, string> $siteLanguageMapping
+     * @throws Console\Exception\RuntimeException
+     */
+    private function validateSiteLanguage(
+        string|int $languageId,
+        Core\Site\Entity\Site $site,
+        array $siteLanguageMapping,
+    ): int {
+        if (is_numeric($languageId)) {
+            $languageId = (int)$languageId;
+        }
+        if (is_string($languageId)) {
+            $languageId = array_search($languageId, $siteLanguageMapping, true);
+        }
+
+        if (!is_int($languageId)) {
+            throw new Console\Exception\RuntimeException('Invalid language ID given.', 1698771577);
+        }
+
+        try {
+            return $site->getLanguageById($languageId)->getLanguageId();
+        } catch (InvalidArgumentException $exception) {
+            throw new Console\Exception\RuntimeException($exception->getMessage(), $exception->getCode());
+        }
     }
 }
