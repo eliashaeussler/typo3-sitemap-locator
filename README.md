@@ -21,8 +21,9 @@ sitemap providers.
 ## 🚀 Features
 
 * Service to locate XML sitemaps of sites
+* Additional console command
 * Support of various sitemap providers (e.g. `robots.txt` or custom location)
-* Interface to implement custom sitemap locators
+* Interface to implement custom sitemap providers
 * Compatible with TYPO3 11.5 LTS and 12.4 LTS
 
 ## 🔥 Installation
