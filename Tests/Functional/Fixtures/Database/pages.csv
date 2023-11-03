@@ -1,3 +1,4 @@
 "pages",,,,,
 ,"uid","pid","title","sys_language_uid","l10n_parent","l10n_source","is_siteroot","slug","perms_userid","perms_user","perms_everybody"
 ,1,0,"Root",0,0,0,1,"/",1,31,1
+,2,1,"",0,0,0,0,"/test",1,31,1

@@ -24,40 +24,25 @@ declare(strict_types=1);
 namespace EliasHaeussler\Typo3SitemapLocator\Tests\Unit\Exception;
 
 use EliasHaeussler\Typo3SitemapLocator as Src;
-use Generator;
-use Psr\Http\Message;
-use TYPO3\CMS\Core;
 use TYPO3\TestingFramework;
 
 /**
- * BaseUrlIsNotSupportedTest
+ * NoSitesAreConfiguredTest
  *
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-2.0-or-later
- * @covers \EliasHaeussler\Typo3SitemapLocator\Exception\BaseUrlIsNotSupported
+ * @covers \EliasHaeussler\Typo3SitemapLocator\Exception\NoSitesAreConfigured
  */
-final class BaseUrlIsNotSupportedTest extends TestingFramework\Core\Unit\UnitTestCase
+final class NoSitesAreConfiguredTest extends TestingFramework\Core\Unit\UnitTestCase
 {
     /**
      * @test
-     * @dataProvider constructorReturnsExceptionForBaseUrlDataProvider
      */
-    public function constructorReturnsExceptionForBaseUrl(string|Message\UriInterface $baseUrl): void
+    public function constructorReturnsExceptionForNonConfiguredSites(): void
     {
-        $subject = new Src\Exception\BaseUrlIsNotSupported($baseUrl);
+        $subject = new Src\Exception\NoSitesAreConfigured();
 
-        self::assertSame('The given base URL "' . $baseUrl . '" is not supported.', $subject->getMessage());
-        self::assertSame(1697106072, $subject->getCode());
-    }
-
-    /**
-     * @return Generator<string, array{string|Message\UriInterface}>
-     */
-    public function constructorReturnsExceptionForBaseUrlDataProvider(): Generator
-    {
-        $url = 'https://typo3-testing.local/';
-
-        yield 'string' => [$url];
-        yield 'uri object' => [new Core\Http\Uri($url)];
+        self::assertSame('There are no sites configured in your system.', $subject->getMessage());
+        self::assertSame(1697184946, $subject->getCode());
     }
 }

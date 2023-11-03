@@ -19,6 +19,21 @@ parameters:
 			path: Classes/Sitemap/SitemapLocator.php
 
 		-
+			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteConfiguration constructor invoked with 1 parameter, 2\\-3 required\\.$#"
+			count: 1
+			path: Tests/Functional/Command/Formatter/JsonFormatterTest.php
+
+		-
+			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteConfiguration constructor invoked with 1 parameter, 2\\-3 required\\.$#"
+			count: 1
+			path: Tests/Functional/Command/Formatter/TextFormatterTest.php
+
+		-
+			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteConfiguration constructor invoked with 1 parameter, 2\\-3 required\\.$#"
+			count: 1
+			path: Tests/Functional/Command/LocateSitemapsCommandTest.php
+
+		-
 			message: "#^EliasHaeussler\\\\Typo3SitemapLocator\\\\Tests\\\\Functional\\\\Fixtures\\\\Classes\\\\DummyPackageManager\\:\\:__construct\\(\\) does not call parent constructor from TYPO3\\\\CMS\\\\Core\\\\Package\\\\PackageManager\\.$#"
 			count: 1
 			path: Tests/Functional/Fixtures/Classes/DummyPackageManager.php

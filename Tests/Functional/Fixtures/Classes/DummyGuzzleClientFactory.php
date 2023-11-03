@@ -23,42 +23,29 @@ declare(strict_types=1);
 
 namespace EliasHaeussler\Typo3SitemapLocator\Tests\Functional\Fixtures\Classes;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Handler;
 use TYPO3\CMS\Core;
 
 /**
- * DummySiteFinder
+ * DummyGuzzleClientFactory
  *
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-2.0-or-later
  * @internal
  */
-final class DummySiteFinder extends Core\Site\SiteFinder
+final class DummyGuzzleClientFactory extends Core\Http\Client\GuzzleClientFactory
 {
-    public ?Core\Site\Entity\Site $expectedSite = null;
+    public readonly Handler\MockHandler $handler;
 
-    /**
-     * @var Core\Site\Entity\Site[]|null
-     */
-    public ?array $expectedSites = null;
-
-    /** @noinspection PhpMissingParentConstructorInspection */
     public function __construct()
     {
-        // Parent call missing on purpose.
+        $this->handler = new Handler\MockHandler();
     }
 
-    public function getSiteByIdentifier(string $identifier): Core\Site\Entity\Site
+    public function getClient(): ClientInterface
     {
-        return $this->expectedSite
-            ?? throw new Core\Exception\SiteNotFoundException('No site found for identifier ' . $identifier, 1521716628);
-    }
-
-    public function getAllSites(bool $useCache = true): array
-    {
-        if ($this->expectedSites !== null) {
-            return $this->expectedSites;
-        }
-
-        return parent::getAllSites($useCache);
+        return new Client(['handler' => $this->handler]);
     }
 }

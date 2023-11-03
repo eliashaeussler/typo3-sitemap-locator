@@ -1,3 +1,4 @@
 "be_users",,,,,,,
 ,"uid","pid","username","usergroup","admin","allowed_languages","db_mountpoints"
-,1,0,"test","1",0,"1","1"
+,1,0,"admin",,1,,
+,2,0,"test","1",0,"1","1"

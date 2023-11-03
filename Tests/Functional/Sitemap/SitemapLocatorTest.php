@@ -257,7 +257,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
      */
     public function locateAllBySiteExcludesInaccessibleLanguages(): void
     {
-        $GLOBALS['BE_USER'] = $this->setUpBackendUser(1);
+        $GLOBALS['BE_USER'] = $this->setUpBackendUser(2);
 
         $site = self::getSite([
             'base' => 'https://www.example.com/',
