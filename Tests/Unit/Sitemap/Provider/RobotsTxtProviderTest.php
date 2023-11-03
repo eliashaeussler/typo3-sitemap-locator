@@ -56,7 +56,9 @@ final class RobotsTxtProviderTest extends TestingFramework\Core\Unit\UnitTestCas
      */
     public function getReturnsEmptyArrayIfNoRobotsTxtExists(): void
     {
-        $this->requestFactory->exception = new Exception();
+        $this->requestFactory->handler->append(
+            new Exception(),
+        );
 
         self::assertSame([], $this->subject->get($this->site));
     }
@@ -71,7 +73,7 @@ final class RobotsTxtProviderTest extends TestingFramework\Core\Unit\UnitTestCas
         $body->write('foo');
         $body->rewind();
 
-        $this->requestFactory->response = $response;
+        $this->requestFactory->handler->append($response);
 
         self::assertSame([], $this->subject->get($this->site));
     }
@@ -91,7 +93,7 @@ TXT
         );
         $body->rewind();
 
-        $this->requestFactory->response = $response;
+        $this->requestFactory->handler->append($response);
 
         $expected = [
             new Src\Domain\Model\Sitemap(

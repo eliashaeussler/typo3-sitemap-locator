@@ -51,7 +51,7 @@ final class JsonFormatterTest extends TestingFramework\Core\Functional\Functiona
 
     private Console\Output\BufferedOutput $output;
     private Core\Site\Entity\Site $site;
-    private Tests\Functional\Fixtures\Classes\DummyGuzzleClientFactory $guzzleClientFactory;
+    private Tests\Unit\Fixtures\DummyRequestFactory $requestFactory;
     private Src\Command\Formatter\JsonFormatter $subject;
 
     protected function setUp(): void
@@ -60,14 +60,14 @@ final class JsonFormatterTest extends TestingFramework\Core\Functional\Functiona
 
         $this->output = new Console\Output\BufferedOutput();
         $this->site = $this->createSite();
-        $this->guzzleClientFactory = new Tests\Functional\Fixtures\Classes\DummyGuzzleClientFactory();
+        $this->requestFactory = new Tests\Unit\Fixtures\DummyRequestFactory();
         $this->subject = new Src\Command\Formatter\JsonFormatter(
             new Console\Style\SymfonyStyle(
                 new Console\Input\StringInput(''),
                 $this->output,
             ),
             new Src\Sitemap\SitemapLocator(
-                new Core\Http\RequestFactory($this->guzzleClientFactory),
+                $this->requestFactory,
                 $this->get(Src\Cache\SitemapsCache::class),
                 $this->get(EventDispatcher\EventDispatcherInterface::class),
                 [
@@ -165,7 +165,7 @@ final class JsonFormatterTest extends TestingFramework\Core\Functional\Functiona
         $sitemaps = [];
         $siteLanguage = $this->site->getDefaultLanguage();
 
-        $this->guzzleClientFactory->handler->append(...$responses);
+        $this->requestFactory->handler->append(...$responses);
 
         $expected = [
             'site' => [
@@ -327,7 +327,7 @@ final class JsonFormatterTest extends TestingFramework\Core\Functional\Functiona
     ): void {
         $sitemaps = [];
 
-        $this->guzzleClientFactory->handler->append(...$responses);
+        $this->requestFactory->handler->append(...$responses);
 
         $expected = [
             'site' => [

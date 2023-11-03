@@ -23,8 +23,9 @@ declare(strict_types=1);
 
 namespace EliasHaeussler\Typo3SitemapLocator\Tests\Unit\Fixtures;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Handler;
 use Psr\Http\Message;
-use Throwable;
 use TYPO3\CMS\Core;
 
 /**
@@ -36,21 +37,20 @@ use TYPO3\CMS\Core;
  */
 final class DummyRequestFactory extends Core\Http\RequestFactory
 {
+    private readonly Client $client;
+
     /** @noinspection PhpMissingParentConstructorInspection */
     public function __construct(
-        public Message\ResponseInterface $response = new Core\Http\Response(),
-        public ?Throwable $exception = null,
-    ) {}
+        public readonly Handler\MockHandler $handler = new Handler\MockHandler(),
+    ) {
+        $this->client = new Client(['handler' => $this->handler]);
+    }
 
     /**
      * @param array<string, mixed> $options
      */
     public function request(string $uri, string $method = 'GET', array $options = []): Message\ResponseInterface
     {
-        if ($this->exception !== null) {
-            throw $this->exception;
-        }
-
-        return $this->response;
+        return $this->client->request($method, $uri, $options);
     }
 }

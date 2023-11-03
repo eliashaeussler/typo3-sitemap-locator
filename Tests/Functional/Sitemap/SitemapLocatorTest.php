@@ -295,7 +295,9 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
      */
     public function isValidSitemapReturnsFalseOnInaccessibleSitemap(): void
     {
-        $this->requestFactory->exception = new Exception();
+        $this->requestFactory->handler->append(
+            new Exception(),
+        );
 
         $site = self::getSite();
         $sitemap = new Src\Domain\Model\Sitemap(
@@ -312,7 +314,9 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
      */
     public function isValidSitemapReturnsFalseOnFailedRequest(): void
     {
-        $this->requestFactory->response = new Core\Http\Response(null, 404);
+        $this->requestFactory->handler->append(
+            new Core\Http\Response(null, 404),
+        );
 
         $site = self::getSite();
         $sitemap = new Src\Domain\Model\Sitemap(
@@ -329,7 +333,9 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
      */
     public function isValidSitemapReturnsTrueOnSuccessfulRequest(): void
     {
-        $this->requestFactory->response = new Core\Http\Response();
+        $this->requestFactory->handler->append(
+            new Core\Http\Response(),
+        );
 
         $site = self::getSite();
         $sitemap = new Src\Domain\Model\Sitemap(
