@@ -28,6 +28,7 @@ use EliasHaeussler\Typo3SitemapLocator\Domain;
 use EliasHaeussler\Typo3SitemapLocator\Event;
 use EliasHaeussler\Typo3SitemapLocator\Exception;
 use EliasHaeussler\Typo3SitemapLocator\Utility;
+use GuzzleHttp\Exception\RequestException;
 use Psr\EventDispatcher;
 use TYPO3\CMS\Core;
 
@@ -109,13 +110,20 @@ final class SitemapLocator
 
     public function isValidSitemap(Domain\Model\Sitemap $sitemap): bool
     {
+        // Check if sitemap is accessible
         try {
             $response = $this->requestFactory->request((string)$sitemap->getUri(), 'HEAD');
-
-            return $response->getStatusCode() < 400;
-        } catch (\Exception) {
-            return false;
+            $isValid = $response->getStatusCode() < 400;
+        } catch (\Exception $exception) {
+            $response = $exception instanceof RequestException ? $exception->getResponse() : null;
+            $isValid = false;
         }
+
+        // Dispatch event
+        $event = new Event\SitemapValidatedEvent($sitemap, $response, $isValid);
+        $this->eventDispatcher->dispatch($event);
+
+        return $event->isValid();
     }
 
     /**

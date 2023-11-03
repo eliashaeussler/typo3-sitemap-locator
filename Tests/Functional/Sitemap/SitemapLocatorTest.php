@@ -293,6 +293,36 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
     /**
      * @test
      */
+    public function isValidSitemapDispatchesEventWithValidityResult(): void
+    {
+        $site = self::getSite();
+        $sitemap = new Src\Domain\Model\Sitemap(
+            new Core\Http\Uri('https://www.example.com/sitemap.xml'),
+            $site,
+            $site->getDefaultLanguage(),
+        );
+
+        $this->requestFactory->handler->append(
+            new Core\Http\Response(),
+        );
+
+        $this->eventDispatcher->addListener(
+            Src\Event\SitemapValidatedEvent::class,
+            static function (Src\Event\SitemapValidatedEvent $event) use ($sitemap): void {
+                self::assertSame($sitemap, $event->getSitemap());
+                self::assertTrue($event->isValid());
+
+                // Change validity result to test event behavior
+                $event->setValid(false);
+            },
+        );
+
+        self::assertFalse($this->subject->isValidSitemap($sitemap));
+    }
+
+    /**
+     * @test
+     */
     public function isValidSitemapReturnsFalseOnInaccessibleSitemap(): void
     {
         $this->requestFactory->handler->append(
