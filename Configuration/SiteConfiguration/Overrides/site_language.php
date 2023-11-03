@@ -39,6 +39,7 @@ $GLOBALS['SiteConfiguration']['site_language']['columns']['xml_sitemap_path'] = 
 
 $GLOBALS['SiteConfiguration']['site_language']['columns']['xml_sitemap_status'] = [
     'label' => 'LLL:EXT:sitemap_locator/Resources/Private/Language/locallang_db.xlf:site_language.xml_sitemap_status.label',
+    'description' => 'LLL:EXT:sitemap_locator/Resources/Private/Language/locallang_db.xlf:site_language.xml_sitemap_status.description',
     'displayCond' => 'FIELD:languageId:>:0',
     'config' => [
         'type' => 'user',

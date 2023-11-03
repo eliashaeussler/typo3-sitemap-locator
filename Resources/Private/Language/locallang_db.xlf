@@ -16,6 +16,10 @@
 			<trans-unit id="site.xml_sitemap_status.label" resname="site.xml_sitemap_status.label">
 				<source>Located XML sitemaps</source>
 			</trans-unit>
+			<trans-unit id="site.xml_sitemap_status.description" resname="site.xml_sitemap_status.description">
+				<source>All located XML sitemaps for this site in the default language are listed below.
+Note: Located sitemaps may be cached and not up-to-date.</source>
+			</trans-unit>
 			<trans-unit id="site_language.xml_sitemap_path.label" resname="site_language.xml_sitemap_path.label">
 				<source>Path to XML sitemap</source>
 			</trans-unit>
@@ -24,6 +28,10 @@
 			</trans-unit>
 			<trans-unit id="site_language.xml_sitemap_status.label" resname="site_language.xml_sitemap_status.label">
 				<source>Located XML sitemaps</source>
+			</trans-unit>
+			<trans-unit id="site_language.xml_sitemap_status.description" resname="site_language.xml_sitemap_status.description">
+				<source>All located XML sitemaps for this site in the current language are listed below.
+Note: Located sitemaps may be cached and not up-to-date.</source>
 			</trans-unit>
 		</body>
 	</file>

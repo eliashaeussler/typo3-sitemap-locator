@@ -14,6 +14,11 @@ parameters:
 			path: Classes/Form/Element/XmlSitemapLocationElement.php
 
 		-
+			message: "#^PHPDoc type array\\<string, mixed\\> of property EliasHaeussler\\\\Typo3SitemapLocator\\\\Form\\\\Element\\\\XmlSitemapLocationElement\\:\\:\\$defaultFieldInformation is not the same as PHPDoc type array of overridden property TYPO3\\\\CMS\\\\Backend\\\\Form\\\\AbstractNode\\:\\:\\$defaultFieldInformation\\.$#"
+			count: 1
+			path: Classes/Form/Element/XmlSitemapLocationElement.php
+
+		-
 			message: "#^Call to function is_object\\(\\) with EliasHaeussler\\\\Typo3SitemapLocator\\\\Sitemap\\\\Provider\\\\Provider will always evaluate to true\\.$#"
 			count: 1
 			path: Classes/Sitemap/SitemapLocator.php

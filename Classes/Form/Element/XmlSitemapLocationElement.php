@@ -37,6 +37,15 @@ use TYPO3\CMS\Core;
  */
 final class XmlSitemapLocationElement extends Backend\Form\Element\AbstractFormElement
 {
+    /**
+     * @var array<string, mixed>
+     */
+    protected $defaultFieldInformation = [
+        'tcaDescription' => [
+            'renderType' => 'tcaDescription',
+        ],
+    ];
+
     private readonly Core\Site\SiteFinder $siteFinder;
     private readonly Sitemap\SitemapLocator $sitemapLocator;
 
@@ -53,7 +62,8 @@ final class XmlSitemapLocationElement extends Backend\Form\Element\AbstractFormE
      */
     public function render(): array
     {
-        $resultArray = $this->initializeResultArray();
+        $fieldInformationResult = $this->renderFieldInformation();
+        $resultArray = $this->mergeChildReturnIntoExistingResult($this->initializeResultArray(), $fieldInformationResult);
 
         $html = [];
         $html[] = '<div class="formengine-field-item t3js-formengine-field-item">';
@@ -64,7 +74,7 @@ final class XmlSitemapLocationElement extends Backend\Form\Element\AbstractFormE
         $html[] =     '</div>';
         $html[] = '</div>';
 
-        $resultArray['html'] = implode(PHP_EOL, $html);
+        $resultArray['html'] .= PHP_EOL . implode(PHP_EOL, $html);
 
         return $resultArray;
     }
