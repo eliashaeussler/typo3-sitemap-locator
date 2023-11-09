@@ -69,6 +69,8 @@ You can access the DDEV site at https://typo3-ext-sitemap-locator.ddev.site/.
 Check code quality
 ------------------
 
+..  rst-class:: d-inline-block mb-3
+
 ..  image:: https://github.com/eliashaeussler/typo3-sitemap-locator/actions/workflows/cgl.yaml/badge.svg
     :target: https://github.com/eliashaeussler/typo3-sitemap-locator/actions/workflows/cgl.yaml
 
