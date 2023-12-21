@@ -103,7 +103,7 @@ final class SiteConfigurationListenerTest extends TestingFramework\Core\Function
 
         ($this->subject)($event);
 
-        self::assertFalse($this->cache->has('foo'));
+        self::assertFalse($this->cache->has('foo_0_da39a3ee5e6b4b0d3255bfef95601890afd80709'));
     }
 
     protected function tearDown(): void

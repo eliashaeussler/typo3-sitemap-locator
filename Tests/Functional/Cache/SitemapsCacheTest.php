@@ -61,8 +61,9 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
     public function getReturnsEmptyArrayIfCacheIsMissing(): void
     {
         $site = new Core\Site\Entity\Site('baz', 1, []);
+        $cacheIdentifier = $this->calculateCacheIdentifier($site);
 
-        self::assertFalse($this->cache->has('baz'));
+        self::assertFalse($this->cache->has($cacheIdentifier));
         self::assertSame([], $this->subject->get($site));
     }
 
@@ -72,9 +73,11 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
     public function getReturnsEmptyArrayIfCacheDataIsInvalid(): void
     {
         $site = new Core\Site\Entity\Site('baz', 1, []);
+        $cacheIdentifier = $this->calculateCacheIdentifier($site);
 
-        $this->cache->set('baz', 'return "foo";');
+        $this->cache->set($cacheIdentifier, 'return "foo";');
 
+        self::assertTrue($this->cache->has($cacheIdentifier));
         self::assertSame([], $this->subject->get($site));
     }
 
@@ -84,35 +87,11 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
     public function getReturnsEmptyArrayIfCacheOfGivenSiteIsEmpty(): void
     {
         $site = new Core\Site\Entity\Site('baz', 1, []);
+        $cacheIdentifier = $this->calculateCacheIdentifier($site);
 
-        $this->cache->set('baz', 'return [];');
+        $this->cache->set($cacheIdentifier, 'return [];');
 
-        self::assertSame([], $this->subject->get($site));
-    }
-
-    /**
-     * @test
-     */
-    public function getReturnsEmptyArrayIfCacheOfGivenSiteLanguageIsEmpty(): void
-    {
-        $site = new Core\Site\Entity\Site('baz', 1, []);
-
-        $this->cache->set(
-            'baz',
-            sprintf(
-                'return %s;',
-                var_export(
-                    [
-                        1 => [
-                            'https://www.example.com/baz',
-                            'https://www.example.com/bar',
-                        ],
-                    ],
-                    true,
-                ),
-            ),
-        );
-
+        self::assertTrue($this->cache->has($cacheIdentifier));
         self::assertSame([], $this->subject->get($site));
     }
 
@@ -122,17 +101,16 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
     public function getReturnsCachedSitemapsForDefaultLanguage(): void
     {
         $site = new Core\Site\Entity\Site('foo', 1, []);
+        $cacheIdentifier = $this->calculateCacheIdentifier($site);
 
         $this->cache->set(
-            'foo',
+            $cacheIdentifier,
             sprintf(
                 'return %s;',
                 var_export(
                     [
-                        0 => [
-                            'https://www.example.com/baz',
-                            'https://www.example.com/bar',
-                        ],
+                        'https://www.example.com/baz',
+                        'https://www.example.com/bar',
                     ],
                     true,
                 ),
@@ -165,17 +143,16 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
     {
         $site = new Core\Site\Entity\Site('foo', 1, []);
         $siteLanguage = new Core\Site\Entity\SiteLanguage(1, 'de_DE.UTF-8', new Core\Http\Uri('https://example.com'), []);
+        $cacheIdentifier = $this->calculateCacheIdentifier($site, $siteLanguage);
 
         $this->cache->set(
-            'foo',
+            $cacheIdentifier,
             sprintf(
                 'return %s;',
                 var_export(
                     [
-                        1 => [
-                            'https://www.example.com/baz',
-                            'https://www.example.com/bar',
-                        ],
+                        'https://www.example.com/baz',
+                        'https://www.example.com/bar',
                     ],
                     true,
                 ),
@@ -205,9 +182,11 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
      */
     public function setInitializesCacheIfCacheIsMissing(): void
     {
-        self::assertFalse($this->cache->has('foo'));
-
         $site = new Core\Site\Entity\Site('foo', 1, []);
+        $cacheIdentifier = $this->calculateCacheIdentifier($site);
+
+        self::assertFalse($this->cache->has($cacheIdentifier));
+
         $sitemaps = [
             new Src\Domain\Model\Sitemap(
                 new Core\Http\Uri('https://www.example.com/baz'),
@@ -239,17 +218,19 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
         $this->subject->set($sitemaps);
 
         self::assertEquals($expected, $this->subject->get($site, $site->getDefaultLanguage()));
-        self::assertTrue($this->cache->has('foo'));
+        self::assertTrue($this->cache->has($cacheIdentifier));
     }
 
     /**
      * @test
      */
-    public function setStoresGivenSitemapInCache(): void
+    public function setStoresGivenSitemapsInCache(): void
     {
-        self::assertFalse($this->cache->has('foo'));
-
         $site = new Core\Site\Entity\Site('foo', 1, []);
+        $cacheIdentifier = $this->calculateCacheIdentifier($site);
+
+        self::assertFalse($this->cache->has($cacheIdentifier));
+
         $sitemaps = [
             new Src\Domain\Model\Sitemap(
                 new Core\Http\Uri('https://www.example.com/baz'),
@@ -281,21 +262,7 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
         $this->subject->set($sitemaps);
 
         self::assertEquals($expected, $this->subject->get($site, $site->getDefaultLanguage()));
-        self::assertTrue($this->cache->has('foo'));
-    }
-
-    /**
-     * @test
-     */
-    public function removeInitializesCacheIfCacheIsMissing(): void
-    {
-        self::assertFalse($this->cache->has('foo'));
-
-        $site = new Core\Site\Entity\Site('foo', 1, []);
-
-        $this->subject->remove($site);
-
-        self::assertFalse($this->cache->has('foo'));
+        self::assertTrue($this->cache->has($cacheIdentifier));
     }
 
     /**
@@ -304,6 +271,8 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
     public function removeRemovesSitemapsOfGivenSiteFromCache(): void
     {
         $site = new Core\Site\Entity\Site('foo', 1, []);
+        $cacheIdentifier = $this->calculateCacheIdentifier($site);
+
         $sitemaps = [
             new Src\Domain\Model\Sitemap(
                 new Core\Http\Uri('https://www.example.com/baz'),
@@ -319,11 +288,11 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
 
         $this->subject->set($sitemaps);
 
-        self::assertTrue($this->cache->has('foo'));
+        self::assertTrue($this->cache->has($cacheIdentifier));
 
         $this->subject->remove($site);
 
-        self::assertFalse($this->cache->has('foo'));
+        self::assertFalse($this->cache->has($cacheIdentifier));
     }
 
     /**
@@ -333,6 +302,7 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
     {
         $site = new Core\Site\Entity\Site('foo', 1, []);
         $siteLanguage = new Core\Site\Entity\SiteLanguage(1, 'de_DE.UTF-8', new Core\Http\Uri('https://example.com'), []);
+        $cacheIdentifier = $this->calculateCacheIdentifier($site, $siteLanguage);
 
         $sitemaps = [
             new Src\Domain\Model\Sitemap(
@@ -349,10 +319,26 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
 
         $this->subject->set($sitemaps);
 
-        self::assertTrue($this->cache->has('foo'));
+        self::assertTrue($this->cache->has($cacheIdentifier));
 
         $this->subject->remove($site, $siteLanguage);
 
-        self::assertCount(1, $this->cache->require('foo'));
+        self::assertFalse($this->cache->has($cacheIdentifier));
+    }
+
+    private function calculateCacheIdentifier(
+        Core\Site\Entity\Site $site,
+        Core\Site\Entity\SiteLanguage $siteLanguage = null,
+    ): string {
+        if ($siteLanguage === null) {
+            $siteLanguage = $site->getDefaultLanguage();
+        }
+
+        return sprintf(
+            '%s_%d_%s',
+            $site->getIdentifier(),
+            $siteLanguage->getLanguageId(),
+            sha1((string)$siteLanguage->getBase()),
+        );
     }
 }
