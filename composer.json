@@ -16,8 +16,8 @@
 		"guzzlehttp/guzzle": "^7.0",
 		"psr/event-dispatcher": "^1.0",
 		"psr/http-message": "^1.0 || ^2.0",
-		"symfony/console": "^5.4 || ^6.0",
-		"symfony/dependency-injection": "^5.4 || ^6.0",
+		"symfony/console": "^5.4 || ^6.0 || ^7.0",
+		"symfony/dependency-injection": "^5.4 || ^6.0 || ^7.0",
 		"typo3/cms-backend": "~11.5.4 || ~12.4.0",
 		"typo3/cms-core": "~11.5.4 || ~12.4.0"
 	},
@@ -34,7 +34,7 @@
 		"phpunit/phpunit": "^9.6",
 		"saschaegerer/phpstan-typo3": "^1.9",
 		"ssch/typo3-rector": "^1.4",
-		"symfony/event-dispatcher": "^5.4 || ^6.0",
+		"symfony/event-dispatcher": "^5.4 || ^6.0 || ^7.0",
 		"typo3/cms-seo": "~11.5.4 || ~12.4.0",
 		"typo3/coding-standards": "^0.7.1",
 		"typo3/testing-framework": "^7.0.2 || ^8.0.1"
