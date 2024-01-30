@@ -23,6 +23,7 @@
 	},
 	"require-dev": {
 		"armin/editorconfig-cli": "^1.6 || ^2.0",
+		"doctrine/dbal": "@RC",
 		"eliashaeussler/php-cs-fixer-config": "^1.2 || ^2.0",
 		"eliashaeussler/phpstan-config": "^2.2",
 		"eliashaeussler/rector-config": "^3.0",
