@@ -194,7 +194,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
 
         $this->eventDispatcher->addListener(
             Src\Event\SitemapsLocatedEvent::class,
-            static function (Src\Event\SitemapsLocatedEvent $event) use ($site, $expected): void {
+            static function(Src\Event\SitemapsLocatedEvent $event) use ($site, $expected): void {
                 self::assertSame($site, $event->getSite());
                 self::assertNull($event->getSiteLanguage());
                 self::assertEquals($expected, $event->getSitemaps());
@@ -289,7 +289,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
 
         $this->eventDispatcher->addListener(
             Src\Event\SitemapValidatedEvent::class,
-            static function (Src\Event\SitemapValidatedEvent $event) use ($sitemap): void {
+            static function(Src\Event\SitemapValidatedEvent $event) use ($sitemap): void {
                 self::assertSame($sitemap, $event->getSitemap());
                 self::assertTrue($event->isValid());
 
