@@ -120,7 +120,7 @@ final class LocateSitemapsCommand extends Console\Command\Command
                 $site->getDefaultLanguage()->getLanguageId(),
             );
             $question->setValidator(
-                fn(string|int $siteLanguage) => $this->validateSiteLanguage($siteLanguage, $site, $availableSiteLanguages),
+                fn (string|int $siteLanguage) => $this->validateSiteLanguage($siteLanguage, $site, $availableSiteLanguages),
             );
 
             $input->setOption(

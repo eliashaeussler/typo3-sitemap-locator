@@ -2,9 +2,14 @@ parameters:
 	ignoreErrors:
 		-
 			message: """
-				#^Access to deprecated property \\$iconFactory of class TYPO3\\\\CMS\\\\Backend\\\\Form\\\\Element\\\\AbstractFormElement\\:
+				#^Access to deprecated property \\$iconFactory of class EliasHaeussler\\\\Typo3SitemapLocator\\\\Form\\\\Element\\\\XmlSitemapLocationElement\\:
 				since TYPO3 v12\\.4\\. will be removed in TYPO3 v13\\.0\\.$#
 			"""
+			count: 1
+			path: Classes/Form/Element/XmlSitemapLocationElement.php
+
+		-
+			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Imaging\\\\IconSize not found\\.$#"
 			count: 1
 			path: Classes/Form/Element/XmlSitemapLocationElement.php
 
