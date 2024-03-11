@@ -25,6 +25,7 @@ namespace EliasHaeussler\Typo3SitemapLocator\Tests\Functional\Utility;
 
 use EliasHaeussler\Typo3SitemapLocator as Src;
 use EliasHaeussler\Typo3SitemapLocator\Tests;
+use PHPUnit\Framework;
 use TYPO3\CMS\Core;
 use TYPO3\TestingFramework;
 
@@ -33,8 +34,8 @@ use TYPO3\TestingFramework;
  *
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-2.0-or-later
- * @covers \EliasHaeussler\Typo3SitemapLocator\Utility\HttpUtility
  */
+#[Framework\Attributes\CoversClass(Src\Utility\HttpUtility::class)]
 final class HttpUtilityTest extends TestingFramework\Core\Functional\FunctionalTestCase
 {
     use Tests\Functional\SiteTrait;
@@ -50,9 +51,7 @@ final class HttpUtilityTest extends TestingFramework\Core\Functional\FunctionalT
         $this->site = $this->createSite();
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function getSiteUrlWithPathReturnsSiteBaseUrlWithMergedPath(): void
     {
         $site = $this->createSite('https://typo3-testing.local/foo/');
@@ -63,9 +62,7 @@ final class HttpUtilityTest extends TestingFramework\Core\Functional\FunctionalT
         );
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function getSiteUrlWithPathRespectsQueryString(): void
     {
         self::assertEquals(
@@ -74,9 +71,7 @@ final class HttpUtilityTest extends TestingFramework\Core\Functional\FunctionalT
         );
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function getSiteUrlWithPathRespectsSiteLanguage(): void
     {
         self::assertEquals(

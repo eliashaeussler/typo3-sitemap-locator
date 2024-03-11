@@ -26,6 +26,7 @@ namespace EliasHaeussler\Typo3SitemapLocator\Tests\Unit\Sitemap\Provider;
 use EliasHaeussler\Typo3SitemapLocator as Src;
 use EliasHaeussler\Typo3SitemapLocator\Tests;
 use Exception;
+use PHPUnit\Framework;
 use TYPO3\CMS\Core;
 use TYPO3\TestingFramework;
 
@@ -34,8 +35,8 @@ use TYPO3\TestingFramework;
  *
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-2.0-or-later
- * @covers \EliasHaeussler\Typo3SitemapLocator\Sitemap\Provider\RobotsTxtProvider
  */
+#[Framework\Attributes\CoversClass(Src\Sitemap\Provider\RobotsTxtProvider::class)]
 final class RobotsTxtProviderTest extends TestingFramework\Core\Unit\UnitTestCase
 {
     private Tests\Unit\Fixtures\DummyRequestFactory $requestFactory;
@@ -51,9 +52,7 @@ final class RobotsTxtProviderTest extends TestingFramework\Core\Unit\UnitTestCas
         $this->subject = new Src\Sitemap\Provider\RobotsTxtProvider($this->requestFactory);
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function getReturnsEmptyArrayIfNoRobotsTxtExists(): void
     {
         $this->requestFactory->handler->append(
@@ -63,9 +62,7 @@ final class RobotsTxtProviderTest extends TestingFramework\Core\Unit\UnitTestCas
         self::assertSame([], $this->subject->get($this->site));
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function getReturnsEmptyArrayIfNoRobotsTxtDoesNotContainSitemapConfiguration(): void
     {
         $response = new Core\Http\Response();
@@ -78,9 +75,7 @@ final class RobotsTxtProviderTest extends TestingFramework\Core\Unit\UnitTestCas
         self::assertSame([], $this->subject->get($this->site));
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function getReturnsSitemapIfRobotsTxtContainsSitemapConfiguration(): void
     {
         $response = new Core\Http\Response();

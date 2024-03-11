@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace EliasHaeussler\Typo3SitemapLocator\Tests\Unit\Exception;
 
 use EliasHaeussler\Typo3SitemapLocator as Src;
+use PHPUnit\Framework;
 use TYPO3\TestingFramework;
 
 /**
@@ -31,13 +32,11 @@ use TYPO3\TestingFramework;
  *
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-2.0-or-later
- * @covers \EliasHaeussler\Typo3SitemapLocator\Exception\ProviderIsNotSupported
  */
+#[Framework\Attributes\CoversClass(Src\Exception\ProviderIsNotSupported::class)]
 final class ProviderIsNotSupportedTest extends TestingFramework\Core\Unit\UnitTestCase
 {
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function constructorReturnsExceptionForInvalidType(): void
     {
         $subject = new Src\Exception\ProviderIsNotSupported(null);
