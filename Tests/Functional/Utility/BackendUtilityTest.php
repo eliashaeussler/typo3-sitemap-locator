@@ -25,7 +25,7 @@ namespace EliasHaeussler\Typo3SitemapLocator\Tests\Functional\Utility;
 
 use EliasHaeussler\Typo3SitemapLocator as Src;
 use PHPUnit\Framework;
-use TYPO3\CMS\Core\Core\Bootstrap;
+use TYPO3\CMS\Core;
 use TYPO3\TestingFramework;
 
 /**
@@ -44,9 +44,8 @@ final class BackendUtilityTest extends TestingFramework\Core\Functional\Function
         $this->importCSVDataSet(\dirname(__DIR__) . '/Fixtures/Database/be_users.csv');
         $this->importCSVDataSet(\dirname(__DIR__) . '/Fixtures/Database/pages.csv');
 
-        $this->setUpBackendUser(1);
-
-        Bootstrap::initializeLanguageObject();
+        $backendUser = $this->setUpBackendUser(1);
+        $GLOBALS['LANG'] = $this->get(Core\Localization\LanguageServiceFactory::class)->createFromUserPreferences($backendUser);
     }
 
     #[Framework\Attributes\Test]
