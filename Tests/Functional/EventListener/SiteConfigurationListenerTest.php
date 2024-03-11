@@ -25,6 +25,7 @@ namespace EliasHaeussler\Typo3SitemapLocator\Tests\Functional\EventListener;
 
 use EliasHaeussler\Typo3SitemapLocator as Src;
 use EliasHaeussler\Typo3SitemapLocator\Tests;
+use PHPUnit\Framework;
 use TYPO3\CMS\Core;
 use TYPO3\TestingFramework;
 
@@ -33,8 +34,8 @@ use TYPO3\TestingFramework;
  *
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-2.0-or-later
- * @covers \EliasHaeussler\Typo3SitemapLocator\EventListener\SiteConfigurationListener
  */
+#[Framework\Attributes\CoversClass(Src\EventListener\SiteConfigurationListener::class)]
 final class SiteConfigurationListenerTest extends TestingFramework\Core\Functional\FunctionalTestCase
 {
     protected array $testExtensionsToLoad = [
@@ -80,9 +81,7 @@ final class SiteConfigurationListenerTest extends TestingFramework\Core\Function
         );
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function invokeDoesNothingIfGivenSiteDoesNotExist(): void
     {
         $event = new Core\Configuration\Event\SiteConfigurationBeforeWriteEvent('foo', []);
@@ -92,9 +91,7 @@ final class SiteConfigurationListenerTest extends TestingFramework\Core\Function
         self::assertTrue($this->cache->has('foo'));
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function invokeRemovesSitemapsCache(): void
     {
         $event = new Core\Configuration\Event\SiteConfigurationBeforeWriteEvent('foo', []);

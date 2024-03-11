@@ -26,6 +26,7 @@ namespace EliasHaeussler\Typo3SitemapLocator\Tests\Functional\Command;
 use EliasHaeussler\Typo3SitemapLocator as Src;
 use EliasHaeussler\Typo3SitemapLocator\Tests;
 use Generator;
+use PHPUnit\Framework;
 use Symfony\Component\Console;
 use TYPO3\CMS\Core;
 use TYPO3\TestingFramework;
@@ -35,8 +36,8 @@ use TYPO3\TestingFramework;
  *
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-2.0-or-later
- * @covers \EliasHaeussler\Typo3SitemapLocator\Command\LocateSitemapsCommand
  */
+#[Framework\Attributes\CoversClass(Src\Command\LocateSitemapsCommand::class)]
 final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\FunctionalTestCase
 {
     use Tests\Functional\SiteTrait;
@@ -73,9 +74,7 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
         $this->cache->flush();
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function interactDoesNothingIfSiteArgumentIsProvided(): void
     {
         $this->commandTester->execute(
@@ -90,9 +89,7 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
         self::assertStringNotContainsString('Please select an available site', $this->commandTester->getDisplay());
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function interactThrowsExceptionIfNoSitesAreAvailable(): void
     {
         $this->expectExceptionObject(new Src\Exception\NoSitesAreConfigured());
@@ -102,9 +99,7 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function interactAsksForAndAppliesSite(): void
     {
         $this->siteFinder->expectedSite = $this->site;
@@ -127,9 +122,7 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
         );
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function interactAsksForAndAppliesAllSiteLanguages(): void
     {
         $this->siteFinder->expectedSite = $this->site;
@@ -154,9 +147,7 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
         self::assertStringContainsString('Language "French" (2)', $output);
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function interactThrowsExceptionIfInvalidLanguageIdIsPassed(): void
     {
         $this->siteFinder->expectedSite = $this->site;
@@ -179,9 +170,7 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
         ]);
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function interactThrowsExceptionIfUnsupportedLanguageIdIsPassed(): void
     {
         $this->siteFinder->expectedSite = $this->site;
@@ -204,10 +193,8 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
         ]);
     }
 
-    /**
-     * @test
-     * @dataProvider interactAsksForAndAppliesLanguageDataProvider
-     */
+    #[Framework\Attributes\Test]
+    #[Framework\Attributes\DataProvider('interactAsksForAndAppliesLanguageDataProvider')]
     public function interactAsksForAndAppliesLanguage(string|int $selection): void
     {
         $this->siteFinder->expectedSite = $this->site;
@@ -231,10 +218,8 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
         );
     }
 
-    /**
-     * @test
-     * @dataProvider executeFailsIfGivenSiteDoesNotExistDataProvider
-     */
+    #[Framework\Attributes\Test]
+    #[Framework\Attributes\DataProvider('executeFailsIfGivenSiteDoesNotExistDataProvider')]
     public function executeFailsIfGivenSiteDoesNotExist(int|string $site): void
     {
         $this->commandTester->execute([
@@ -248,9 +233,7 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
         );
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function executeFailsIfAnErrorOccursWhileLocatingAllSitemaps(): void
     {
         $site = $this->createSite('/');
@@ -269,9 +252,7 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
         );
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function executeDisplaysSitemapsOfAllLanguagesIfAllOptionIsGiven(): void
     {
         $this->siteFinder->expectedSite = $this->site;
@@ -293,9 +274,7 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
         self::assertStringContainsString('* https://typo3-testing.local/fr/sitemap.xml', $output);
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function executeFailsIfGivenSiteLanguageDoesNotExistInSite(): void
     {
         $this->siteFinder->expectedSite = $this->site;
@@ -312,9 +291,7 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
         );
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function executeUsesDefaultSiteLanguageIfGivenLanguageIsNotNumeric(): void
     {
         $this->siteFinder->expectedSite = $this->site;
@@ -331,9 +308,7 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
         );
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function executeFailsIfAnErrorOccursWhileLocatingSitemaps(): void
     {
         $this->siteFinder->expectedSite = $this->createSite('/');
@@ -350,9 +325,7 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
         );
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function executeDisplaysLocatedSitemapsOfGivenSiteAndLanguage(): void
     {
         $this->siteFinder->expectedSite = $this->site;
@@ -369,9 +342,7 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
         );
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function executeUsesJsonFormatterIfJsonOptionIsGiven(): void
     {
         $this->siteFinder->expectedSite = $this->site;
@@ -386,9 +357,7 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
         self::assertJson($this->commandTester->getDisplay());
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function executeValidatesLocatedSitemapsIfValidateOptionIsGiven(): void
     {
         $this->siteFinder->expectedSite = $this->site;
@@ -416,7 +385,7 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
     /**
      * @return Generator<string, array{string|int}>
      */
-    public function executeFailsIfGivenSiteDoesNotExistDataProvider(): Generator
+    public static function executeFailsIfGivenSiteDoesNotExistDataProvider(): Generator
     {
         yield 'site identifier' => ['foo'];
         yield 'root page id' => [99];

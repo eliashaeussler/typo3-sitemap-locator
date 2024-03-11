@@ -25,6 +25,7 @@ namespace EliasHaeussler\Typo3SitemapLocator\Tests\Unit\Sitemap\Provider;
 
 use EliasHaeussler\Typo3SitemapLocator as Src;
 use Generator;
+use PHPUnit\Framework;
 use TYPO3\CMS\Core;
 use TYPO3\TestingFramework;
 
@@ -33,8 +34,8 @@ use TYPO3\TestingFramework;
  *
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-2.0-or-later
- * @covers \EliasHaeussler\Typo3SitemapLocator\Sitemap\Provider\SiteProvider
  */
+#[Framework\Attributes\CoversClass(Src\Sitemap\Provider\SiteProvider::class)]
 final class SiteProviderTest extends TestingFramework\Core\Unit\UnitTestCase
 {
     private Src\Sitemap\Provider\SiteProvider $subject;
@@ -45,9 +46,7 @@ final class SiteProviderTest extends TestingFramework\Core\Unit\UnitTestCase
         $this->subject = new Src\Sitemap\Provider\SiteProvider();
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function getReturnsEmptyArrayIfSitemapPathIsNotConfiguredInSite(): void
     {
         $site = new Core\Site\Entity\Site('foo', 1, []);
@@ -55,10 +54,8 @@ final class SiteProviderTest extends TestingFramework\Core\Unit\UnitTestCase
         self::assertSame([], $this->subject->get($site));
     }
 
-    /**
-     * @test
-     * @dataProvider getReturnsSitemapWithUrlPathFromSiteDataProvider
-     */
+    #[Framework\Attributes\Test]
+    #[Framework\Attributes\DataProvider('getReturnsSitemapWithUrlPathFromSiteDataProvider')]
     public function getReturnsSitemapWithUrlPathFromSite(string $path, string $expected): void
     {
         $site = new Core\Site\Entity\Site('foo', 1, [
@@ -76,10 +73,8 @@ final class SiteProviderTest extends TestingFramework\Core\Unit\UnitTestCase
         self::assertEquals($sitemaps, $this->subject->get($site));
     }
 
-    /**
-     * @test
-     * @dataProvider getReturnsSitemapWithUrlPathFromSiteLanguageDataProvider
-     */
+    #[Framework\Attributes\Test]
+    #[Framework\Attributes\DataProvider('getReturnsSitemapWithUrlPathFromSiteLanguageDataProvider')]
     public function getReturnsSitemapWithUrlPathFromSiteLanguage(string $path, string $expected): void
     {
         $site = new Core\Site\Entity\Site('foo', 1, [
