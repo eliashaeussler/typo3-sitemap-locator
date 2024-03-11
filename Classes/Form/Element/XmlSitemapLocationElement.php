@@ -46,12 +46,23 @@ final class XmlSitemapLocationElement extends Backend\Form\Element\AbstractFormE
         ],
     ];
 
+    /**
+     * @todo Make private readonly Core\Imaging\IconFactory once support for TYPO3 v12 is dropped
+     */
+    protected $iconFactory;
     private readonly Core\Site\SiteFinder $siteFinder;
     private readonly Sitemap\SitemapLocator $sitemapLocator;
 
+    /**
+     * @todo Use DI once support for TYPO3 v12 is dropped
+     */
     public function __construct(Backend\Form\NodeFactory $nodeFactory = null, array $data = [])
     {
-        parent::__construct($nodeFactory, $data);
+        if ((new Core\Information\Typo3Version())->getMajorVersion() < 13) {
+            parent::__construct($nodeFactory, $data);
+        } else {
+            $this->iconFactory = Core\Utility\GeneralUtility::makeInstance(Core\Imaging\IconFactory::class);
+        }
 
         $this->siteFinder = Core\Utility\GeneralUtility::makeInstance(Core\Site\SiteFinder::class);
         $this->sitemapLocator = Core\Utility\GeneralUtility::makeInstance(Sitemap\SitemapLocator::class);
@@ -211,7 +222,13 @@ final class XmlSitemapLocationElement extends Backend\Form\Element\AbstractFormE
 
     private function renderIcon(string $identifier): string
     {
-        return $this->iconFactory->getIcon($identifier, Core\Imaging\Icon::SIZE_SMALL)->render();
+        if (enum_exists(Core\Imaging\IconSize::class)) {
+            $iconSize = Core\Imaging\IconSize::SMALL;
+        } else {
+            $iconSize = Core\Imaging\Icon::SIZE_SMALL;
+        }
+
+        return $this->iconFactory->getIcon($identifier, $iconSize)->render();
     }
 
     private function translate(string $key): string
