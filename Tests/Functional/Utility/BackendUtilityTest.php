@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace EliasHaeussler\Typo3SitemapLocator\Tests\Functional\Utility;
 
 use EliasHaeussler\Typo3SitemapLocator as Src;
+use PHPUnit\Framework;
 use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\TestingFramework;
 
@@ -32,8 +33,8 @@ use TYPO3\TestingFramework;
  *
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-2.0-or-later
- * @covers \EliasHaeussler\Typo3SitemapLocator\Utility\BackendUtility
  */
+#[Framework\Attributes\CoversClass(Src\Utility\BackendUtility::class)]
 final class BackendUtilityTest extends TestingFramework\Core\Functional\FunctionalTestCase
 {
     protected function setUp(): void
@@ -48,9 +49,7 @@ final class BackendUtilityTest extends TestingFramework\Core\Functional\Function
         Bootstrap::initializeLanguageObject();
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function getBackendUserReturnsCurrentBackendUser(): void
     {
         $actual = Src\Utility\BackendUtility::getBackendUser();
@@ -59,25 +58,19 @@ final class BackendUtilityTest extends TestingFramework\Core\Functional\Function
         self::assertSame(1, $actual->user[$actual->userid_column]);
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function getPageTitleReturnsNullIfPageDoesNotExist(): void
     {
         self::assertNull(Src\Utility\BackendUtility::getPageTitle(99));
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function getPageTitleReturnsNullIfNoPageTitleIsSet(): void
     {
         self::assertNull(Src\Utility\BackendUtility::getPageTitle(2));
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function getPageTitleReturnsPageTitle(): void
     {
         self::assertSame('Root', Src\Utility\BackendUtility::getPageTitle(1));

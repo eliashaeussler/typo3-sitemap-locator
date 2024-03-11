@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace EliasHaeussler\Typo3SitemapLocator\Tests\Unit\Sitemap\Provider;
 
 use EliasHaeussler\Typo3SitemapLocator as Src;
+use PHPUnit\Framework;
 use TYPO3\CMS\Core;
 use TYPO3\TestingFramework;
 
@@ -32,8 +33,8 @@ use TYPO3\TestingFramework;
  *
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-2.0-or-later
- * @covers \EliasHaeussler\Typo3SitemapLocator\Sitemap\Provider\DefaultProvider
  */
+#[Framework\Attributes\CoversClass(Src\Sitemap\Provider\DefaultProvider::class)]
 final class DefaultProviderTest extends TestingFramework\Core\Unit\UnitTestCase
 {
     private Src\Sitemap\Provider\DefaultProvider $subject;
@@ -44,9 +45,7 @@ final class DefaultProviderTest extends TestingFramework\Core\Unit\UnitTestCase
         $this->subject = new Src\Sitemap\Provider\DefaultProvider();
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function getReturnsSitemapWithDefaultPath(): void
     {
         $site = new Core\Site\Entity\Site('foo', 1, ['base' => 'https://www.example.com/']);

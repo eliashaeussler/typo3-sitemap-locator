@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace EliasHaeussler\Typo3SitemapLocator\Tests\Functional\Cache;
 
 use EliasHaeussler\Typo3SitemapLocator as Src;
+use PHPUnit\Framework;
 use TYPO3\CMS\Core;
 use TYPO3\TestingFramework;
 
@@ -32,8 +33,8 @@ use TYPO3\TestingFramework;
  *
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-2.0-or-later
- * @covers \EliasHaeussler\Typo3SitemapLocator\Cache\SitemapsCache
  */
+#[Framework\Attributes\CoversClass(Src\Cache\SitemapsCache::class)]
 final class SitemapsCacheTest extends TestingFramework\Core\Functional\FunctionalTestCase
 {
     protected array $testExtensionsToLoad = [
@@ -55,9 +56,7 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
         $this->cache->flush();
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function getReturnsEmptyArrayIfCacheIsMissing(): void
     {
         $site = new Core\Site\Entity\Site('baz', 1, []);
@@ -67,9 +66,7 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
         self::assertSame([], $this->subject->get($site));
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function getReturnsEmptyArrayIfCacheDataIsInvalid(): void
     {
         $site = new Core\Site\Entity\Site('baz', 1, []);
@@ -81,9 +78,7 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
         self::assertSame([], $this->subject->get($site));
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function getReturnsEmptyArrayIfCacheOfGivenSiteIsEmpty(): void
     {
         $site = new Core\Site\Entity\Site('baz', 1, []);
@@ -95,9 +90,7 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
         self::assertSame([], $this->subject->get($site));
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function getReturnsCachedSitemapsForDefaultLanguage(): void
     {
         $site = new Core\Site\Entity\Site('foo', 1, []);
@@ -136,9 +129,7 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
         self::assertEquals($expected, $this->subject->get($site, $site->getDefaultLanguage()));
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function getReturnsCachedSitemapForGivenLanguage(): void
     {
         $site = new Core\Site\Entity\Site('foo', 1, []);
@@ -177,9 +168,7 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
         self::assertEquals($expected, $this->subject->get($site, $siteLanguage));
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function setInitializesCacheIfCacheIsMissing(): void
     {
         $site = new Core\Site\Entity\Site('foo', 1, []);
@@ -221,9 +210,7 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
         self::assertTrue($this->cache->has($cacheIdentifier));
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function setStoresGivenSitemapsInCache(): void
     {
         $site = new Core\Site\Entity\Site('foo', 1, []);
@@ -265,9 +252,7 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
         self::assertTrue($this->cache->has($cacheIdentifier));
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function removeRemovesSitemapsOfGivenSiteFromCache(): void
     {
         $site = new Core\Site\Entity\Site('foo', 1, []);
@@ -295,9 +280,7 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
         self::assertFalse($this->cache->has($cacheIdentifier));
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function removeRemovesSitemapsOfGivenSiteAndSiteLanguageFromCache(): void
     {
         $site = new Core\Site\Entity\Site('foo', 1, []);

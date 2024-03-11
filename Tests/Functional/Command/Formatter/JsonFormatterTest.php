@@ -26,6 +26,7 @@ namespace EliasHaeussler\Typo3SitemapLocator\Tests\Functional\Command\Formatter;
 use EliasHaeussler\Typo3SitemapLocator as Src;
 use EliasHaeussler\Typo3SitemapLocator\Tests;
 use Generator;
+use PHPUnit\Framework;
 use Psr\EventDispatcher;
 use Psr\Http\Message;
 use Symfony\Component\Console;
@@ -37,8 +38,8 @@ use TYPO3\TestingFramework;
  *
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-2.0-or-later
- * @covers \EliasHaeussler\Typo3SitemapLocator\Command\Formatter\JsonFormatter
  */
+#[Framework\Attributes\CoversClass(Src\Command\Formatter\JsonFormatter::class)]
 final class JsonFormatterTest extends TestingFramework\Core\Functional\FunctionalTestCase
 {
     use Tests\Functional\SiteTrait;
@@ -77,9 +78,7 @@ final class JsonFormatterTest extends TestingFramework\Core\Functional\Functiona
         );
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function formatSitemapsReturnsFalseIfNoSitemapsWereFound(): void
     {
         $expected = [
@@ -107,9 +106,7 @@ final class JsonFormatterTest extends TestingFramework\Core\Functional\Functiona
         );
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function formatSitemapsWritesSitemapsAsJsonArray(): void
     {
         $siteLanguage = $this->site->getDefaultLanguage();
@@ -151,12 +148,11 @@ final class JsonFormatterTest extends TestingFramework\Core\Functional\Functiona
     }
 
     /**
-     * @test
-     * @dataProvider formatSitemapsIncludesValidityStateOfLocatedSitemapsDataProvider
-     *
      * @param list<Message\ResponseInterface> $responses
      * @param list<bool> $expectedStates
      */
+    #[Framework\Attributes\Test]
+    #[Framework\Attributes\DataProvider('formatSitemapsIncludesValidityStateOfLocatedSitemapsDataProvider')]
     public function formatSitemapsIncludesValidityStateOfLocatedSitemaps(
         array $responses,
         array $expectedStates,
@@ -202,9 +198,7 @@ final class JsonFormatterTest extends TestingFramework\Core\Functional\Functiona
         );
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function formatAllSitemapsReturnsFalseIfNoSitemapsWereFound(): void
     {
         $expected = [
@@ -227,9 +221,7 @@ final class JsonFormatterTest extends TestingFramework\Core\Functional\Functiona
         );
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function formatAllSitemapsWritesSitemapsAsJsonArrayGroupedByLanguage(): void
     {
         $sitemaps = [
@@ -314,12 +306,11 @@ final class JsonFormatterTest extends TestingFramework\Core\Functional\Functiona
     }
 
     /**
-     * @test
-     * @dataProvider formatAllSitemapsIncludesValidityStateOfLocatedSitemapsDataProvider
-     *
      * @param list<Message\ResponseInterface> $responses
      * @param list<bool> $expectedStates
      */
+    #[Framework\Attributes\Test]
+    #[Framework\Attributes\DataProvider('formatAllSitemapsIncludesValidityStateOfLocatedSitemapsDataProvider')]
     public function formatAllSitemapsIncludesValidityStateOfLocatedSitemaps(
         array $responses,
         array $expectedStates,

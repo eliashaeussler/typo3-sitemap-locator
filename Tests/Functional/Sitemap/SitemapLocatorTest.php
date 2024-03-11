@@ -27,6 +27,7 @@ use EliasHaeussler\Typo3SitemapLocator as Src;
 use EliasHaeussler\Typo3SitemapLocator\Tests;
 use Exception;
 use Generator;
+use PHPUnit\Framework;
 use stdClass;
 use Symfony\Component\EventDispatcher;
 use TYPO3\CMS\Core;
@@ -37,8 +38,8 @@ use TYPO3\TestingFramework;
  *
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-2.0-or-later
- * @covers \EliasHaeussler\Typo3SitemapLocator\Sitemap\SitemapLocator
  */
+#[Framework\Attributes\CoversClass(Src\Sitemap\SitemapLocator::class)]
 final class SitemapLocatorTest extends TestingFramework\Core\Functional\FunctionalTestCase
 {
     protected array $testExtensionsToLoad = [
@@ -71,9 +72,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
         $cacheFrontend->flush();
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function constructorThrowsExceptionIfGivenProviderIsNotAnObject(): void
     {
         $providers = [
@@ -87,9 +86,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
         new Src\Sitemap\SitemapLocator($this->requestFactory, $this->cache, $this->eventDispatcher, $providers);
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function constructorThrowsExceptionIfGivenProviderIsNoValidObject(): void
     {
         $providers = [
@@ -103,10 +100,8 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
         new Src\Sitemap\SitemapLocator($this->requestFactory, $this->cache, $this->eventDispatcher, $providers);
     }
 
-    /**
-     * @test
-     * @dataProvider locateBySiteReturnsCachedSitemapDataProvider
-     */
+    #[Framework\Attributes\Test]
+    #[Framework\Attributes\DataProvider('locateBySiteReturnsCachedSitemapDataProvider')]
     public function locateBySiteReturnsCachedSitemap(?Core\Site\Entity\SiteLanguage $siteLanguage, string $expectedUrl): void
     {
         $site = self::getSite([]);
@@ -124,10 +119,8 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
         self::assertEquals($sitemaps, $this->subject->locateBySite($site, $siteLanguage));
     }
 
-    /**
-     * @test
-     * @dataProvider locateBySiteThrowsExceptionIfSiteBaseHasNoHostnameConfiguredDataProvider
-     */
+    #[Framework\Attributes\Test]
+    #[Framework\Attributes\DataProvider('locateBySiteThrowsExceptionIfSiteBaseHasNoHostnameConfiguredDataProvider')]
     public function locateBySiteThrowsExceptionIfSiteBaseHasNoHostnameConfigured(?Core\Site\Entity\SiteLanguage $siteLanguage): void
     {
         $site = self::getSite([]);
@@ -139,10 +132,8 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
         $this->subject->locateBySite($site, $siteLanguage);
     }
 
-    /**
-     * @test
-     * @dataProvider locateBySiteThrowsExceptionIfProvidersCannotResolveSitemapDataProvider
-     */
+    #[Framework\Attributes\Test]
+    #[Framework\Attributes\DataProvider('locateBySiteThrowsExceptionIfProvidersCannotResolveSitemapDataProvider')]
     public function locateBySiteThrowsExceptionIfProvidersCannotResolveSitemap(?Core\Site\Entity\SiteLanguage $siteLanguage): void
     {
         $site = self::getSite();
@@ -160,10 +151,8 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
         $subject->locateBySite($site, $siteLanguage);
     }
 
-    /**
-     * @test
-     * @dataProvider locateBySiteReturnsLocatedSitemapDataProvider
-     */
+    #[Framework\Attributes\Test]
+    #[Framework\Attributes\DataProvider('locateBySiteReturnsLocatedSitemapDataProvider')]
     public function locateBySiteReturnsLocatedSitemap(?Core\Site\Entity\SiteLanguage $siteLanguage, string $expectedUrl): void
     {
         $site = self::getSite();
@@ -190,9 +179,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
         self::assertEquals($cachedSitemaps, $this->cache->get($site, $siteLanguage));
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function locateBySiteDispatchesEventWithLocatedSitemap(): void
     {
         $site = self::getSite();
@@ -220,9 +207,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
         self::assertSame([], $this->subject->locateBySite($site));
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function locateAllBySiteExcludesDisabledLanguages(): void
     {
         $GLOBALS['BE_USER'] = $this->setUpBackendUser(1);
@@ -252,9 +237,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
         self::assertSame([], $this->subject->locateAllBySite($site));
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function locateAllBySiteExcludesInaccessibleLanguages(): void
     {
         $GLOBALS['BE_USER'] = $this->setUpBackendUser(2);
@@ -290,9 +273,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
         self::assertEquals([1 => $sitemaps], $this->subject->locateAllBySite($site));
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function isValidSitemapDispatchesEventWithValidityResult(): void
     {
         $site = self::getSite();
@@ -320,9 +301,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
         self::assertFalse($this->subject->isValidSitemap($sitemap));
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function isValidSitemapReturnsFalseOnInaccessibleSitemap(): void
     {
         $this->requestFactory->handler->append(
@@ -339,9 +318,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
         self::assertFalse($this->subject->isValidSitemap($sitemap));
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function isValidSitemapReturnsFalseOnFailedRequest(): void
     {
         $this->requestFactory->handler->append(
@@ -358,9 +335,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
         self::assertFalse($this->subject->isValidSitemap($sitemap));
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function isValidSitemapReturnsTrueOnSuccessfulRequest(): void
     {
         $this->requestFactory->handler->append(

@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace EliasHaeussler\Typo3SitemapLocator\Tests\Unit\Exception;
 
 use EliasHaeussler\Typo3SitemapLocator as Src;
+use PHPUnit\Framework;
 use TYPO3\CMS\Core;
 use TYPO3\TestingFramework;
 
@@ -32,13 +33,11 @@ use TYPO3\TestingFramework;
  *
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-2.0-or-later
- * @covers \EliasHaeussler\Typo3SitemapLocator\Exception\SitemapIsMissing
  */
+#[Framework\Attributes\CoversClass(Src\Exception\SitemapIsMissing::class)]
 final class SitemapIsMissingTest extends TestingFramework\Core\Unit\UnitTestCase
 {
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function constructorReturnsExceptionForMissingSitemap(): void
     {
         $site = new Core\Site\Entity\Site('foo', 1, []);

@@ -25,6 +25,7 @@ namespace EliasHaeussler\Typo3SitemapLocator\Tests\Functional\Sitemap\Provider;
 
 use EliasHaeussler\Typo3SitemapLocator as Src;
 use EliasHaeussler\Typo3SitemapLocator\Tests;
+use PHPUnit\Framework;
 use TYPO3\CMS\Core;
 use TYPO3\TestingFramework;
 
@@ -33,8 +34,8 @@ use TYPO3\TestingFramework;
  *
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-2.0-or-later
- * @covers \EliasHaeussler\Typo3SitemapLocator\Sitemap\Provider\PageTypeProvider
  */
+#[Framework\Attributes\CoversClass(Src\Sitemap\Provider\PageTypeProvider::class)]
 final class PageTypeProviderTest extends TestingFramework\Core\Functional\FunctionalTestCase
 {
     private Src\Sitemap\Provider\PageTypeProvider $subject;
@@ -50,9 +51,7 @@ final class PageTypeProviderTest extends TestingFramework\Core\Functional\Functi
         Core\Utility\ExtensionManagementUtility::setPackageManager($this->packageManager);
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function getReturnsEmptyArrayIfSeoExtensionIsNotLoaded(): void
     {
         $site = new Core\Site\Entity\Site('foo', 1, []);
@@ -60,9 +59,7 @@ final class PageTypeProviderTest extends TestingFramework\Core\Functional\Functi
         self::assertSame([], $this->subject->get($site));
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function getReturnsEmptyArrayIfNoRouteEnhancersAreConfigured(): void
     {
         $this->packageManager->loadedExtensions = ['seo'];
@@ -72,9 +69,7 @@ final class PageTypeProviderTest extends TestingFramework\Core\Functional\Functi
         self::assertSame([], $this->subject->get($site));
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function getReturnsEmptyArrayIfPageTypeIsNotConfigured(): void
     {
         $this->packageManager->loadedExtensions = ['seo'];
@@ -95,9 +90,7 @@ final class PageTypeProviderTest extends TestingFramework\Core\Functional\Functi
         self::assertSame([], $this->subject->get($site));
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function getReturnsSitemapWithPageTypeFromSite(): void
     {
         $this->packageManager->loadedExtensions = ['seo'];
@@ -125,9 +118,7 @@ final class PageTypeProviderTest extends TestingFramework\Core\Functional\Functi
         self::assertEquals($expected, $this->subject->get($site));
     }
 
-    /**
-     * @test
-     */
+    #[Framework\Attributes\Test]
     public function getReturnsSitemapWithPageTypeAndSiteLanguage(): void
     {
         $this->packageManager->loadedExtensions = ['seo'];
