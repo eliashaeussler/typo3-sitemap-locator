@@ -108,8 +108,8 @@ Run tests
 
 ..  rst-class:: d-inline-block mb-3
 
-..  image:: https://codecov.io/gh/eliashaeussler/typo3-sitemap-locator/branch/main/graph/badge.svg?token=NzyH1gX3Rz
-    :target: https://codecov.io/gh/eliashaeussler/typo3-sitemap-locator
+..  image:: https://img.shields.io/coverallsCoverage/github/eliashaeussler/typo3-sitemap-locator?logo=coveralls
+    :target: https://coveralls.io/github/eliashaeussler/typo3-sitemap-locator
 
 ..  code-block:: bash
 
