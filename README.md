@@ -4,7 +4,7 @@
 
 # TYPO3 extension `sitemap_locator`
 
-[![Coverage](https://img.shields.io/codecov/c/github/eliashaeussler/typo3-sitemap-locator?logo=codecov&token=NzyH1gX3Rz)](https://codecov.io/gh/eliashaeussler/typo3-sitemap-locator)
+[![Coverage](https://img.shields.io/coverallsCoverage/github/eliashaeussler/typo3-sitemap-locator?logo=coveralls)](https://coveralls.io/github/eliashaeussler/typo3-sitemap-locator)
 [![Maintainability](https://img.shields.io/codeclimate/maintainability/eliashaeussler/typo3-sitemap-locator?logo=codeclimate)](https://codeclimate.com/github/eliashaeussler/typo3-sitemap-locator/maintainability)
 [![CGL](https://img.shields.io/github/actions/workflow/status/eliashaeussler/typo3-sitemap-locator/cgl.yaml?label=cgl&logo=github)](https://github.com/eliashaeussler/typo3-sitemap-locator/actions/workflows/cgl.yaml)
 [![Tests](https://img.shields.io/github/actions/workflow/status/eliashaeussler/typo3-sitemap-locator/tests.yaml?label=tests&logo=github)](https://github.com/eliashaeussler/typo3-sitemap-locator/actions/workflows/tests.yaml)
