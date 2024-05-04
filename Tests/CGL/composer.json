@@ -27,7 +27,10 @@
 			"@fix:editorconfig",
 			"@fix:php"
 		],
-		"fix:composer": "@composer normalize",
+		"fix:composer": [
+			"@composer normalize",
+			"@composer normalize ../../composer.json"
+		],
 		"fix:editorconfig": "@lint:editorconfig --fix",
 		"fix:php": "php-cs-fixer fix",
 		"lint": [
@@ -36,7 +39,7 @@
 			"@lint:php"
 		],
 		"lint:composer": "@fix:composer --dry-run",
-		"lint:editorconfig": "ec",
+		"lint:editorconfig": "ec --finder-config .editorconfig-lint.php",
 		"lint:php": "@fix:php --dry-run",
 		"migration": [
 			"@migration:rector"
