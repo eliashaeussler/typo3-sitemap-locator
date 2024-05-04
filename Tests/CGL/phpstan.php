@@ -21,25 +21,27 @@ declare(strict_types=1);
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-use EliasHaeussler\PhpCsFixerConfig;
-use TYPO3\CodingStandards;
+use EliasHaeussler\PHPStanConfig;
 
-$header = PhpCsFixerConfig\Rules\Header::create(
-    'sitemap_locator',
-    PhpCsFixerConfig\Package\Type::TYPO3Extension,
-    PhpCsFixerConfig\Package\Author::create('Elias Häußler', 'elias@haeussler.dev'),
-    PhpCsFixerConfig\Package\CopyrightRange::from(2023),
-    PhpCsFixerConfig\Package\License::GPL2OrLater,
-);
-
-$config = CodingStandards\CsFixerConfig::create();
-$finder = $config->getFinder()
-    ->in(__DIR__)
-    ->ignoreVCSIgnored(true)
-    ->ignoreDotFiles(false)
+$rootPath = dirname(__DIR__, 2);
+$symfonySet = PHPStanConfig\Set\SymfonySet::create()
+    ->withConsoleApplicationLoader($rootPath . '/Tests/Build/console-application.php')
 ;
 
-return PhpCsFixerConfig\Config::create()
-    ->withConfig($config)
-    ->withRule($header)
+return PHPStanConfig\Config\Config::create($rootPath)
+    ->in(
+        'Classes',
+        'Configuration',
+        'Tests',
+    )
+    ->not(
+        'Tests/CGL'
+    )
+    ->bootstrapFiles(
+        $rootPath . '/.Build/vendor/autoload.php',
+    )
+    ->withBaseline()
+    ->level(8)
+    ->withSets($symfonySet)
+    ->toArray()
 ;
