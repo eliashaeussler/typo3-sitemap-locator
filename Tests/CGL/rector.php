@@ -29,31 +29,36 @@ use Rector\Symfony\Symfony53\Rector\Class_\CommandDescriptionToPropertyRector;
 use Rector\ValueObject\PhpVersion;
 
 return static function(RectorConfig $rectorConfig): void {
+    $rootPath = dirname(__DIR__, 2);
+
+    require $rootPath . '/.Build/vendor/autoload.php';
+
     Config::create($rectorConfig, PhpVersion::PHP_81)
         ->in(
-            __DIR__ . '/Classes',
-            __DIR__ . '/Configuration',
-            __DIR__ . '/Tests',
+            $rootPath . '/Classes',
+            $rootPath . '/Configuration',
+            $rootPath . '/Tests',
         )
         ->not(
-            __DIR__ . '/.Build/*',
-            __DIR__ . '/.github/*',
-            __DIR__ . '/var/*',
+            $rootPath . '/.Build/*',
+            $rootPath . '/.github/*',
+            $rootPath . '/Tests/CGL/vendor/*',
+            $rootPath . '/var/*',
         )
         ->withPHPUnit()
         ->withSymfony()
         ->withTYPO3()
         ->skip(AnnotationToAttributeRector::class, [
-            __DIR__ . '/Classes/Extension.php',
-            __DIR__ . '/Classes/Sitemap/Provider/DefaultProvider.php',
-            __DIR__ . '/Classes/Sitemap/Provider/PageTypeProvider.php',
-            __DIR__ . '/Classes/Sitemap/Provider/RobotsTxtProvider.php',
-            __DIR__ . '/Classes/Sitemap/Provider/SiteProvider.php',
+            $rootPath . '/Classes/Extension.php',
+            $rootPath . '/Classes/Sitemap/Provider/DefaultProvider.php',
+            $rootPath . '/Classes/Sitemap/Provider/PageTypeProvider.php',
+            $rootPath . '/Classes/Sitemap/Provider/RobotsTxtProvider.php',
+            $rootPath . '/Classes/Sitemap/Provider/SiteProvider.php',
         ])
         ->skip(CommandDescriptionToPropertyRector::class)
         ->skip(FinalizeClassesWithoutChildrenRector::class, [
             // We keep domain models open for extensions
-            __DIR__ . '/Classes/Domain/Model/*',
+            $rootPath . '/Classes/Domain/Model/*',
         ])
         ->apply()
     ;

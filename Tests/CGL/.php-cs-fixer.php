@@ -21,20 +21,25 @@ declare(strict_types=1);
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-use EliasHaeussler\PHPStanConfig;
+use EliasHaeussler\PhpCsFixerConfig;
+use TYPO3\CodingStandards;
 
-$symfonySet = PHPStanConfig\Set\SymfonySet::create()
-    ->withConsoleApplicationLoader('Tests/Build/console-application.php')
+$header = PhpCsFixerConfig\Rules\Header::create(
+    'sitemap_locator',
+    PhpCsFixerConfig\Package\Type::TYPO3Extension,
+    PhpCsFixerConfig\Package\Author::create('Elias Häußler', 'elias@haeussler.dev'),
+    PhpCsFixerConfig\Package\CopyrightRange::from(2023),
+    PhpCsFixerConfig\Package\License::GPL2OrLater,
+);
+
+$config = CodingStandards\CsFixerConfig::create();
+$finder = $config->getFinder()
+    ->in(dirname(__DIR__, 2))
+    ->ignoreVCSIgnored(true)
+    ->ignoreDotFiles(false)
 ;
 
-return PHPStanConfig\Config\Config::create(__DIR__)
-    ->in(
-        'Classes',
-        'Configuration',
-        'Tests',
-    )
-    ->withBaseline()
-    ->level(8)
-    ->withSets($symfonySet)
-    ->toArray()
+return PhpCsFixerConfig\Config::create()
+    ->withConfig($config)
+    ->withRule($header)
 ;
