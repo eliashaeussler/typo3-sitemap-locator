@@ -29,51 +29,171 @@ parameters:
 			path: ../../Classes/Sitemap/SitemapLocator.php
 
 		-
-			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteConfiguration constructor invoked with 1 parameter, 2\\-3 required\\.$#"
+			message: "#^Call to method createNewBasicSite\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteWriter\\.$#"
 			count: 1
-			path: ../../Tests/Functional/Command/Formatter/JsonFormatterTest.php
+			path: ../Functional/Command/Formatter/JsonFormatterTest.php
+
+		-
+			message: "#^Call to method write\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteWriter\\.$#"
+			count: 1
+			path: ../Functional/Command/Formatter/JsonFormatterTest.php
 
 		-
 			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteConfiguration constructor invoked with 1 parameter, 2\\-3 required\\.$#"
 			count: 1
-			path: ../../Tests/Functional/Command/Formatter/TextFormatterTest.php
+			path: ../Functional/Command/Formatter/JsonFormatterTest.php
+
+		-
+			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteConfiguration constructor invoked with 4 parameters, 2\\-3 required\\.$#"
+			count: 1
+			path: ../Functional/Command/Formatter/JsonFormatterTest.php
+
+		-
+			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Site\\\\SiteSettingsFactory not found\\.$#"
+			count: 1
+			path: ../Functional/Command/Formatter/JsonFormatterTest.php
+
+		-
+			message: "#^Instantiated class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteWriter not found\\.$#"
+			count: 1
+			path: ../Functional/Command/Formatter/JsonFormatterTest.php
+
+		-
+			message: "#^Parameter \\#3 \\$coreCache of class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteConfiguration constructor expects TYPO3\\\\CMS\\\\Core\\\\Cache\\\\Frontend\\\\PhpFrontend\\|null, TYPO3\\\\CMS\\\\Core\\\\EventDispatcher\\\\NoopEventDispatcher given\\.$#"
+			count: 1
+			path: ../Functional/Command/Formatter/JsonFormatterTest.php
+
+		-
+			message: "#^Call to method createNewBasicSite\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteWriter\\.$#"
+			count: 1
+			path: ../Functional/Command/Formatter/TextFormatterTest.php
+
+		-
+			message: "#^Call to method write\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteWriter\\.$#"
+			count: 1
+			path: ../Functional/Command/Formatter/TextFormatterTest.php
 
 		-
 			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteConfiguration constructor invoked with 1 parameter, 2\\-3 required\\.$#"
 			count: 1
-			path: ../../Tests/Functional/Command/LocateSitemapsCommandTest.php
+			path: ../Functional/Command/Formatter/TextFormatterTest.php
+
+		-
+			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteConfiguration constructor invoked with 4 parameters, 2\\-3 required\\.$#"
+			count: 1
+			path: ../Functional/Command/Formatter/TextFormatterTest.php
+
+		-
+			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Site\\\\SiteSettingsFactory not found\\.$#"
+			count: 1
+			path: ../Functional/Command/Formatter/TextFormatterTest.php
+
+		-
+			message: "#^Instantiated class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteWriter not found\\.$#"
+			count: 1
+			path: ../Functional/Command/Formatter/TextFormatterTest.php
+
+		-
+			message: "#^Parameter \\#3 \\$coreCache of class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteConfiguration constructor expects TYPO3\\\\CMS\\\\Core\\\\Cache\\\\Frontend\\\\PhpFrontend\\|null, TYPO3\\\\CMS\\\\Core\\\\EventDispatcher\\\\NoopEventDispatcher given\\.$#"
+			count: 1
+			path: ../Functional/Command/Formatter/TextFormatterTest.php
+
+		-
+			message: "#^Call to method createNewBasicSite\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteWriter\\.$#"
+			count: 1
+			path: ../Functional/Command/LocateSitemapsCommandTest.php
+
+		-
+			message: "#^Call to method write\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteWriter\\.$#"
+			count: 1
+			path: ../Functional/Command/LocateSitemapsCommandTest.php
+
+		-
+			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteConfiguration constructor invoked with 1 parameter, 2\\-3 required\\.$#"
+			count: 1
+			path: ../Functional/Command/LocateSitemapsCommandTest.php
+
+		-
+			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteConfiguration constructor invoked with 4 parameters, 2\\-3 required\\.$#"
+			count: 1
+			path: ../Functional/Command/LocateSitemapsCommandTest.php
+
+		-
+			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Site\\\\SiteSettingsFactory not found\\.$#"
+			count: 1
+			path: ../Functional/Command/LocateSitemapsCommandTest.php
+
+		-
+			message: "#^Instantiated class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteWriter not found\\.$#"
+			count: 1
+			path: ../Functional/Command/LocateSitemapsCommandTest.php
+
+		-
+			message: "#^Parameter \\#3 \\$coreCache of class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteConfiguration constructor expects TYPO3\\\\CMS\\\\Core\\\\Cache\\\\Frontend\\\\PhpFrontend\\|null, TYPO3\\\\CMS\\\\Core\\\\EventDispatcher\\\\NoopEventDispatcher given\\.$#"
+			count: 1
+			path: ../Functional/Command/LocateSitemapsCommandTest.php
 
 		-
 			message: "#^EliasHaeussler\\\\Typo3SitemapLocator\\\\Tests\\\\Functional\\\\Fixtures\\\\Classes\\\\DummyPackageManager\\:\\:__construct\\(\\) does not call parent constructor from TYPO3\\\\CMS\\\\Core\\\\Package\\\\PackageManager\\.$#"
 			count: 1
-			path: ../../Tests/Functional/Fixtures/Classes/DummyPackageManager.php
+			path: ../Functional/Fixtures/Classes/DummyPackageManager.php
 
 		-
 			message: "#^EliasHaeussler\\\\Typo3SitemapLocator\\\\Tests\\\\Functional\\\\Fixtures\\\\Classes\\\\DummySiteFinder\\:\\:__construct\\(\\) does not call parent constructor from TYPO3\\\\CMS\\\\Core\\\\Site\\\\SiteFinder\\.$#"
 			count: 1
-			path: ../../Tests/Functional/Fixtures/Classes/DummySiteFinder.php
+			path: ../Functional/Fixtures/Classes/DummySiteFinder.php
 
 		-
 			message: "#^Parameter \\#4 \\$providers of class EliasHaeussler\\\\Typo3SitemapLocator\\\\Sitemap\\\\SitemapLocator constructor expects iterable\\<EliasHaeussler\\\\Typo3SitemapLocator\\\\Sitemap\\\\Provider\\\\Provider\\>, array\\<int, stdClass\\> given\\.$#"
 			count: 1
-			path: ../../Tests/Functional/Sitemap/SitemapLocatorTest.php
+			path: ../Functional/Sitemap/SitemapLocatorTest.php
 
 		-
 			message: "#^Parameter \\#4 \\$providers of class EliasHaeussler\\\\Typo3SitemapLocator\\\\Sitemap\\\\SitemapLocator constructor expects iterable\\<EliasHaeussler\\\\Typo3SitemapLocator\\\\Sitemap\\\\Provider\\\\Provider\\>, array\\<int, string\\> given\\.$#"
 			count: 1
-			path: ../../Tests/Functional/Sitemap/SitemapLocatorTest.php
+			path: ../Functional/Sitemap/SitemapLocatorTest.php
+
+		-
+			message: "#^Call to method createNewBasicSite\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteWriter\\.$#"
+			count: 1
+			path: ../Functional/Utility/HttpUtilityTest.php
+
+		-
+			message: "#^Call to method write\\(\\) on an unknown class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteWriter\\.$#"
+			count: 1
+			path: ../Functional/Utility/HttpUtilityTest.php
 
 		-
 			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteConfiguration constructor invoked with 1 parameter, 2\\-3 required\\.$#"
 			count: 1
-			path: ../../Tests/Functional/Utility/HttpUtilityTest.php
+			path: ../Functional/Utility/HttpUtilityTest.php
+
+		-
+			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteConfiguration constructor invoked with 4 parameters, 2\\-3 required\\.$#"
+			count: 1
+			path: ../Functional/Utility/HttpUtilityTest.php
+
+		-
+			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Site\\\\SiteSettingsFactory not found\\.$#"
+			count: 1
+			path: ../Functional/Utility/HttpUtilityTest.php
+
+		-
+			message: "#^Instantiated class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteWriter not found\\.$#"
+			count: 1
+			path: ../Functional/Utility/HttpUtilityTest.php
+
+		-
+			message: "#^Parameter \\#3 \\$coreCache of class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteConfiguration constructor expects TYPO3\\\\CMS\\\\Core\\\\Cache\\\\Frontend\\\\PhpFrontend\\|null, TYPO3\\\\CMS\\\\Core\\\\EventDispatcher\\\\NoopEventDispatcher given\\.$#"
+			count: 1
+			path: ../Functional/Utility/HttpUtilityTest.php
 
 		-
 			message: "#^EliasHaeussler\\\\Typo3SitemapLocator\\\\Tests\\\\Unit\\\\Fixtures\\\\DummyRequestFactory\\:\\:__construct\\(\\) does not call parent constructor from TYPO3\\\\CMS\\\\Core\\\\Http\\\\RequestFactory\\.$#"
 			count: 1
-			path: ../../Tests/Unit/Fixtures/DummyRequestFactory.php
+			path: ../Unit/Fixtures/DummyRequestFactory.php
 
 		-
 			message: "#^Parameter \\#3 \\$options \\(array\\<string, mixed\\>\\) of method EliasHaeussler\\\\Typo3SitemapLocator\\\\Tests\\\\Unit\\\\Fixtures\\\\DummyRequestFactory\\:\\:request\\(\\) should be contravariant with parameter \\$options \\(array\\) of method TYPO3\\\\CMS\\\\Core\\\\Http\\\\RequestFactory\\:\\:request\\(\\)$#"
 			count: 1
-			path: ../../Tests/Unit/Fixtures/DummyRequestFactory.php
+			path: ../Unit/Fixtures/DummyRequestFactory.php
