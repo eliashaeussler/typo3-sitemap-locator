@@ -25,10 +25,7 @@ namespace EliasHaeussler\Typo3SitemapLocator\Tests\Functional\Sitemap;
 
 use EliasHaeussler\Typo3SitemapLocator as Src;
 use EliasHaeussler\Typo3SitemapLocator\Tests;
-use Exception;
-use Generator;
 use PHPUnit\Framework;
-use stdClass;
 use Symfony\Component\EventDispatcher;
 use TYPO3\CMS\Core;
 use TYPO3\TestingFramework;
@@ -90,11 +87,11 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
     public function constructorThrowsExceptionIfGivenProviderIsNoValidObject(): void
     {
         $providers = [
-            new stdClass(),
+            new \stdClass(),
         ];
 
         $this->expectExceptionObject(
-            new Src\Exception\ProviderIsInvalid(new stdClass()),
+            new Src\Exception\ProviderIsInvalid(new \stdClass()),
         );
 
         new Src\Sitemap\SitemapLocator($this->requestFactory, $this->cache, $this->eventDispatcher, $providers);
@@ -194,7 +191,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
 
         $this->eventDispatcher->addListener(
             Src\Event\SitemapsLocatedEvent::class,
-            static function(Src\Event\SitemapsLocatedEvent $event) use ($site, $expected): void {
+            static function (Src\Event\SitemapsLocatedEvent $event) use ($site, $expected): void {
                 self::assertSame($site, $event->getSite());
                 self::assertNull($event->getSiteLanguage());
                 self::assertEquals($expected, $event->getSitemaps());
@@ -289,7 +286,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
 
         $this->eventDispatcher->addListener(
             Src\Event\SitemapValidatedEvent::class,
-            static function(Src\Event\SitemapValidatedEvent $event) use ($sitemap): void {
+            static function (Src\Event\SitemapValidatedEvent $event) use ($sitemap): void {
                 self::assertSame($sitemap, $event->getSitemap());
                 self::assertTrue($event->isValid());
 
@@ -305,7 +302,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
     public function isValidSitemapReturnsFalseOnInaccessibleSitemap(): void
     {
         $this->requestFactory->handler->append(
-            new Exception(),
+            new \Exception(),
         );
 
         $site = self::getSite();
@@ -353,36 +350,36 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
     }
 
     /**
-     * @return Generator<string, array{Core\Site\Entity\SiteLanguage|null, string}>
+     * @return \Generator<string, array{Core\Site\Entity\SiteLanguage|null, string}>
      */
-    public static function locateBySiteReturnsCachedSitemapDataProvider(): Generator
+    public static function locateBySiteReturnsCachedSitemapDataProvider(): \Generator
     {
         yield 'no site language' => [null, 'https://www.example.com/sitemap.xml'];
         yield 'site language' => [self::getSiteLanguage(), 'https://www.example.com/sitemap.xml'];
     }
 
     /**
-     * @return Generator<string, array{Core\Site\Entity\SiteLanguage|null}>
+     * @return \Generator<string, array{Core\Site\Entity\SiteLanguage|null}>
      */
-    public static function locateBySiteThrowsExceptionIfSiteBaseHasNoHostnameConfiguredDataProvider(): Generator
+    public static function locateBySiteThrowsExceptionIfSiteBaseHasNoHostnameConfiguredDataProvider(): \Generator
     {
         yield 'no site language' => [null];
         yield 'site language' => [self::getSiteLanguage('')];
     }
 
     /**
-     * @return Generator<string, array{Core\Site\Entity\SiteLanguage|null}>
+     * @return \Generator<string, array{Core\Site\Entity\SiteLanguage|null}>
      */
-    public static function locateBySiteThrowsExceptionIfProvidersCannotResolveSitemapDataProvider(): Generator
+    public static function locateBySiteThrowsExceptionIfProvidersCannotResolveSitemapDataProvider(): \Generator
     {
         yield 'no site language' => [null];
         yield 'site language' => [self::getSiteLanguage()];
     }
 
     /**
-     * @return Generator<string, array{Core\Site\Entity\SiteLanguage|null, string}>
+     * @return \Generator<string, array{Core\Site\Entity\SiteLanguage|null, string}>
      */
-    public static function locateBySiteReturnsLocatedSitemapDataProvider(): Generator
+    public static function locateBySiteReturnsLocatedSitemapDataProvider(): \Generator
     {
         yield 'no site language' => [null, 'https://www.example.com/sitemap.xml'];
         yield 'site language' => [self::getSiteLanguage(), 'https://www.example.com/de/sitemap.xml'];

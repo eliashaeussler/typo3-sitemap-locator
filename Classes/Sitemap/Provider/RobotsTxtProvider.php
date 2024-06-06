@@ -25,7 +25,6 @@ namespace EliasHaeussler\Typo3SitemapLocator\Sitemap\Provider;
 
 use EliasHaeussler\Typo3SitemapLocator\Domain;
 use EliasHaeussler\Typo3SitemapLocator\Utility;
-use Exception;
 use Psr\Http\Message;
 use TYPO3\CMS\Core;
 
@@ -62,7 +61,7 @@ final class RobotsTxtProvider implements Provider
 
         return array_values(
             array_map(
-                static fn (string $url) => new Domain\Model\Sitemap(
+                static fn(string $url) => new Domain\Model\Sitemap(
                     new Core\Http\Uri($url),
                     $site,
                     $siteLanguage ?? $site->getDefaultLanguage(),
@@ -78,7 +77,7 @@ final class RobotsTxtProvider implements Provider
             $response = $this->requestFactory->request((string)$uri);
 
             return $response->getBody()->getContents();
-        } catch (Exception) {
+        } catch (\Exception) {
             return null;
         }
     }

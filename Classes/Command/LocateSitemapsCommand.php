@@ -26,7 +26,6 @@ namespace EliasHaeussler\Typo3SitemapLocator\Command;
 use EliasHaeussler\Typo3SitemapLocator\Exception;
 use EliasHaeussler\Typo3SitemapLocator\Sitemap;
 use EliasHaeussler\Typo3SitemapLocator\Utility;
-use InvalidArgumentException;
 use Symfony\Component\Console;
 use TYPO3\CMS\Core;
 
@@ -120,7 +119,7 @@ final class LocateSitemapsCommand extends Console\Command\Command
                 $site->getDefaultLanguage()->getLanguageId(),
             );
             $question->setValidator(
-                fn (string|int $siteLanguage) => $this->validateSiteLanguage($siteLanguage, $site, $availableSiteLanguages),
+                fn(string|int $siteLanguage) => $this->validateSiteLanguage($siteLanguage, $site, $availableSiteLanguages),
             );
 
             $input->setOption(
@@ -280,7 +279,7 @@ final class LocateSitemapsCommand extends Console\Command\Command
 
         try {
             return $site->getLanguageById($languageId)->getLanguageId();
-        } catch (InvalidArgumentException $exception) {
+        } catch (\InvalidArgumentException $exception) {
             throw new Console\Exception\RuntimeException($exception->getMessage(), $exception->getCode());
         }
     }

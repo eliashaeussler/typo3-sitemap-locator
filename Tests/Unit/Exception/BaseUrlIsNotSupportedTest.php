@@ -24,7 +24,6 @@ declare(strict_types=1);
 namespace EliasHaeussler\Typo3SitemapLocator\Tests\Unit\Exception;
 
 use EliasHaeussler\Typo3SitemapLocator as Src;
-use Generator;
 use PHPUnit\Framework;
 use Psr\Http\Message;
 use TYPO3\CMS\Core;
@@ -50,9 +49,9 @@ final class BaseUrlIsNotSupportedTest extends TestingFramework\Core\Unit\UnitTes
     }
 
     /**
-     * @return Generator<string, array{string|Message\UriInterface}>
+     * @return \Generator<string, array{string|Message\UriInterface}>
      */
-    public static function constructorReturnsExceptionForBaseUrlDataProvider(): Generator
+    public static function constructorReturnsExceptionForBaseUrlDataProvider(): \Generator
     {
         $url = 'https://typo3-testing.local/';
 

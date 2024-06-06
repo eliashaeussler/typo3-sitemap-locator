@@ -24,7 +24,6 @@ declare(strict_types=1);
 namespace EliasHaeussler\Typo3SitemapLocator\Tests\Unit\Sitemap\Provider;
 
 use EliasHaeussler\Typo3SitemapLocator as Src;
-use Generator;
 use PHPUnit\Framework;
 use TYPO3\CMS\Core;
 use TYPO3\TestingFramework;
@@ -100,18 +99,18 @@ final class SiteProviderTest extends TestingFramework\Core\Unit\UnitTestCase
     }
 
     /**
-     * @return Generator<string, array{string, string}>
+     * @return \Generator<string, array{string, string}>
      */
-    public static function getReturnsSitemapWithUrlPathFromSiteDataProvider(): Generator
+    public static function getReturnsSitemapWithUrlPathFromSiteDataProvider(): \Generator
     {
         yield 'path only' => ['baz.xml', 'https://www.example.com/baz.xml'];
         yield 'path with query string' => ['baz.xml?foo=baz', 'https://www.example.com/baz.xml?foo=baz'];
     }
 
     /**
-     * @return Generator<string, array{string, string}>
+     * @return \Generator<string, array{string, string}>
      */
-    public static function getReturnsSitemapWithUrlPathFromSiteLanguageDataProvider(): Generator
+    public static function getReturnsSitemapWithUrlPathFromSiteLanguageDataProvider(): \Generator
     {
         yield 'path only' => ['baz.xml', 'https://www.example.com/de/baz.xml'];
         yield 'path with query string' => ['baz.xml?foo=baz', 'https://www.example.com/de/baz.xml?foo=baz'];
