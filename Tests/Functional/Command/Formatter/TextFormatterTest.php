@@ -25,7 +25,6 @@ namespace EliasHaeussler\Typo3SitemapLocator\Tests\Functional\Command\Formatter;
 
 use EliasHaeussler\Typo3SitemapLocator as Src;
 use EliasHaeussler\Typo3SitemapLocator\Tests;
-use Generator;
 use PHPUnit\Framework;
 use Psr\EventDispatcher;
 use Psr\Http\Message;
@@ -303,9 +302,9 @@ final class TextFormatterTest extends TestingFramework\Core\Functional\Functiona
     }
 
     /**
-     * @return Generator<string, array{list<Message\ResponseInterface>, list<bool>, bool}>
+     * @return \Generator<string, array{list<Message\ResponseInterface>, list<bool>, bool}>
      */
-    public static function formatSitemapsIncludesValidityStateOfLocatedSitemapsDataProvider(): Generator
+    public static function formatSitemapsIncludesValidityStateOfLocatedSitemapsDataProvider(): \Generator
     {
         $validResponse = new Core\Http\Response();
         $invalidResponse = new Core\Http\Response(statusCode: 404);
@@ -318,9 +317,9 @@ final class TextFormatterTest extends TestingFramework\Core\Functional\Functiona
     }
 
     /**
-     * @return Generator<string, array{list<Message\ResponseInterface>, list<bool>, bool}>
+     * @return \Generator<string, array{list<Message\ResponseInterface>, list<bool>, bool}>
      */
-    public static function formatAllSitemapsIncludesValidityStateOfLocatedSitemapsDataProvider(): Generator
+    public static function formatAllSitemapsIncludesValidityStateOfLocatedSitemapsDataProvider(): \Generator
     {
         $validResponse = new Core\Http\Response();
         $invalidResponse = new Core\Http\Response(statusCode: 404);

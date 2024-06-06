@@ -25,7 +25,6 @@ namespace EliasHaeussler\Typo3SitemapLocator\Tests\Functional\Command;
 
 use EliasHaeussler\Typo3SitemapLocator as Src;
 use EliasHaeussler\Typo3SitemapLocator\Tests;
-use Generator;
 use PHPUnit\Framework;
 use Symfony\Component\Console;
 use TYPO3\CMS\Core;
@@ -373,9 +372,9 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
     }
 
     /**
-     * @return Generator<string, array{string|int}>
+     * @return \Generator<string, array{string|int}>
      */
-    public static function interactAsksForAndAppliesLanguageDataProvider(): Generator
+    public static function interactAsksForAndAppliesLanguageDataProvider(): \Generator
     {
         yield 'language id as integer' => [2];
         yield 'language id as string' => ['2'];
@@ -383,9 +382,9 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
     }
 
     /**
-     * @return Generator<string, array{string|int}>
+     * @return \Generator<string, array{string|int}>
      */
-    public static function executeFailsIfGivenSiteDoesNotExistDataProvider(): Generator
+    public static function executeFailsIfGivenSiteDoesNotExistDataProvider(): \Generator
     {
         yield 'site identifier' => ['foo'];
         yield 'root page id' => [99];

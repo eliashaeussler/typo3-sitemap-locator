@@ -25,7 +25,6 @@ namespace EliasHaeussler\Typo3SitemapLocator\Tests\Unit\Sitemap\Provider;
 
 use EliasHaeussler\Typo3SitemapLocator as Src;
 use EliasHaeussler\Typo3SitemapLocator\Tests;
-use Exception;
 use PHPUnit\Framework;
 use TYPO3\CMS\Core;
 use TYPO3\TestingFramework;
@@ -56,7 +55,7 @@ final class RobotsTxtProviderTest extends TestingFramework\Core\Unit\UnitTestCas
     public function getReturnsEmptyArrayIfNoRobotsTxtExists(): void
     {
         $this->requestFactory->handler->append(
-            new Exception(),
+            new \Exception(),
         );
 
         self::assertSame([], $this->subject->get($this->site));

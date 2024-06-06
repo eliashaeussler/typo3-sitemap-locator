@@ -55,7 +55,7 @@ final class SitemapsCache
 
         return array_values(
             array_map(
-                static fn (string $sitemapUrl) => new Domain\Model\Sitemap(
+                static fn(string $sitemapUrl) => new Domain\Model\Sitemap(
                     new Core\Http\Uri($sitemapUrl),
                     $site,
                     $siteLanguage ?? $site->getDefaultLanguage(),
@@ -96,7 +96,7 @@ final class SitemapsCache
                 $this->writeCache(
                     $cacheIdentifier,
                     array_map(
-                        static fn (Domain\Model\Sitemap $sitemap) => (string)$sitemap->getUri(),
+                        static fn(Domain\Model\Sitemap $sitemap) => (string)$sitemap->getUri(),
                         $sitemapsOfCurrentSite,
                     ),
                 );

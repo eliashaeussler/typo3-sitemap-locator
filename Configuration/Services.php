@@ -24,7 +24,7 @@ declare(strict_types=1);
 use EliasHaeussler\Typo3SitemapLocator\Sitemap;
 use Symfony\Component\DependencyInjection;
 
-return static function(DependencyInjection\ContainerBuilder $container): void {
+return static function (DependencyInjection\ContainerBuilder $container): void {
     $container->registerForAutoconfiguration(Sitemap\Provider\Provider::class)
         ->addTag('sitemap_locator.sitemap_provider');
 };

@@ -25,7 +25,6 @@ namespace EliasHaeussler\Typo3SitemapLocator\Tests\Unit\Exception;
 
 use EliasHaeussler\Typo3SitemapLocator as Src;
 use PHPUnit\Framework;
-use stdClass;
 use TYPO3\TestingFramework;
 
 /**
@@ -40,7 +39,7 @@ final class ProviderIsInvalidTest extends TestingFramework\Core\Unit\UnitTestCas
     #[Framework\Attributes\Test]
     public function constructorReturnsExceptionForGivenProvider(): void
     {
-        $subject = new Src\Exception\ProviderIsInvalid(new stdClass());
+        $subject = new Src\Exception\ProviderIsInvalid(new \stdClass());
 
         self::assertSame(
             sprintf('The given provider "stdClass" does not implement the interface "%s".', Src\Sitemap\Provider\Provider::class),
