@@ -24,7 +24,6 @@ declare(strict_types=1);
 use EliasHaeussler\RectorConfig\Config\Config;
 use Rector\Config\RectorConfig;
 use Rector\Php80\Rector\Class_\AnnotationToAttributeRector;
-use Rector\Privatization\Rector\Class_\FinalizeClassesWithoutChildrenRector;
 use Rector\Symfony\Symfony53\Rector\Class_\CommandDescriptionToPropertyRector;
 use Rector\ValueObject\PhpVersion;
 
@@ -56,10 +55,6 @@ return static function (RectorConfig $rectorConfig): void {
             $rootPath . '/Classes/Sitemap/Provider/SiteProvider.php',
         ])
         ->skip(CommandDescriptionToPropertyRector::class)
-        ->skip(FinalizeClassesWithoutChildrenRector::class, [
-            // We keep domain models open for extensions
-            $rootPath . '/Classes/Domain/Model/*',
-        ])
         ->apply()
     ;
 
