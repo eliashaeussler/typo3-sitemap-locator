@@ -61,7 +61,7 @@ final class SitemapsCache
                     $siteLanguage ?? $site->getDefaultLanguage(),
                     true,
                 ),
-                array_filter($cacheData, 'is_string'),
+                array_filter($cacheData, is_string(...)),
             ),
         );
     }
