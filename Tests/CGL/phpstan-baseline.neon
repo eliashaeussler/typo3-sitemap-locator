@@ -44,7 +44,7 @@ parameters:
 			path: ../Functional/Command/Formatter/JsonFormatterTest.php
 
 		-
-			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteConfiguration constructor invoked with 4 parameters, 2\\-3 required\\.$#"
+			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteConfiguration constructor invoked with 5 parameters, 2\\-3 required\\.$#"
 			count: 1
 			path: ../Functional/Command/Formatter/JsonFormatterTest.php
 
@@ -79,7 +79,7 @@ parameters:
 			path: ../Functional/Command/Formatter/TextFormatterTest.php
 
 		-
-			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteConfiguration constructor invoked with 4 parameters, 2\\-3 required\\.$#"
+			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteConfiguration constructor invoked with 5 parameters, 2\\-3 required\\.$#"
 			count: 1
 			path: ../Functional/Command/Formatter/TextFormatterTest.php
 
@@ -114,7 +114,7 @@ parameters:
 			path: ../Functional/Command/LocateSitemapsCommandTest.php
 
 		-
-			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteConfiguration constructor invoked with 4 parameters, 2\\-3 required\\.$#"
+			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteConfiguration constructor invoked with 5 parameters, 2\\-3 required\\.$#"
 			count: 1
 			path: ../Functional/Command/LocateSitemapsCommandTest.php
 
@@ -169,7 +169,7 @@ parameters:
 			path: ../Functional/Utility/HttpUtilityTest.php
 
 		-
-			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteConfiguration constructor invoked with 4 parameters, 2\\-3 required\\.$#"
+			message: "#^Class TYPO3\\\\CMS\\\\Core\\\\Configuration\\\\SiteConfiguration constructor invoked with 5 parameters, 2\\-3 required\\.$#"
 			count: 1
 			path: ../Functional/Utility/HttpUtilityTest.php
 
