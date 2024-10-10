@@ -41,7 +41,6 @@ trait SiteTrait
         $typo3Version = new Core\Information\Typo3Version();
 
         if ($typo3Version->getMajorVersion() >= 13) {
-            $coreCache = new Core\Cache\Frontend\NullFrontend('core');
             $eventDispatcher = new Core\EventDispatcher\NoopEventDispatcher();
             $yamlFileLoader = $this->get(Core\Configuration\Loader\YamlFileLoader::class);
 
@@ -49,13 +48,13 @@ trait SiteTrait
                 $configPath,
                 $this->get(Core\Site\SiteSettingsFactory::class),
                 $eventDispatcher,
-                $coreCache,
+                new Core\Cache\Frontend\NullFrontend('core'),
                 $yamlFileLoader,
+                new Core\Cache\Frontend\NullFrontend('runtime'),
             );
             $siteWriter = new Core\Configuration\SiteWriter(
                 $configPath,
                 $eventDispatcher,
-                $coreCache,
                 $yamlFileLoader,
             );
         } elseif ($typo3Version->getMajorVersion() >= 12) {

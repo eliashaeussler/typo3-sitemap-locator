@@ -25,7 +25,6 @@ namespace EliasHaeussler\Typo3SitemapLocator\Tests\Functional\EventListener;
 
 use EliasHaeussler\PHPUnitAttributes;
 use EliasHaeussler\Typo3SitemapLocator as Src;
-use EliasHaeussler\Typo3SitemapLocator\Tests;
 use PHPUnit\Framework;
 use TYPO3\CMS\Core;
 use TYPO3\TestingFramework;
@@ -47,7 +46,7 @@ final class SiteConfigurationListenerTest extends TestingFramework\Core\Function
     protected bool $initializeDatabase = false;
 
     private Core\Cache\Frontend\PhpFrontend $cache;
-    private Tests\Functional\Fixtures\Classes\DummySiteFinder $siteFinder;
+    private Core\Site\SiteFinder&Framework\MockObject\MockObject $siteFinder;
     private Src\EventListener\SiteConfigurationListener $subject;
 
     protected function setUp(): void
@@ -55,17 +54,17 @@ final class SiteConfigurationListenerTest extends TestingFramework\Core\Function
         parent::setUp();
 
         $this->cache = $this->get('cache.sitemap_locator');
-        $this->siteFinder = new Tests\Functional\Fixtures\Classes\DummySiteFinder();
+        $this->siteFinder = $this->createMock(Core\Site\SiteFinder::class);
         $this->subject = new Src\EventListener\SiteConfigurationListener(
             $this->get(Src\Cache\SitemapsCache::class),
             $this->siteFinder,
         );
 
         $this->cache->set(
-            'foo',
-            sprintf(
+            'foo_0_42099b4af021e53fd8fd4e056c2568d7c2e3ffa8',
+            \sprintf(
                 'return %s;',
-                var_export(
+                \var_export(
                     [
                         0 => [
                             'https://www.example.com/baz',
@@ -81,23 +80,28 @@ final class SiteConfigurationListenerTest extends TestingFramework\Core\Function
     #[Framework\Attributes\Test]
     public function invokeDoesNothingIfGivenSiteDoesNotExist(): void
     {
+        $this->siteFinder->method('getSiteByIdentifier')->willThrowException(
+            new Core\Exception\SiteNotFoundException('No site found for identifier foo', 1521716628)
+        );
+
         $event = new Core\Configuration\Event\SiteConfigurationBeforeWriteEvent('foo', []);
 
         ($this->subject)($event);
 
-        self::assertTrue($this->cache->has('foo'));
+        self::assertTrue($this->cache->has('foo_0_42099b4af021e53fd8fd4e056c2568d7c2e3ffa8'));
     }
 
     #[Framework\Attributes\Test]
     public function invokeRemovesSitemapsCache(): void
     {
         $event = new Core\Configuration\Event\SiteConfigurationBeforeWriteEvent('foo', []);
+        $site = new Core\Site\Entity\Site('foo', 1, []);
 
-        $this->siteFinder->expectedSite = new Core\Site\Entity\Site('foo', 1, []);
+        $this->siteFinder->method('getSiteByIdentifier')->willReturn($site);
 
         ($this->subject)($event);
 
-        self::assertFalse($this->cache->has('foo_0_da39a3ee5e6b4b0d3255bfef95601890afd80709'));
+        self::assertFalse($this->cache->has('foo_0_42099b4af021e53fd8fd4e056c2568d7c2e3ffa8'));
     }
 
     protected function tearDown(): void
