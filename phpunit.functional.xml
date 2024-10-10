@@ -5,6 +5,9 @@
          colors="true"
          xsi:noNamespaceSchemaLocation=".Build/vendor/phpunit/phpunit/phpunit.xsd"
 >
+    <extensions>
+        <bootstrap class="EliasHaeussler\PHPUnitAttributes\PHPUnitAttributesExtension" />
+    </extensions>
     <php>
         <env name="COLUMNS" value="300"/>
     </php>
