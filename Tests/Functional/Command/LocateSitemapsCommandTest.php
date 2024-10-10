@@ -47,7 +47,7 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
 
     private Core\Cache\Frontend\PhpFrontend $cache;
     private Core\Site\Entity\Site $site;
-    private Tests\Functional\Fixtures\Classes\DummySiteFinder $siteFinder;
+    private Core\Site\SiteFinder&Framework\MockObject\MockObject $siteFinder;
     private Console\Tester\CommandTester $commandTester;
 
     protected function setUp(): void
@@ -56,7 +56,7 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
 
         $this->cache = $this->get('cache.sitemap_locator');
         $this->site = $this->createSite();
-        $this->siteFinder = new Tests\Functional\Fixtures\Classes\DummySiteFinder();
+        $this->siteFinder = $this->createMock(Core\Site\SiteFinder::class);
         $this->commandTester = new Console\Tester\CommandTester(
             new Src\Command\LocateSitemapsCommand(
                 $this->get(Src\Sitemap\SitemapLocator::class),
@@ -76,6 +76,8 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
     #[Framework\Attributes\Test]
     public function interactDoesNothingIfSiteArgumentIsProvided(): void
     {
+        $this->siteFinder->method('getSiteByIdentifier')->willReturn($this->site);
+
         $this->commandTester->execute(
             [
                 'site' => $this->site->getIdentifier(),
@@ -101,13 +103,13 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
     #[Framework\Attributes\Test]
     public function interactAsksForAndAppliesSite(): void
     {
-        $this->siteFinder->expectedSite = $this->site;
-        $this->siteFinder->expectedSites = [
-            $this->site,
-        ];
+        $this->siteFinder->method('getSiteByIdentifier')->willReturn($this->site);
+        $this->siteFinder->method('getAllSites')->willReturn([
+            $this->site->getIdentifier() => $this->site,
+        ]);
 
         $this->commandTester->setInputs([
-            'test-site',
+            $this->site->getIdentifier(),
             '',
         ]);
 
@@ -124,13 +126,13 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
     #[Framework\Attributes\Test]
     public function interactAsksForAndAppliesAllSiteLanguages(): void
     {
-        $this->siteFinder->expectedSite = $this->site;
-        $this->siteFinder->expectedSites = [
-            $this->site,
-        ];
+        $this->siteFinder->method('getSiteByIdentifier')->willReturn($this->site);
+        $this->siteFinder->method('getAllSites')->willReturn([
+            $this->site->getIdentifier() => $this->site,
+        ]);
 
         $this->commandTester->setInputs([
-            'test-site',
+            $this->site->getIdentifier(),
             'yes',
             'yes',
         ]);
@@ -149,13 +151,13 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
     #[Framework\Attributes\Test]
     public function interactThrowsExceptionIfInvalidLanguageIdIsPassed(): void
     {
-        $this->siteFinder->expectedSite = $this->site;
-        $this->siteFinder->expectedSites = [
-            $this->site,
-        ];
+        $this->siteFinder->method('getSiteByIdentifier')->willReturn($this->site);
+        $this->siteFinder->method('getAllSites')->willReturn([
+            $this->site->getIdentifier() => $this->site,
+        ]);
 
         $this->commandTester->setInputs([
-            'test-site',
+            $this->site->getIdentifier(),
             '',
             'foo',
         ]);
@@ -172,13 +174,13 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
     #[Framework\Attributes\Test]
     public function interactThrowsExceptionIfUnsupportedLanguageIdIsPassed(): void
     {
-        $this->siteFinder->expectedSite = $this->site;
-        $this->siteFinder->expectedSites = [
-            $this->site,
-        ];
+        $this->siteFinder->method('getSiteByIdentifier')->willReturn($this->site);
+        $this->siteFinder->method('getAllSites')->willReturn([
+            $this->site->getIdentifier() => $this->site,
+        ]);
 
         $this->commandTester->setInputs([
-            'test-site',
+            $this->site->getIdentifier(),
             '',
             '99',
         ]);
@@ -196,13 +198,13 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
     #[Framework\Attributes\DataProvider('interactAsksForAndAppliesLanguageDataProvider')]
     public function interactAsksForAndAppliesLanguage(string|int $selection): void
     {
-        $this->siteFinder->expectedSite = $this->site;
-        $this->siteFinder->expectedSites = [
-            $this->site,
-        ];
+        $this->siteFinder->method('getSiteByIdentifier')->willReturn($this->site);
+        $this->siteFinder->method('getAllSites')->willReturn([
+            $this->site->getIdentifier() => $this->site,
+        ]);
 
         $this->commandTester->setInputs([
-            'test-site',
+            $this->site->getIdentifier(),
             '',
             $selection,
         ]);
@@ -221,6 +223,11 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
     #[Framework\Attributes\DataProvider('executeFailsIfGivenSiteDoesNotExistDataProvider')]
     public function executeFailsIfGivenSiteDoesNotExist(int|string $site): void
     {
+        $exception = new Core\Exception\SiteNotFoundException('No site found for identifier test-site', 1521716628);
+
+        $this->siteFinder->method('getSiteByIdentifier')->willThrowException($exception);
+        $this->siteFinder->method('getSiteByRootPageId')->willThrowException($exception);
+
         $this->commandTester->execute([
             'site' => $site,
         ]);
@@ -237,10 +244,10 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
     {
         $site = $this->createSite('/');
 
-        $this->siteFinder->expectedSite = $site;
+        $this->siteFinder->method('getSiteByIdentifier')->willReturn($site);
 
         $this->commandTester->execute([
-            'site' => 'test-site',
+            'site' => $site->getIdentifier(),
             '--all' => true,
         ]);
 
@@ -254,10 +261,10 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
     #[Framework\Attributes\Test]
     public function executeDisplaysSitemapsOfAllLanguagesIfAllOptionIsGiven(): void
     {
-        $this->siteFinder->expectedSite = $this->site;
+        $this->siteFinder->method('getSiteByIdentifier')->willReturn($this->site);
 
         $this->commandTester->execute([
-            'site' => 'test-site',
+            'site' => $this->site->getIdentifier(),
             '--all' => true,
         ]);
 
@@ -276,10 +283,10 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
     #[Framework\Attributes\Test]
     public function executeFailsIfGivenSiteLanguageDoesNotExistInSite(): void
     {
-        $this->siteFinder->expectedSite = $this->site;
+        $this->siteFinder->method('getSiteByIdentifier')->willReturn($this->site);
 
         $this->commandTester->execute([
-            'site' => 'test-site',
+            'site' => $this->site->getIdentifier(),
             '--language' => 99,
         ]);
 
@@ -293,10 +300,10 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
     #[Framework\Attributes\Test]
     public function executeUsesDefaultSiteLanguageIfGivenLanguageIsNotNumeric(): void
     {
-        $this->siteFinder->expectedSite = $this->site;
+        $this->siteFinder->method('getSiteByIdentifier')->willReturn($this->site);
 
         $this->commandTester->execute([
-            'site' => 'test-site',
+            'site' => $this->site->getIdentifier(),
             '--language' => 'foo',
         ]);
 
@@ -310,10 +317,12 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
     #[Framework\Attributes\Test]
     public function executeFailsIfAnErrorOccursWhileLocatingSitemaps(): void
     {
-        $this->siteFinder->expectedSite = $this->createSite('/');
+        $site = $this->createSite('/');
+
+        $this->siteFinder->method('getSiteByIdentifier')->willReturn($site);
 
         $this->commandTester->execute([
-            'site' => 'test-site',
+            'site' => $site->getIdentifier(),
             '--language' => 0,
         ]);
 
@@ -327,10 +336,10 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
     #[Framework\Attributes\Test]
     public function executeDisplaysLocatedSitemapsOfGivenSiteAndLanguage(): void
     {
-        $this->siteFinder->expectedSite = $this->site;
+        $this->siteFinder->method('getSiteByIdentifier')->willReturn($this->site);
 
         $this->commandTester->execute([
-            'site' => 'test-site',
+            'site' => $this->site->getIdentifier(),
             '--language' => 0,
         ]);
 
@@ -344,10 +353,10 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
     #[Framework\Attributes\Test]
     public function executeUsesJsonFormatterIfJsonOptionIsGiven(): void
     {
-        $this->siteFinder->expectedSite = $this->site;
+        $this->siteFinder->method('getSiteByIdentifier')->willReturn($this->site);
 
         $this->commandTester->execute([
-            'site' => 'test-site',
+            'site' => $this->site->getIdentifier(),
             '--language' => 0,
             '--json' => true,
         ]);
@@ -359,10 +368,10 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
     #[Framework\Attributes\Test]
     public function executeValidatesLocatedSitemapsIfValidateOptionIsGiven(): void
     {
-        $this->siteFinder->expectedSite = $this->site;
+        $this->siteFinder->method('getSiteByIdentifier')->willReturn($this->site);
 
         $this->commandTester->execute([
-            'site' => 'test-site',
+            'site' => $this->site->getIdentifier(),
             '--language' => 0,
             '--validate' => true,
         ]);
