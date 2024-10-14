@@ -23,6 +23,7 @@
 	},
 	"require-dev": {
 		"eliashaeussler/phpunit-attributes": "^1.2",
+		"eliashaeussler/version-bumper": "^1.2",
 		"phpunit/phpcov": "^9.0 || ^10.0",
 		"phpunit/phpunit": "^10.1 || ^11.0",
 		"symfony/event-dispatcher": "^5.4 || ^6.0 || ^7.0",
@@ -42,6 +43,7 @@
 	},
 	"config": {
 		"allow-plugins": {
+			"eliashaeussler/version-bumper": true,
 			"typo3/class-alias-loader": true,
 			"typo3/cms-composer-installers": true
 		},
