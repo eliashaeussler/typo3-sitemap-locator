@@ -55,6 +55,11 @@ Please have a look at the
 Extension icon by
 [UIcons](https://www.freepik.com/icon/radar_10461820#fromView=search&term=compass&page=1&position=62&track=ais).
 
+## 🔒 Security Policy
+
+Please read our [security policy](SECURITY.md) if you discover a security
+vulnerability in this extension.
+
 ## ⭐ License
 
 This project is licensed under [GNU General Public License 2.0 (or later)](LICENSE.md).
