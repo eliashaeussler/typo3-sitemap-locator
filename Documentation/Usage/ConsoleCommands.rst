@@ -33,7 +33,6 @@ language.
 The following command options are available:
 
 ..  confval:: site
-
     :Required: true
     :type: integer (root page ID) or string (site identifier)
     :Default: none
@@ -61,7 +60,6 @@ The following command options are available:
                 typo3/sysext/core/bin/typo3 sitemap-locator:locate main
 
 ..  confval:: -l|--language
-
     :Required: false
     :type: integer
     :Default: none (= default language)
@@ -89,7 +87,6 @@ The following command options are available:
                 typo3/sysext/core/bin/typo3 sitemap-locator:locate --language 1
 
 ..  confval:: -a|--all
-
     :Required: false
     :type: boolean
     :Default: false
@@ -116,7 +113,6 @@ The following command options are available:
                 typo3/sysext/core/bin/typo3 sitemap-locator:locate --all
 
 ..  confval:: --validate
-
     :Required: false
     :type: boolean
     :Default: false
@@ -144,7 +140,6 @@ The following command options are available:
                 typo3/sysext/core/bin/typo3 sitemap-locator:locate --validate
 
 ..  confval:: -j|--json
-
     :Required: false
     :type: boolean
     :Default: false

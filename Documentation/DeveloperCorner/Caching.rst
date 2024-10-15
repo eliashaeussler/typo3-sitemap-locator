@@ -21,8 +21,8 @@ the path to the XML sitemap is cached. Caching happens with a custom
 
         Get the located sitemaps of a given site.
 
-        :param TYPO3\\CMS\\Core\\Site\\Entity\\Site $site: The sitemap's site object.
-        :param TYPO3\\CMS\\Core\\Site\\Entity\\SiteLanguage $siteLanguage: An optional site language.
+        :param TYPO3\CMS\Core\Site\Entity\Site $site: The sitemap's site object.
+        :param TYPO3\CMS\Core\Site\Entity\SiteLanguage $siteLanguage: An optional site language.
         :returns: Located sitemaps of a given site.
 
     ..  php:method:: set($sitemaps)
