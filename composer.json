@@ -31,8 +31,6 @@
 		"typo3/cms-seo": "~11.5.4 || ~12.4.0 || ~13.4.0",
 		"typo3/testing-framework": "^7.0.2 || ^8.2.3"
 	},
-	"minimum-stability": "dev",
-	"prefer-stable": true,
 	"autoload": {
 		"psr-4": {
 			"EliasHaeussler\\Typo3SitemapLocator\\": "Classes/"
