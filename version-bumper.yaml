@@ -1,8 +1,7 @@
 filesToModify:
-  - path: Documentation/Settings.cfg
+  - path: Documentation/guides.xml
     patterns:
-      - 'release = {%version%}'
-    reportUnmatched: true
+      - 'release="{%version%}"'
   - path: ext_emconf.php
     patterns:
       - "'version' => '{%version%}'"

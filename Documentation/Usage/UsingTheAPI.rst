@@ -20,22 +20,22 @@ Read more about how to use this API on this page.
 
         Locate XML sitemaps of the given site and site language.
 
-        :param TYPO3\\CMS\\Core\\Site\\Entity\\Site $site: The site whose XML sitemap path should be located.
-        :param TYPO3\\CMS\\Core\\Site\\Entity\\SiteLanguage $siteLanguage: An optional site language to include while locating the XML sitemap path.
-        :returns: An array of instances of :php:class:`EliasHaeussler\\Typo3SitemapLocator\\Domain\\Model\\Sitemap`.
+        :param TYPO3\CMS\Core\Site\Entity\Site $site: The site whose XML sitemap path should be located.
+        :param TYPO3\CMS\Core\Site\Entity\SiteLanguage $siteLanguage: An optional site language to include while locating the XML sitemap path.
+        :returns: An array of instances of :php:`\EliasHaeussler\Typo3SitemapLocator\Domain\Model\Sitemap`.
 
     ..  php:method:: locateAllBySite($site)
 
         Locate XML sitemaps of the given site and all their available languages.
 
-        :param TYPO3\\CMS\\Core\\Site\\Entity\\Site $site: The site whose XML sitemap path should be located.
-        :returns: An array of instances of :php:class:`EliasHaeussler\\Typo3SitemapLocator\\Domain\\Model\\Sitemap`, indexed by the site language id.
+        :param TYPO3\CMS\Core\Site\Entity\Site $site: The site whose XML sitemap path should be located.
+        :returns: An array of instances of :php:`\EliasHaeussler\Typo3SitemapLocator\Domain\Model\Sitemap`, indexed by the site language id.
 
     ..  php:method:: isValidSitemap($sitemap)
 
         Check whether the given sitemap actually exists.
 
-        :param EliasHaeussler\\Typo3SitemapLocator\\Domain\\Model\\Sitemap $sitemap: The XML sitemap to check for existence
+        :param EliasHaeussler\Typo3SitemapLocator\Domain\Model\Sitemap $sitemap: The XML sitemap to check for existence
         :returntype: bool
 
 ..  _api-example:
@@ -43,7 +43,7 @@ Read more about how to use this API on this page.
 Example
 =======
 
-::
+..  code-block:: php
 
     use EliasHaeussler\Typo3SitemapLocator;
     use TYPO3\CMS\Core;

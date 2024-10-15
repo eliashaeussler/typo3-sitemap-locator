@@ -21,9 +21,9 @@ priority) to localize XML sitemaps according to certain criteria.
 
         Locate XML sitemaps of the given site.
 
-        :param TYPO3\\CMS\\Core\\Site\\Entity\\Site $site: The site whose XML sitemap path should be located.
-        :param TYPO3\\CMS\\Core\\Site\\Entity\\SiteLanguage $siteLanguage: An optional site language to include while locating the XML sitemap path.
-        :returns: An array of instances of :php:class:`EliasHaeussler\\Typo3SitemapLocator\\Domain\\Model\\Sitemap`.
+        :param TYPO3\CMS\Core\Site\Entity\Site $site: The site whose XML sitemap path should be located.
+        :param TYPO3\CMS\Core\Site\Entity\SiteLanguage $siteLanguage: An optional site language to include while locating the XML sitemap path.
+        :returns: An array of instances of :php:`\EliasHaeussler\Typo3SitemapLocator\Domain\Model\Sitemap`.
 
     ..  php:staticmethod:: getPriority()
 
@@ -77,23 +77,23 @@ Implement a custom provider
 ===========================
 
 To develop your own sitemap provider, it is only necessary to
-implement the :php:interface:`EliasHaeussler\\Typo3SitemapLocator\\Sitemap\\Provider\\Provider`
+implement the :php:`\EliasHaeussler\Typo3SitemapLocator\Sitemap\Provider\Provider`
 interface. In addition, the :php:`getPriority()` method must be
 used to define when the provider is executed.
 
 The order of the providers provided by default is as follows:
 
-+----------------------------------------------------------------------------------------+---------------------+
-| Sitemap provider                                                                       | Priority            |
-+========================================================================================+=====================+
-| :php:class:`EliasHaeussler\\Typo3SitemapLocator\\Sitemap\\Provider\\PageTypeProvider`  | 300                 |
-+----------------------------------------------------------------------------------------+---------------------+
-| :php:class:`EliasHaeussler\\Typo3SitemapLocator\\Sitemap\\Provider\\SiteProvider`      | 200                 |
-+----------------------------------------------------------------------------------------+---------------------+
-| :php:class:`EliasHaeussler\\Typo3SitemapLocator\\Sitemap\\Provider\\RobotsTxtProvider` | 100                 |
-+----------------------------------------------------------------------------------------+---------------------+
-| :php:class:`EliasHaeussler\\Typo3SitemapLocator\\Sitemap\\Provider\\DefaultProvider`   | :php:`PHP_INT_MIN`  |
-+----------------------------------------------------------------------------------------+---------------------+
++-------------------------------------------------------------------------------+---------------------+
+| Sitemap provider                                                              | Priority            |
++===============================================================================+=====================+
+| :php:`\EliasHaeussler\Typo3SitemapLocator\Sitemap\Provider\PageTypeProvider`  | 300                 |
++-------------------------------------------------------------------------------+---------------------+
+| :php:`\EliasHaeussler\Typo3SitemapLocator\Sitemap\Provider\SiteProvider`      | 200                 |
++-------------------------------------------------------------------------------+---------------------+
+| :php:`\EliasHaeussler\Typo3SitemapLocator\Sitemap\Provider\RobotsTxtProvider` | 100                 |
++-------------------------------------------------------------------------------+---------------------+
+| :php:`\EliasHaeussler\Typo3SitemapLocator\Sitemap\Provider\DefaultProvider`   | :php:`PHP_INT_MIN`  |
++-------------------------------------------------------------------------------+---------------------+
 
 Once your custom provider is ready, make sure to clear the DI
 caches in order to rebuild the service container properly.

@@ -11,7 +11,6 @@ the path to a related XML sitemap. The following configuration options are avail
 for this purpose:
 
 ..  confval:: xml_sitemap_path (site)
-
     :Path: xml_sitemap_path
     :type: string
 
@@ -22,7 +21,6 @@ for this purpose:
         :alt: Configuration of XML sitemap path within the Sites module
 
 ..  confval:: xml_sitemap_path (site_language)
-
     :Path: languages > (site language) > xml_sitemap_path
     :type: string
 

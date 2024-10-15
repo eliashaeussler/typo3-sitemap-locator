@@ -122,4 +122,3 @@ sitemap providers.
     :hidden:
 
     Sitemap
-    genindex
