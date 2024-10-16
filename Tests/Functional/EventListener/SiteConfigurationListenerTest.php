@@ -75,6 +75,22 @@ final class SiteConfigurationListenerTest extends TestingFramework\Core\Function
                 ),
             ),
         );
+
+        $this->cache->set(
+            'foo_1_1c526ad1bac1b1cce895c61f4a427529c672099d',
+            \sprintf(
+                'return %s;',
+                \var_export(
+                    [
+                        0 => [
+                            'https://www.example.com/de/baz',
+                            'https://www.example.com/de/bar',
+                        ],
+                    ],
+                    true,
+                ),
+            ),
+        );
     }
 
     #[Framework\Attributes\Test]
@@ -89,19 +105,40 @@ final class SiteConfigurationListenerTest extends TestingFramework\Core\Function
         ($this->subject)($event);
 
         self::assertTrue($this->cache->has('foo_0_42099b4af021e53fd8fd4e056c2568d7c2e3ffa8'));
+        self::assertTrue($this->cache->has('foo_1_1c526ad1bac1b1cce895c61f4a427529c672099d'));
     }
 
     #[Framework\Attributes\Test]
     public function invokeRemovesSitemapsCache(): void
     {
         $event = new Core\Configuration\Event\SiteConfigurationBeforeWriteEvent('foo', []);
-        $site = new Core\Site\Entity\Site('foo', 1, []);
+        $site = new Core\Site\Entity\Site('foo', 1, [
+            'languages' => [
+                0 => [
+                    'base' => '/',
+                    'languageId' => 0,
+                    'title' => 'Default',
+                    'navigationTitle' => '',
+                    'flag' => 'us',
+                    'locale' => 'en_US.UTF-8',
+                ],
+                1 => [
+                    'base' => '/de/',
+                    'languageId' => 1,
+                    'title' => 'German',
+                    'navigationTitle' => '',
+                    'flag' => 'de',
+                    'locale' => 'de_DE.UTF-8',
+                ],
+            ],
+        ]);
 
         $this->siteFinder->method('getSiteByIdentifier')->willReturn($site);
 
         ($this->subject)($event);
 
         self::assertFalse($this->cache->has('foo_0_42099b4af021e53fd8fd4e056c2568d7c2e3ffa8'));
+        self::assertFalse($this->cache->has('foo_0_1c526ad1bac1b1cce895c61f4a427529c672099d'));
     }
 
     protected function tearDown(): void

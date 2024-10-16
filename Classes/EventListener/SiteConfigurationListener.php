@@ -48,6 +48,8 @@ final class SiteConfigurationListener
             return;
         }
 
-        $this->cache->remove($site);
+        foreach ($site->getLanguages() as $siteLanguage) {
+            $this->cache->remove($site, $siteLanguage);
+        }
     }
 }
