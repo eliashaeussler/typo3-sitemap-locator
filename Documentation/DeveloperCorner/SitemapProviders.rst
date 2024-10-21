@@ -77,7 +77,7 @@ Implement a custom provider
 ===========================
 
 To develop your own sitemap provider, it is only necessary to
-implement the :php:`\EliasHaeussler\Typo3SitemapLocator\Sitemap\Provider\Provider`
+implement the :php:interface:`\EliasHaeussler\Typo3SitemapLocator\Sitemap\Provider\Provider`
 interface. In addition, the :php:`getPriority()` method must be
 used to define when the provider is executed.
 
