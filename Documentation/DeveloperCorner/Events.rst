@@ -18,7 +18,7 @@ SitemapsLocatedEvent
 ====================
 
 This event is dispatched right after an XML sitemap is located via
-:php:`\EliasHaeussler\Typo3SitemapLocator\Sitemap\SitemapLocator::locateBySite`.
+:php:meth:`\EliasHaeussler\Typo3SitemapLocator\Sitemap\SitemapLocator::locateBySite`.
 It allows to modify the list of located XML sitemaps and also provides
 the used site and site language.
 
@@ -27,7 +27,7 @@ the used site and site language.
 SitemapValidatedEvent
 =====================
 
-When :php:`\EliasHaeussler\Typo3SitemapLocator\Sitemap\SitemapLocator::isValidSitemap`
+When :php:meth:`\EliasHaeussler\Typo3SitemapLocator\Sitemap\SitemapLocator::isValidSitemap`
 is called, a request to the given sitemap URL is dispatched. If this
 request fails or returns a status code of `400` or higher, the sitemap
 is considered invalid. Right after the validity check, this event is
