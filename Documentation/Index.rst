@@ -41,72 +41,46 @@ sitemap providers.
 
 ----
 
-..  container:: row m-0 p-0
+..  card-grid::
+    :columns: 1
+    :columns-md: 2
+    :gap: 4
+    :card-height: 100
 
-    ..  container:: col-12 col-md-6 pl-0 pr-0 pr-md-3 pt-3 m-0
+    ..  card::  Introduction
 
-        ..  container:: card px-0 h-100
+        A quick overview about the main features provided by this extension.
 
-            ..  rst-class:: card-header h3
+        ..  card-footer::   :ref:`Learn more about this extension <introduction>`
+            :button-style: btn btn-secondary stretched-link
 
-                ..  rubric:: :ref:`introduction`
+    ..  card::  Installation
 
-            ..  container:: card-body
+        Instructions on how to install this extension and which TYPO3 and PHP versions are currently supported.
 
-                A quick overview about the main features provided
-                by this extension.
+        ..  card-footer::   :ref:`Getting started <installation>`
+            :button-style: btn btn-secondary stretched-link
 
-    ..  container:: col-12 col-md-6 pl-0 pr-0 pr-md-3 pt-3 m-0
+    ..  card::  Configuration
 
-        ..  container:: card px-0 h-100
+        Learn how to configure the extension for extended usage. By default, no special configuration is required.
 
-            ..  rst-class:: card-header h3
+        ..  card-footer::   :ref:`View configuration options <configuration>`
+            :button-style: btn btn-secondary stretched-link
 
-                ..  rubric:: :ref:`installation`
+    ..  card::  Usage
 
-            ..  container:: card-body
+        This section describes how to use this extension in your application to locate XML sitemaps.
 
-                Instructions on how to install this extension and
-                which TYPO3 and PHP versions are currently supported.
+        ..  card-footer::   :ref:`Learn how to use this extension <usage>`
+            :button-style: btn btn-secondary stretched-link
 
-    ..  container:: col-12 col-md-6 pl-0 pr-0 pr-md-3 pt-3 m-0
+    ..  card::  Developer corner
 
-        ..  container:: card px-0 h-100
+        A quick overview about all relevant classes provided by this extension.
 
-            ..  rst-class:: card-header h3
-
-                ..  rubric:: :ref:`configuration`
-
-            ..  container:: card-body
-
-                Learn how to configure the extension for extended
-                usage. By default, no special configuration is required.
-
-    ..  container:: col-12 col-md-6 pl-0 pr-0 pr-md-3 pt-3 m-0
-
-        ..  container:: card px-0 h-100
-
-            ..  rst-class:: card-header h3
-
-                ..  rubric:: :ref:`usage`
-
-            ..  container:: card-body
-
-                This section describes how to use this extension in
-                your application to locate XML sitemaps.
-
-    ..  container:: col-12 col-md-6 pl-0 pr-0 pr-md-3 pt-3 m-0
-
-        ..  container:: card px-0 h-100
-
-            ..  rst-class:: card-header h3
-
-                ..  rubric:: :ref:`developer-corner`
-
-            ..  container:: card-body
-
-                A quick overview about all relevant classes provided
-                by this extension.
+        ..  card-footer::   :ref:`Deep dive into classes & concepts <developer-corner>`
+            :button-style: btn btn-secondary stretched-link
 
 ..  toctree::
     :hidden:
