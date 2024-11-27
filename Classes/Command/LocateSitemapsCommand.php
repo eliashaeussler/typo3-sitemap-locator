@@ -228,9 +228,10 @@ final class LocateSitemapsCommand extends Console\Command\Command
 
         // Decorate sites
         foreach ($sites as $site) {
+            $pageTitle = Utility\BackendUtility::getPageTitle($site->getRootPageId());
             $decoratedSites[$site->getIdentifier()] = sprintf(
                 '%s (%d)',
-                Utility\BackendUtility::getPageTitle($site->getRootPageId()) ?? $site->getIdentifier(),
+                $pageTitle ?? $site->getIdentifier(),
                 $site->getRootPageId(),
             );
         }
