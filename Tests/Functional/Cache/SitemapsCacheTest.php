@@ -311,7 +311,7 @@ final class SitemapsCacheTest extends TestingFramework\Core\Functional\Functiona
 
     private function calculateCacheIdentifier(
         Core\Site\Entity\Site $site,
-        Core\Site\Entity\SiteLanguage $siteLanguage = null,
+        ?Core\Site\Entity\SiteLanguage $siteLanguage = null,
     ): string {
         if ($siteLanguage === null) {
             $siteLanguage = $site->getDefaultLanguage();

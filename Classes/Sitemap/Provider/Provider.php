@@ -39,7 +39,7 @@ interface Provider
      */
     public function get(
         Core\Site\Entity\Site $site,
-        Core\Site\Entity\SiteLanguage $siteLanguage = null,
+        ?Core\Site\Entity\SiteLanguage $siteLanguage = null,
     ): array;
 
     public static function getPriority(): int;

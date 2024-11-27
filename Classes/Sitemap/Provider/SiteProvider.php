@@ -37,7 +37,7 @@ final class SiteProvider implements Provider
 {
     public function get(
         Core\Site\Entity\Site $site,
-        Core\Site\Entity\SiteLanguage $siteLanguage = null,
+        ?Core\Site\Entity\SiteLanguage $siteLanguage = null,
     ): array {
         if ($siteLanguage !== null && $siteLanguage !== $site->getDefaultLanguage()) {
             $sitemapPath = $siteLanguage->toArray()['xml_sitemap_path'] ?? null;

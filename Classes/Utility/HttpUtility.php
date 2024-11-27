@@ -37,7 +37,7 @@ final class HttpUtility
     public static function getSiteUrlWithPath(
         Core\Site\Entity\Site $site,
         string $path,
-        Core\Site\Entity\SiteLanguage $siteLanguage = null,
+        ?Core\Site\Entity\SiteLanguage $siteLanguage = null,
     ): Message\UriInterface {
         $baseUrl = $siteLanguage !== null ? $siteLanguage->getBase() : $site->getBase();
         $fullPath = rtrim($baseUrl->getPath(), '/') . '/' . ltrim($path, '/');
