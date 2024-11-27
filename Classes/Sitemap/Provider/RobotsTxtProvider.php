@@ -44,7 +44,7 @@ final class RobotsTxtProvider implements Provider
 
     public function get(
         Core\Site\Entity\Site $site,
-        Core\Site\Entity\SiteLanguage $siteLanguage = null,
+        ?Core\Site\Entity\SiteLanguage $siteLanguage = null,
     ): array {
         $robotsTxtUri = Utility\HttpUtility::getSiteUrlWithPath($site, 'robots.txt', $siteLanguage);
         $robotsTxt = $this->fetchRobotsTxt($robotsTxtUri);

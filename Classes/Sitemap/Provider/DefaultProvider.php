@@ -39,7 +39,7 @@ final class DefaultProvider implements Provider
 
     public function get(
         Core\Site\Entity\Site $site,
-        Core\Site\Entity\SiteLanguage $siteLanguage = null,
+        ?Core\Site\Entity\SiteLanguage $siteLanguage = null,
     ): array {
         $sitemap = new Domain\Model\Sitemap(
             Utility\HttpUtility::getSiteUrlWithPath($site, self::DEFAULT_PATH, $siteLanguage),
