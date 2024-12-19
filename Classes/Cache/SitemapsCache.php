@@ -43,7 +43,7 @@ final class SitemapsCache
      */
     public function get(
         Core\Site\Entity\Site $site,
-        Core\Site\Entity\SiteLanguage $siteLanguage = null,
+        ?Core\Site\Entity\SiteLanguage $siteLanguage = null,
     ): array {
         $cacheIdentifier = $this->calculateCacheIdentifier($site, $siteLanguage);
         $cacheData = $this->readCache($cacheIdentifier);
@@ -109,7 +109,7 @@ final class SitemapsCache
      */
     public function remove(
         Core\Site\Entity\Site $site,
-        Core\Site\Entity\SiteLanguage $siteLanguage = null,
+        ?Core\Site\Entity\SiteLanguage $siteLanguage = null,
     ): void {
         $cacheIdentifier = $this->calculateCacheIdentifier($site, $siteLanguage);
 
@@ -145,7 +145,7 @@ final class SitemapsCache
 
     private function calculateCacheIdentifier(
         Core\Site\Entity\Site $site,
-        Core\Site\Entity\SiteLanguage $siteLanguage = null,
+        ?Core\Site\Entity\SiteLanguage $siteLanguage = null,
     ): string {
         if ($siteLanguage === null) {
             $siteLanguage = $site->getDefaultLanguage();

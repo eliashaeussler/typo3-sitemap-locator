@@ -46,7 +46,7 @@ final class PageTypeProvider implements Provider
 
     public function get(
         Core\Site\Entity\Site $site,
-        Core\Site\Entity\SiteLanguage $siteLanguage = null,
+        ?Core\Site\Entity\SiteLanguage $siteLanguage = null,
     ): array {
         // Early return if EXT:seo is not installed
         if (!Core\Utility\ExtensionManagementUtility::isLoaded('seo')) {
