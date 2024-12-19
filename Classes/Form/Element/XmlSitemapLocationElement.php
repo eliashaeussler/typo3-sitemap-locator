@@ -56,7 +56,7 @@ final class XmlSitemapLocationElement extends Backend\Form\Element\AbstractFormE
     /**
      * @todo Use DI once support for TYPO3 v12 is dropped
      */
-    public function __construct(Backend\Form\NodeFactory $nodeFactory = null, array $data = [])
+    public function __construct(?Backend\Form\NodeFactory $nodeFactory = null, array $data = [])
     {
         if ((new Core\Information\Typo3Version())->getMajorVersion() < 13) {
             parent::__construct($nodeFactory, $data);

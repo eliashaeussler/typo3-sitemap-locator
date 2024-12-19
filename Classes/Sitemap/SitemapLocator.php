@@ -61,7 +61,7 @@ final class SitemapLocator
      */
     public function locateBySite(
         Core\Site\Entity\Site $site,
-        Core\Site\Entity\SiteLanguage $siteLanguage = null,
+        ?Core\Site\Entity\SiteLanguage $siteLanguage = null,
     ): array {
         // Get sitemaps from cache
         if (($sitemaps = $this->cache->get($site, $siteLanguage)) !== []) {
@@ -131,7 +131,7 @@ final class SitemapLocator
      */
     private function resolveSitemaps(
         Core\Site\Entity\Site $site,
-        Core\Site\Entity\SiteLanguage $siteLanguage = null,
+        ?Core\Site\Entity\SiteLanguage $siteLanguage = null,
     ): array {
         foreach ($this->providers as $provider) {
             if (($sitemaps = $provider->get($site, $siteLanguage)) !== []) {
