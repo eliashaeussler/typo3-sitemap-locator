@@ -112,7 +112,7 @@ final class SitemapLocator
     {
         // Check if sitemap is accessible
         try {
-            $response = $this->requestFactory->request((string)$sitemap->getUri(), 'HEAD');
+            $response = $this->requestFactory->request((string)$sitemap->getUri());
             $isValid = $response->getStatusCode() < 400;
         } catch (\Exception $exception) {
             $response = $exception instanceof RequestException ? $exception->getResponse() : null;
