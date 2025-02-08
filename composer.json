@@ -59,7 +59,7 @@
 	},
 	"scripts": {
 		"post-install-cmd": [
-			"@composer -d Tests/CGL install"
+			"@cgl install"
 		],
 		"cgl": "@composer -d Tests/CGL --",
 		"docs": [

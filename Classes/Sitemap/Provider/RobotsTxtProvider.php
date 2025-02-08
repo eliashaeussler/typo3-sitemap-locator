@@ -59,15 +59,13 @@ final class RobotsTxtProvider implements Provider
             return [];
         }
 
-        return array_values(
-            array_map(
-                static fn(string $url) => new Domain\Model\Sitemap(
-                    new Core\Http\Uri($url),
-                    $site,
-                    $siteLanguage ?? $site->getDefaultLanguage(),
-                ),
-                $matches['url'],
+        return array_map(
+            static fn(string $url) => new Domain\Model\Sitemap(
+                new Core\Http\Uri($url),
+                $site,
+                $siteLanguage ?? $site->getDefaultLanguage(),
             ),
+            $matches['url'],
         );
     }
 

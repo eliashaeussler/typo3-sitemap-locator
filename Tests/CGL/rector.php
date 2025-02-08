@@ -24,6 +24,7 @@ declare(strict_types=1);
 use EliasHaeussler\RectorConfig\Config\Config;
 use Rector\Config\RectorConfig;
 use Rector\Php80\Rector\Class_\AnnotationToAttributeRector;
+use Rector\Symfony\DependencyInjection\Rector\Trait_\TraitGetByTypeToInjectRector;
 use Rector\ValueObject\PhpVersion;
 
 return static function (RectorConfig $rectorConfig): void {
@@ -52,6 +53,9 @@ return static function (RectorConfig $rectorConfig): void {
             $rootPath . '/Classes/Sitemap/Provider/PageTypeProvider.php',
             $rootPath . '/Classes/Sitemap/Provider/RobotsTxtProvider.php',
             $rootPath . '/Classes/Sitemap/Provider/SiteProvider.php',
+        ])
+        ->skip(TraitGetByTypeToInjectRector::class, [
+            $rootPath . '/Tests/Functional/SiteTrait.php',
         ])
         ->apply()
     ;
