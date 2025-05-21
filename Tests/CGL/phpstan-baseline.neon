@@ -28,6 +28,12 @@ parameters:
 			path: ../../Classes/Form/Element/XmlSitemapLocationElement.php
 
 		-
+			message: '#^Call to function is_a\(\) with EliasHaeussler\\Typo3SitemapLocator\\Sitemap\\Provider\\Provider and ''EliasHaeussler\\\\Typo3SitemapLocator\\\\Sitemap\\\\Provider\\\\Provider'' will always evaluate to true\.$#'
+			identifier: function.alreadyNarrowedType
+			count: 1
+			path: ../../Classes/Sitemap/SitemapLocator.php
+
+		-
 			message: '#^Call to function is_object\(\) with EliasHaeussler\\Typo3SitemapLocator\\Sitemap\\Provider\\Provider will always evaluate to true\.$#'
 			identifier: function.alreadyNarrowedType
 			count: 1
