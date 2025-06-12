@@ -6,11 +6,8 @@
 ..  image:: https://img.shields.io/codeclimate/maintainability/eliashaeussler/typo3-sitemap-locator?logo=codeclimate
     :target: https://codeclimate.com/github/eliashaeussler/typo3-sitemap-locator/maintainability
 
-..  image:: https://img.shields.io/github/actions/workflow/status/eliashaeussler/typo3-sitemap-locator/cgl.yaml?label=cgl&logo=github
-    :target: https://github.com/eliashaeussler/typo3-sitemap-locator/actions/workflows/cgl.yaml
-
-..  image:: https://img.shields.io/github/actions/workflow/status/eliashaeussler/typo3-sitemap-locator/tests.yaml?label=tests&logo=github
-    :target: https://github.com/eliashaeussler/typo3-sitemap-locator/actions/workflows/tests.yaml
+..  image:: https://img.shields.io/github/actions/workflow/status/eliashaeussler/typo3-sitemap-locator/ci.yaml?label=CI&logo=github
+    :target: https://github.com/eliashaeussler/typo3-sitemap-locator/actions/workflows/ci.yaml
 
 ..  _contributing:
 
@@ -75,6 +72,19 @@ Next, install all dependencies:
     ddev composer install
 
 You can access the DDEV site at https://typo3-ext-sitemap-locator.ddev.site/.
+
+..  _analyze-code:
+
+Analyze code
+------------
+
+..  code-block:: bash
+
+    # All analyzers
+    ddev cgl analyze
+
+    # Specific analyzers
+    ddev cgl analyze:dependencies
 
 ..  _check-code-quality:
 
