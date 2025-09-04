@@ -27,7 +27,7 @@ Features
 -   Support of various :ref:`sitemap providers <sitemap-providers>`
     (e.g. :file:`robots.txt` or custom location)
 -   Interface to implement :ref:`custom sitemap providers <implement-a-custom-provider>`
--   Compatible with TYPO3 13.4 LTS
+-   Compatible with TYPO3 13.4 LTS and 14.0
     (see :ref:`version matrix <version-matrix>`)
 
 ..  _support:
