@@ -35,12 +35,12 @@ use TYPO3\CMS\Core;
 final class PageTypeProvider implements Provider
 {
     /**
-     * @see https://github.com/TYPO3/typo3/blob/v12.4.0/typo3/sysext/core/Configuration/DefaultConfiguration.php#L118
+     * @see https://github.com/TYPO3/typo3/blob/v13.4.0/typo3/sysext/core/Configuration/DefaultConfiguration.php#L130
      */
     private const EXPECTED_ENHANCER_TYPE = 'PageType';
 
     /**
-     * @see https://github.com/TYPO3/typo3/blob/v12.4.0/typo3/sysext/seo/Configuration/TypoScript/XmlSitemap/setup.typoscript#L3
+     * @see https://github.com/TYPO3/typo3/blob/v13.4.0/typo3/sysext/seo/Configuration/TypoScript/XmlSitemap/setup.typoscript#L3
      */
     private const EXPECTED_PAGE_TYPE = 1533906435;
 

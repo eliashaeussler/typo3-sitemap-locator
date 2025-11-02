@@ -35,11 +35,11 @@ use TYPO3\CMS\Core;
  * @license GPL-2.0-or-later
  * @internal
  */
-final class TextFormatter implements Formatter
+final readonly class TextFormatter implements Formatter
 {
     public function __construct(
-        private readonly Console\Output\OutputInterface&Console\Style\StyleInterface $output,
-        private readonly Sitemap\SitemapLocator $sitemapLocator,
+        private Console\Output\OutputInterface&Console\Style\StyleInterface $output,
+        private Sitemap\SitemapLocator $sitemapLocator,
     ) {}
 
     public function formatSitemaps(

@@ -23,7 +23,6 @@ declare(strict_types=1);
 
 namespace EliasHaeussler\Typo3SitemapLocator\Tests\Functional\EventListener;
 
-use EliasHaeussler\PHPUnitAttributes;
 use EliasHaeussler\Typo3SitemapLocator as Src;
 use PHPUnit\Framework;
 use TYPO3\CMS\Core;
@@ -36,7 +35,6 @@ use TYPO3\TestingFramework;
  * @license GPL-2.0-or-later
  */
 #[Framework\Attributes\CoversClass(Src\EventListener\SiteConfigurationListener::class)]
-#[PHPUnitAttributes\Attribute\RequiresPackage('typo3/cms-core', '>= 12')] // @todo Remove once support for TYPO3 v11 is dropped
 final class SiteConfigurationListenerTest extends TestingFramework\Core\Functional\FunctionalTestCase
 {
     protected array $testExtensionsToLoad = [
