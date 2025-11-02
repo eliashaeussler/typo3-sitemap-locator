@@ -32,11 +32,12 @@ use TYPO3\CMS\Core;
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-2.0-or-later
  */
-final class SiteConfigurationListener
+#[Core\Attribute\AsEventListener('sitemapLocatorSiteConfigurationListener')]
+final readonly class SiteConfigurationListener
 {
     public function __construct(
-        private readonly Cache\SitemapsCache $cache,
-        private readonly Core\Site\SiteFinder $siteFinder,
+        private Cache\SitemapsCache $cache,
+        private Core\Site\SiteFinder $siteFinder,
     ) {}
 
     public function __invoke(Core\Configuration\Event\SiteConfigurationBeforeWriteEvent $event): void

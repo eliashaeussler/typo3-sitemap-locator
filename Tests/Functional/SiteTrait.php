@@ -38,37 +38,20 @@ trait SiteTrait
     private function createSite(string $baseUrl = 'https://typo3-testing.local/'): Core\Site\Entity\Site
     {
         $configPath = $this->instancePath . '/typo3conf/sites';
-        $typo3Version = new Core\Information\Typo3Version();
+        $eventDispatcher = new Core\EventDispatcher\NoopEventDispatcher();
+        $yamlFileLoader = $this->get(Core\Configuration\Loader\YamlFileLoader::class);
 
-        if ($typo3Version->getMajorVersion() >= 13) {
-            $eventDispatcher = new Core\EventDispatcher\NoopEventDispatcher();
-            $yamlFileLoader = $this->get(Core\Configuration\Loader\YamlFileLoader::class);
+        $siteConfiguration = new Core\Configuration\SiteConfiguration(
+            $configPath,
+            $this->get(Core\Site\SiteSettingsFactory::class),
+            $this->get(Core\Site\Set\SetRegistry::class),
+            $eventDispatcher,
+            new Core\Cache\Frontend\NullFrontend('core'),
+            $yamlFileLoader,
+            new Core\Cache\Frontend\NullFrontend('runtime'),
+        );
 
-            $siteConfiguration = new Core\Configuration\SiteConfiguration(
-                $configPath,
-                $this->get(Core\Site\SiteSettingsFactory::class),
-                $this->get(Core\Site\Set\SetRegistry::class),
-                $eventDispatcher,
-                new Core\Cache\Frontend\NullFrontend('core'),
-                $yamlFileLoader,
-                new Core\Cache\Frontend\NullFrontend('runtime'),
-            );
-            $siteWriter = new Core\Configuration\SiteWriter(
-                $configPath,
-                $eventDispatcher,
-                $yamlFileLoader,
-            );
-        } elseif ($typo3Version->getMajorVersion() >= 12) {
-            // @todo Remove once support for TYPO3 v12 is dropped
-            $siteConfiguration = $siteWriter = new Core\Configuration\SiteConfiguration(
-                $configPath,
-                new Core\EventDispatcher\NoopEventDispatcher(),
-            );
-        } else {
-            // @todo Remove once support for TYPO3 v11 is dropped
-            $siteConfiguration = $siteWriter = new Core\Configuration\SiteConfiguration($configPath);
-        }
-
+        $siteWriter = new Core\Configuration\SiteWriter($configPath, $eventDispatcher, $yamlFileLoader);
         $siteWriter->createNewBasicSite(static::$testSiteIdentifier, 1, $baseUrl);
 
         $rawConfig = $siteConfiguration->load(static::$testSiteIdentifier);
