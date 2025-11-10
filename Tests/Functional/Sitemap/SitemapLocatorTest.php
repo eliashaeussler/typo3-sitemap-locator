@@ -39,24 +39,30 @@ use TYPO3\TestingFramework;
 #[Framework\Attributes\CoversClass(Src\Sitemap\SitemapLocator::class)]
 final class SitemapLocatorTest extends TestingFramework\Core\Functional\FunctionalTestCase
 {
+    use Tests\Functional\ClientMockTrait;
+
     protected array $testExtensionsToLoad = [
         'sitemap_locator',
     ];
 
     private Src\Cache\SitemapsCache $cache;
     private EventDispatcher\EventDispatcher $eventDispatcher;
-    private Tests\Unit\Fixtures\DummyRequestFactory $requestFactory;
+    private Src\Http\Client\ClientFactory $clientFactory;
     private Src\Sitemap\SitemapLocator $subject;
 
     protected function setUp(): void
     {
         parent::setUp();
 
+        $this->registerMockHandler();
+
         $this->cache = $this->get(Src\Cache\SitemapsCache::class);
-        $this->eventDispatcher = new EventDispatcher\EventDispatcher();
-        $this->requestFactory = new Tests\Unit\Fixtures\DummyRequestFactory();
+        $this->clientFactory = $this->get(Src\Http\Client\ClientFactory::class);
         $this->subject = new Src\Sitemap\SitemapLocator(
-            $this->requestFactory,
+            new Src\Http\Client\ClientFactory(
+                new Core\Http\Client\GuzzleClientFactory(),
+                $this->eventDispatcher,
+            ),
             $this->cache,
             $this->eventDispatcher,
             [new Src\Sitemap\Provider\DefaultProvider()],
@@ -80,7 +86,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
             new Src\Exception\ProviderIsNotSupported('foo'),
         );
 
-        new Src\Sitemap\SitemapLocator($this->requestFactory, $this->cache, $this->eventDispatcher, $providers);
+        new Src\Sitemap\SitemapLocator($this->clientFactory, $this->cache, $this->eventDispatcher, $providers);
     }
 
     #[Framework\Attributes\Test]
@@ -94,7 +100,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
             new Src\Exception\ProviderIsInvalid(new \stdClass()),
         );
 
-        new Src\Sitemap\SitemapLocator($this->requestFactory, $this->cache, $this->eventDispatcher, $providers);
+        new Src\Sitemap\SitemapLocator($this->clientFactory, $this->cache, $this->eventDispatcher, $providers);
     }
 
     #[Framework\Attributes\Test]
@@ -135,10 +141,10 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
     {
         $site = self::getSite();
         $subject = new Src\Sitemap\SitemapLocator(
-            $this->requestFactory,
+            $this->clientFactory,
             $this->cache,
             $this->eventDispatcher,
-            []
+            [],
         );
 
         $this->expectExceptionObject(
@@ -280,7 +286,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
             $site->getDefaultLanguage(),
         );
 
-        $this->requestFactory->handler->append(
+        $this->createMockHandler()->append(
             new Core\Http\Response(),
         );
 
@@ -301,7 +307,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
     #[Framework\Attributes\Test]
     public function isValidSitemapReturnsFalseOnInaccessibleSitemap(): void
     {
-        $this->requestFactory->handler->append(
+        $this->createMockHandler()->append(
             new \Exception(),
         );
 
@@ -318,7 +324,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
     #[Framework\Attributes\Test]
     public function isValidSitemapReturnsFalseOnFailedRequest(): void
     {
-        $this->requestFactory->handler->append(
+        $this->createMockHandler()->append(
             new Core\Http\Response(null, 404),
         );
 
@@ -335,7 +341,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
     #[Framework\Attributes\Test]
     public function isValidSitemapReturnsTrueOnSuccessfulRequest(): void
     {
-        $this->requestFactory->handler->append(
+        $this->createMockHandler()->append(
             new Core\Http\Response(),
         );
 

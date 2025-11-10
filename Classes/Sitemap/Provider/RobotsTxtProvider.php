@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace EliasHaeussler\Typo3SitemapLocator\Sitemap\Provider;
 
 use EliasHaeussler\Typo3SitemapLocator\Domain;
+use EliasHaeussler\Typo3SitemapLocator\Http;
 use EliasHaeussler\Typo3SitemapLocator\Utility;
 use Psr\Http\Message;
 use TYPO3\CMS\Core;
@@ -39,7 +40,7 @@ final class RobotsTxtProvider implements Provider
     private const SITEMAP_PATTERN = '#^Sitemap:\s*(?P<url>https?://[^\r\n]+)#im';
 
     public function __construct(
-        private readonly Core\Http\RequestFactory $requestFactory,
+        private readonly Http\Client\ClientFactory $clientFactory,
     ) {}
 
     public function get(
@@ -72,7 +73,7 @@ final class RobotsTxtProvider implements Provider
     private function fetchRobotsTxt(Message\UriInterface $uri): ?string
     {
         try {
-            $response = $this->requestFactory->request((string)$uri);
+            $response = $this->clientFactory->get()->request('GET', $uri);
 
             return $response->getBody()->getContents();
         } catch (\Exception) {

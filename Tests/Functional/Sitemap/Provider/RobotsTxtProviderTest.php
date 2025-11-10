@@ -21,7 +21,7 @@ declare(strict_types=1);
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace EliasHaeussler\Typo3SitemapLocator\Tests\Unit\Sitemap\Provider;
+namespace EliasHaeussler\Typo3SitemapLocator\Tests\Functional\Sitemap\Provider;
 
 use EliasHaeussler\Typo3SitemapLocator as Src;
 use EliasHaeussler\Typo3SitemapLocator\Tests;
@@ -36,9 +36,14 @@ use TYPO3\TestingFramework;
  * @license GPL-2.0-or-later
  */
 #[Framework\Attributes\CoversClass(Src\Sitemap\Provider\RobotsTxtProvider::class)]
-final class RobotsTxtProviderTest extends TestingFramework\Core\Unit\UnitTestCase
+final class RobotsTxtProviderTest extends TestingFramework\Core\Functional\FunctionalTestCase
 {
-    private Tests\Unit\Fixtures\DummyRequestFactory $requestFactory;
+    use Tests\Functional\ClientMockTrait;
+
+    protected array $testExtensionsToLoad = [
+        'sitemap_locator',
+    ];
+
     private Core\Site\Entity\Site $site;
     private Src\Sitemap\Provider\RobotsTxtProvider $subject;
 
@@ -46,15 +51,21 @@ final class RobotsTxtProviderTest extends TestingFramework\Core\Unit\UnitTestCas
     {
         parent::setUp();
 
-        $this->requestFactory = new Tests\Unit\Fixtures\DummyRequestFactory();
+        $this->registerMockHandler();
+
         $this->site = new Core\Site\Entity\Site('foo', 1, ['base' => 'https://www.example.com/']);
-        $this->subject = new Src\Sitemap\Provider\RobotsTxtProvider($this->requestFactory);
+        $this->subject = new Src\Sitemap\Provider\RobotsTxtProvider(
+            new Src\Http\Client\ClientFactory(
+                new Core\Http\Client\GuzzleClientFactory(),
+                $this->eventDispatcher,
+            ),
+        );
     }
 
     #[Framework\Attributes\Test]
     public function getReturnsEmptyArrayIfNoRobotsTxtExists(): void
     {
-        $this->requestFactory->handler->append(
+        $this->createMockHandler()->append(
             new \Exception(),
         );
 
@@ -69,7 +80,7 @@ final class RobotsTxtProviderTest extends TestingFramework\Core\Unit\UnitTestCas
         $body->write('foo');
         $body->rewind();
 
-        $this->requestFactory->handler->append($response);
+        $this->createMockHandler()->append($response);
 
         self::assertSame([], $this->subject->get($this->site));
     }
@@ -87,7 +98,7 @@ TXT
         );
         $body->rewind();
 
-        $this->requestFactory->handler->append($response);
+        $this->createMockHandler()->append($response);
 
         $expected = [
             new Src\Domain\Model\Sitemap(

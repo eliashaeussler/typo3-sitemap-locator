@@ -272,15 +272,3 @@ parameters:
 			identifier: argument.type
 			count: 1
 			path: ../Functional/Utility/HttpUtilityTest.php
-
-		-
-			message: '#^EliasHaeussler\\Typo3SitemapLocator\\Tests\\Unit\\Fixtures\\DummyRequestFactory\:\:__construct\(\) does not call parent constructor from TYPO3\\CMS\\Core\\Http\\RequestFactory\.$#'
-			identifier: constructor.missingParentCall
-			count: 1
-			path: ../Unit/Fixtures/DummyRequestFactory.php
-
-		-
-			message: '#^Parameter \#3 \$options \(array\<string, mixed\>\) of method EliasHaeussler\\Typo3SitemapLocator\\Tests\\Unit\\Fixtures\\DummyRequestFactory\:\:request\(\) should be contravariant with parameter \$options \(array\) of method TYPO3\\CMS\\Core\\Http\\RequestFactory\:\:request\(\)$#'
-			identifier: method.childParameterType
-			count: 1
-			path: ../Unit/Fixtures/DummyRequestFactory.php

@@ -12,6 +12,20 @@ location and validation process.
 
 The following events are currently dispatched:
 
+..  _before-client-configured-event:
+
+BeforeClientConfiguredEvent
+===========================
+
+..  versionadded:: 0.2.0
+
+    `Feature: #148 - Allow configuration of Guzzle client options <https://github.com/eliashaeussler/typo3-sitemap-locator/pull/148>`__
+
+Once the Guzzle client is used for external HTTP requests, this event
+is dispatched to allow modification of the HTTP client configuration.
+All available `Guzzle client config options <https://docs.guzzlephp.org/en/stable/quickstart.html#creating-a-client>`__
+can be used.
+
 ..  _sitemaps-located-event:
 
 SitemapsLocatedEvent

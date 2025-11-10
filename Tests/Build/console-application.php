@@ -24,6 +24,7 @@ declare(strict_types=1);
 use Composer\Autoload;
 use EliasHaeussler\Typo3SitemapLocator\Cache;
 use EliasHaeussler\Typo3SitemapLocator\Command;
+use EliasHaeussler\Typo3SitemapLocator\Http;
 use EliasHaeussler\Typo3SitemapLocator\Sitemap;
 use Symfony\Component\Console;
 use TYPO3\CMS\Core;
@@ -41,7 +42,10 @@ $container = Core\Core\Bootstrap::init($classLoader);
 // Create command
 $locateCommand = new Command\LocateSitemapsCommand(
     new Sitemap\SitemapLocator(
-        $container->get(Core\Http\RequestFactory::class),
+        new Http\Client\ClientFactory(
+            $container->get(Core\Http\Client\GuzzleClientFactory::class),
+            new Core\EventDispatcher\NoopEventDispatcher(),
+        ),
         new Cache\SitemapsCache(
             new Core\Cache\Frontend\NullFrontend('sitemap_locator'),
         ),
