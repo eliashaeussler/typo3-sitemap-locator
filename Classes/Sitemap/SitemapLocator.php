@@ -27,6 +27,7 @@ use EliasHaeussler\Typo3SitemapLocator\Cache;
 use EliasHaeussler\Typo3SitemapLocator\Domain;
 use EliasHaeussler\Typo3SitemapLocator\Event;
 use EliasHaeussler\Typo3SitemapLocator\Exception;
+use EliasHaeussler\Typo3SitemapLocator\Http;
 use EliasHaeussler\Typo3SitemapLocator\Utility;
 use GuzzleHttp\Exception\RequestException;
 use Psr\EventDispatcher;
@@ -46,7 +47,7 @@ final class SitemapLocator
      * @throws Exception\ProviderIsNotSupported
      */
     public function __construct(
-        private readonly Core\Http\RequestFactory $requestFactory,
+        private readonly Http\Client\ClientFactory $clientFactory,
         private readonly Cache\SitemapsCache $cache,
         private readonly EventDispatcher\EventDispatcherInterface $eventDispatcher,
         private readonly iterable $providers,
@@ -112,7 +113,7 @@ final class SitemapLocator
     {
         // Check if sitemap is accessible
         try {
-            $response = $this->requestFactory->request((string)$sitemap->getUri(), 'HEAD');
+            $response = $this->clientFactory->get()->request('HEAD', $sitemap->getUri());
             $isValid = $response->getStatusCode() < 400;
         } catch (\Exception $exception) {
             $response = $exception instanceof RequestException ? $exception->getResponse() : null;

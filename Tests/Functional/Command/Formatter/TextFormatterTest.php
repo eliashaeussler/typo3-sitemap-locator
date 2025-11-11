@@ -26,7 +26,6 @@ namespace EliasHaeussler\Typo3SitemapLocator\Tests\Functional\Command\Formatter;
 use EliasHaeussler\Typo3SitemapLocator as Src;
 use EliasHaeussler\Typo3SitemapLocator\Tests;
 use PHPUnit\Framework;
-use Psr\EventDispatcher;
 use Psr\Http\Message;
 use Symfony\Component\Console;
 use TYPO3\CMS\Core;
@@ -41,6 +40,7 @@ use TYPO3\TestingFramework;
 #[Framework\Attributes\CoversClass(Src\Command\Formatter\TextFormatter::class)]
 final class TextFormatterTest extends TestingFramework\Core\Functional\FunctionalTestCase
 {
+    use Tests\Functional\ClientMockTrait;
     use Tests\Functional\SiteTrait;
 
     protected array $testExtensionsToLoad = [
@@ -51,25 +51,28 @@ final class TextFormatterTest extends TestingFramework\Core\Functional\Functiona
 
     private Console\Output\BufferedOutput $output;
     private Core\Site\Entity\Site $site;
-    private Tests\Unit\Fixtures\DummyRequestFactory $requestFactory;
     private Src\Command\Formatter\TextFormatter $subject;
 
     protected function setUp(): void
     {
         parent::setUp();
 
+        $this->registerMockHandler();
+
         $this->output = new Console\Output\BufferedOutput();
         $this->site = $this->createSite();
-        $this->requestFactory = new Tests\Unit\Fixtures\DummyRequestFactory();
         $this->subject = new Src\Command\Formatter\TextFormatter(
             new Console\Style\SymfonyStyle(
                 new Console\Input\StringInput(''),
                 $this->output,
             ),
             new Src\Sitemap\SitemapLocator(
-                $this->requestFactory,
+                new Src\Http\Client\ClientFactory(
+                    new Core\Http\Client\GuzzleClientFactory(),
+                    $this->eventDispatcher,
+                ),
                 $this->get(Src\Cache\SitemapsCache::class),
-                $this->get(EventDispatcher\EventDispatcherInterface::class),
+                $this->eventDispatcher,
                 [
                     new Src\Sitemap\Provider\DefaultProvider(),
                 ],
@@ -142,7 +145,7 @@ final class TextFormatterTest extends TestingFramework\Core\Functional\Functiona
         $sitemaps = [];
         $siteLanguage = $this->site->getDefaultLanguage();
 
-        $this->requestFactory->handler->append(...$responses);
+        $this->createMockHandler()->append(...$responses);
 
         foreach ($expectedStates as $index => $expectedState) {
             $sitemapUrl = 'https://typo3-testing.local/sitemap-' . $index . '.xml';
@@ -269,7 +272,7 @@ final class TextFormatterTest extends TestingFramework\Core\Functional\Functiona
         $sitemaps = [];
         $siteLanguage = $this->site->getDefaultLanguage();
 
-        $this->requestFactory->handler->append(...$responses);
+        $this->createMockHandler()->append(...$responses);
 
         foreach ($expectedStates as $languageId => $expectedState) {
             $sitemapUrl = 'https://typo3-testing.local/sitemap-' . $languageId . '.xml';

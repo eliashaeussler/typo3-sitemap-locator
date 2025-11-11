@@ -21,36 +21,43 @@ declare(strict_types=1);
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-namespace EliasHaeussler\Typo3SitemapLocator\Tests\Unit\Fixtures;
-
-use GuzzleHttp\Client;
-use GuzzleHttp\Handler;
-use Psr\Http\Message;
-use TYPO3\CMS\Core;
+namespace EliasHaeussler\Typo3SitemapLocator\Event;
 
 /**
- * DummyRequestFactory
+ * BeforeClientConfiguredEvent
  *
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-2.0-or-later
- * @internal
  */
-final class DummyRequestFactory extends Core\Http\RequestFactory
+final class BeforeClientConfiguredEvent
 {
-    private readonly Client $client;
-
-    /** @noinspection PhpMissingParentConstructorInspection */
+    /**
+     * @param array<string, mixed> $options
+     */
     public function __construct(
-        public readonly Handler\MockHandler $handler = new Handler\MockHandler(),
-    ) {
-        $this->client = new Client(['handler' => $this->handler]);
+        private array $options,
+    ) {}
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getOptions(): array
+    {
+        return $this->options;
+    }
+
+    public function setOption(string $name, mixed $value): self
+    {
+        $this->options[$name] = $value;
+
+        return $this;
     }
 
     /**
      * @param array<string, mixed> $options
      */
-    public function request(string $uri, string $method = 'GET', array $options = [], ?string $context = null): Message\ResponseInterface
+    public function setOptions(array $options): void
     {
-        return $this->client->request($method, $uri, $options);
+        $this->options = $options;
     }
 }
