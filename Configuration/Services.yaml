@@ -7,29 +7,9 @@ services:
   EliasHaeussler\Typo3SitemapLocator\:
     resource: '../Classes/*'
     exclude:
-      - '../Domain/Event/*'
-      - '../Domain/Exception/*'
       - '../Domain/Model/*'
-
-  EliasHaeussler\Typo3SitemapLocator\Cache\SitemapsCache:
-    arguments:
-      $cache: '@cache.sitemap_locator'
-
-  EliasHaeussler\Typo3SitemapLocator\Command\LocateSitemapsCommand:
-    tags:
-      - name: console.command
-        command: sitemap-locator:locate
-        description: 'Locate XML sitemaps of a given site and optional site language.'
-
-  EliasHaeussler\Typo3SitemapLocator\EventListener\SiteConfigurationListener:
-    tags:
-      - name: event.listener
-        identifier: 'sitemapLocatorSiteConfigurationListener'
-
-  EliasHaeussler\Typo3SitemapLocator\Sitemap\SitemapLocator:
-    public: true
-    arguments:
-      $providers: !tagged_iterator { tag: 'sitemap_locator.sitemap_provider', default_priority_method: 'getPriority' }
+      - '../Event/*'
+      - '../Exception/*'
 
   cache.sitemap_locator:
     class: 'TYPO3\CMS\Core\Cache\Frontend\PhpFrontend'

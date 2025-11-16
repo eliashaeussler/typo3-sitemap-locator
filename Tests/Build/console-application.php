@@ -22,10 +22,7 @@ declare(strict_types=1);
  */
 
 use Composer\Autoload;
-use EliasHaeussler\Typo3SitemapLocator\Cache;
 use EliasHaeussler\Typo3SitemapLocator\Command;
-use EliasHaeussler\Typo3SitemapLocator\Http;
-use EliasHaeussler\Typo3SitemapLocator\Sitemap;
 use Symfony\Component\Console;
 use TYPO3\CMS\Core;
 
@@ -35,25 +32,23 @@ $classLoader = require \dirname(__DIR__, 2) . '/.Build/vendor/autoload.php';
 // Move project's class loader in front of PHPStan's class loader
 $classLoader->register(true);
 
-// Build environment and initialize the service container
+// Build environment
 Core\Core\SystemEnvironmentBuilder::run(0, Core\Core\SystemEnvironmentBuilder::REQUESTTYPE_CLI);
+
+// Make sure essential config is available
+$configurationManager = new Core\Configuration\ConfigurationManager();
+$systemConfigurationFileLocation = $configurationManager->getSystemConfigurationFileLocation();
+if (!is_file($systemConfigurationFileLocation)) {
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['folderCreateMask'] ??= '2775';
+    Core\Utility\GeneralUtility::mkdir_deep(dirname($systemConfigurationFileLocation));
+    $configurationManager->createLocalConfigurationFromFactoryConfiguration();
+}
+
+// Initialize service container
 $container = Core\Core\Bootstrap::init($classLoader);
 
 // Create command
-$locateCommand = new Command\LocateSitemapsCommand(
-    new Sitemap\SitemapLocator(
-        new Http\Client\ClientFactory(
-            $container->get(Core\Http\Client\GuzzleClientFactory::class),
-            new Core\EventDispatcher\NoopEventDispatcher(),
-        ),
-        new Cache\SitemapsCache(
-            new Core\Cache\Frontend\NullFrontend('sitemap_locator'),
-        ),
-        new Core\EventDispatcher\NoopEventDispatcher(),
-        [],
-    ),
-    new Core\Site\SiteFinder(),
-);
+$locateCommand = $container->get(Command\LocateSitemapsCommand::class);
 $locateCommand->setName('sitemap-locator:locate');
 
 // Initialize application and add command

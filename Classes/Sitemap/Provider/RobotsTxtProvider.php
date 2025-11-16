@@ -35,12 +35,12 @@ use TYPO3\CMS\Core;
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-2.0-or-later
  */
-final class RobotsTxtProvider implements Provider
+final readonly class RobotsTxtProvider implements Provider
 {
     private const SITEMAP_PATTERN = '#^Sitemap:\s*(?P<url>https?://[^\r\n]+)#im';
 
     public function __construct(
-        private readonly Http\Client\ClientFactory $clientFactory,
+        private Http\Client\ClientFactory $clientFactory,
     ) {}
 
     public function get(

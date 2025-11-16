@@ -24,6 +24,7 @@ declare(strict_types=1);
 namespace EliasHaeussler\Typo3SitemapLocator\Cache;
 
 use EliasHaeussler\Typo3SitemapLocator\Domain;
+use Symfony\Component\DependencyInjection;
 use TYPO3\CMS\Core;
 
 /**
@@ -32,10 +33,11 @@ use TYPO3\CMS\Core;
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-2.0-or-later
  */
-final class SitemapsCache
+final readonly class SitemapsCache
 {
     public function __construct(
-        private readonly Core\Cache\Frontend\PhpFrontend $cache,
+        #[DependencyInjection\Attribute\Autowire(service: 'cache.sitemap_locator')]
+        private Core\Cache\Frontend\PhpFrontend $cache,
     ) {}
 
     /**

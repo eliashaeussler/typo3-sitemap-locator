@@ -31,6 +31,7 @@ use EliasHaeussler\Typo3SitemapLocator\Http;
 use EliasHaeussler\Typo3SitemapLocator\Utility;
 use GuzzleHttp\Exception\RequestException;
 use Psr\EventDispatcher;
+use Symfony\Component\DependencyInjection;
 use TYPO3\CMS\Core;
 
 /**
@@ -39,7 +40,8 @@ use TYPO3\CMS\Core;
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-2.0-or-later
  */
-final class SitemapLocator
+#[DependencyInjection\Attribute\Autoconfigure(public: true)]
+final readonly class SitemapLocator
 {
     /**
      * @param iterable<Provider\Provider> $providers
@@ -47,10 +49,11 @@ final class SitemapLocator
      * @throws Exception\ProviderIsNotSupported
      */
     public function __construct(
-        private readonly Http\Client\ClientFactory $clientFactory,
-        private readonly Cache\SitemapsCache $cache,
-        private readonly EventDispatcher\EventDispatcherInterface $eventDispatcher,
-        private readonly iterable $providers,
+        private Http\Client\ClientFactory $clientFactory,
+        private Cache\SitemapsCache $cache,
+        private EventDispatcher\EventDispatcherInterface $eventDispatcher,
+        #[DependencyInjection\Attribute\AutowireIterator('sitemap_locator.sitemap_provider', defaultPriorityMethod: 'getPriority')]
+        private iterable $providers,
     ) {
         $this->validateProviders();
     }

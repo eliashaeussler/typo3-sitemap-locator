@@ -35,6 +35,10 @@ use TYPO3\CMS\Core;
  * @author Elias Häußler <elias@haeussler.dev>
  * @license GPL-2.0-or-later
  */
+#[Console\Attribute\AsCommand(
+    name: 'sitemap-locator:locate',
+    description: 'Locate XML sitemaps of a given site and optional site language.',
+)]
 final class LocateSitemapsCommand extends Console\Command\Command
 {
     private Console\Style\SymfonyStyle $io;
