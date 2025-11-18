@@ -3,9 +3,6 @@
 ..  image:: https://img.shields.io/coverallsCoverage/github/eliashaeussler/typo3-sitemap-locator?logo=coveralls
     :target: https://coveralls.io/github/eliashaeussler/typo3-sitemap-locator
 
-..  image:: https://img.shields.io/codeclimate/maintainability/eliashaeussler/typo3-sitemap-locator?logo=codeclimate
-    :target: https://codeclimate.com/github/eliashaeussler/typo3-sitemap-locator/maintainability
-
 ..  image:: https://img.shields.io/github/actions/workflow/status/eliashaeussler/typo3-sitemap-locator/ci.yaml?label=CI&logo=github
     :target: https://github.com/eliashaeussler/typo3-sitemap-locator/actions/workflows/ci.yaml
 
