@@ -29,7 +29,7 @@
 		"symfony/event-dispatcher": "^7.0",
 		"typo3/cms-install": "~13.4.0 || ~14.0.0",
 		"typo3/cms-seo": "~13.4.0 || ~14.0.0",
-		"typo3/testing-framework": "^9.0.1"
+		"typo3/testing-framework": "^9.0.3"
 	},
 	"autoload": {
 		"psr-4": {
