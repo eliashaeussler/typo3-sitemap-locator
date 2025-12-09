@@ -53,6 +53,6 @@ $locateCommand->setName('sitemap-locator:locate');
 
 // Initialize application and add command
 $application = new Console\Application();
-$application->add($locateCommand);
+$application->addCommands([$locateCommand]);
 
 return $application;

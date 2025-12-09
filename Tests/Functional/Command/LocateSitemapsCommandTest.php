@@ -217,7 +217,7 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
         $this->commandTester->setInputs([
             $this->site->getIdentifier(),
             '',
-            $selection,
+            (string)$selection,
         ]);
 
         $this->commandTester->execute([], [
