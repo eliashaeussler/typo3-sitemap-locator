@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of the TYPO3 CMS extension "sitemap_locator".
  *
- * Copyright (C) 2023-2025 Elias Häußler <elias@haeussler.dev>
+ * Copyright (C) 2023-2026 Elias Häußler <elias@haeussler.dev>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -217,7 +217,7 @@ final class LocateSitemapsCommandTest extends TestingFramework\Core\Functional\F
         $this->commandTester->setInputs([
             $this->site->getIdentifier(),
             '',
-            $selection,
+            (string)$selection,
         ]);
 
         $this->commandTester->execute([], [

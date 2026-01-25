@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of the TYPO3 CMS extension "sitemap_locator".
  *
- * Copyright (C) 2023-2025 Elias Häußler <elias@haeussler.dev>
+ * Copyright (C) 2023-2026 Elias Häußler <elias@haeussler.dev>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,6 +58,6 @@ $locateCommand->setName('sitemap-locator:locate');
 
 // Initialize application and add command
 $application = new Console\Application();
-$application->add($locateCommand);
+$application->addCommands([$locateCommand]);
 
 return $application;
