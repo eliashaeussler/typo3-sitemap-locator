@@ -5,7 +5,6 @@
 # TYPO3 extension `sitemap_locator`
 
 [![Coverage](https://img.shields.io/coverallsCoverage/github/eliashaeussler/typo3-sitemap-locator?logo=coveralls)](https://coveralls.io/github/eliashaeussler/typo3-sitemap-locator)
-[![Maintainability](https://img.shields.io/codeclimate/maintainability/eliashaeussler/typo3-sitemap-locator?logo=codeclimate)](https://codeclimate.com/github/eliashaeussler/typo3-sitemap-locator/maintainability)
 [![CI](https://img.shields.io/github/actions/workflow/status/eliashaeussler/typo3-sitemap-locator/ci.yaml?label=CI&logo=github)](https://github.com/eliashaeussler/typo3-sitemap-locator/actions/workflows/ci.yaml)
 [![Supported TYPO3 versions](https://typo3-badges.dev/badge/sitemap_locator/typo3/shields.svg)](https://extensions.typo3.org/extension/sitemap_locator)
 [![Slack](https://img.shields.io/badge/slack-%23ext--sitemap__locator-4a154b?logo=slack)](https://typo3.slack.com/archives/C060KATSL5V)
