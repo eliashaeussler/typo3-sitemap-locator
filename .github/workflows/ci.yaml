@@ -101,9 +101,12 @@ jobs:
           - php-version: "8.4"
             typo3-version: "11.5"
 
-        # Enforce PHPUnit ^11.2 for TYPO3 13.4 & lowest dependencies
-        # since it adds support for doubling readonly classes (SiteFinder in our case)
         include:
+          # Disable Composer security-blocking for TYPO3 v11.5 ELTS
+          - typo3-version: "11.5"
+            composer-options: "--no-security-blocking"
+          # Enforce PHPUnit ^11.2 for TYPO3 13.4 & lowest dependencies
+          # since it adds support for doubling readonly classes (SiteFinder in our case)
           - php-version: "8.2"
             typo3-version: "13.4"
             dependencies: "lowest"
