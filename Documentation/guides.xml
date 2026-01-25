@@ -13,6 +13,6 @@
                edit-on-github="eliashaeussler/typo3-sitemap-locator"
                typo3-core-preferred="main"
     />
-    <project title="Sitemap Locator" release="0.2.0" copyright="since 2023 by Elias Häußler"/>
+    <project title="Sitemap Locator" release="0.2.1" copyright="since 2023 by Elias Häußler"/>
     <inventory id="t3coreapi" url="https://docs.typo3.org/m/typo3/reference-coreapi/main/en-us/"/>
 </guides>
