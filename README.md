@@ -22,7 +22,7 @@ sitemap providers.
 * Additional console command
 * Support of various sitemap providers (e.g. `robots.txt` or custom location)
 * Interface to implement custom sitemap providers
-* Compatible with TYPO3 13.4 LTS and 14.1
+* Compatible with TYPO3 13.4 LTS and 14.2
 
 ## 🔥 Installation
 
