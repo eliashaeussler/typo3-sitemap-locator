@@ -24,9 +24,6 @@ declare(strict_types=1);
 use EliasHaeussler\PHPStanConfig;
 
 $rootPath = dirname(__DIR__, 2);
-$symfonySet = PHPStanConfig\Set\SymfonySet::create()
-    ->withConsoleApplicationLoader($rootPath . '/Tests/Build/console-application.php')
-;
 
 return PHPStanConfig\Config\Config::create($rootPath)
     ->in(
@@ -38,10 +35,12 @@ return PHPStanConfig\Config\Config::create($rootPath)
         'Tests/CGL'
     )
     ->bootstrapFiles(
-        $rootPath . '/.Build/vendor/autoload.php',
+        '.Build/vendor/autoload.php',
     )
-    ->withBaseline()
+    ->withBaseline(__DIR__ . '/phpstan-baseline.neon')
     ->level(8)
-    ->withSets($symfonySet)
+    ->withSet(static function (PHPStanConfig\Set\SymfonySet $set) {
+        $set->withConsoleApplicationLoader('Tests/Build/console-application.php');
+    })
     ->toArray()
 ;
