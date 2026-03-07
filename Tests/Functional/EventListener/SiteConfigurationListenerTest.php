@@ -44,7 +44,7 @@ final class SiteConfigurationListenerTest extends TestingFramework\Core\Function
     protected bool $initializeDatabase = false;
 
     private Core\Cache\Frontend\PhpFrontend $cache;
-    private Core\Site\SiteFinder&Framework\MockObject\MockObject $siteFinder;
+    private Core\Site\SiteFinder&Framework\MockObject\Stub $siteFinderStub;
     private Src\EventListener\SiteConfigurationListener $subject;
 
     protected function setUp(): void
@@ -52,10 +52,10 @@ final class SiteConfigurationListenerTest extends TestingFramework\Core\Function
         parent::setUp();
 
         $this->cache = $this->get('cache.sitemap_locator');
-        $this->siteFinder = $this->createMock(Core\Site\SiteFinder::class);
+        $this->siteFinderStub = self::createStub(Core\Site\SiteFinder::class);
         $this->subject = new Src\EventListener\SiteConfigurationListener(
             $this->get(Src\Cache\SitemapsCache::class),
-            $this->siteFinder,
+            $this->siteFinderStub,
         );
 
         $this->cache->set(
@@ -94,7 +94,7 @@ final class SiteConfigurationListenerTest extends TestingFramework\Core\Function
     #[Framework\Attributes\Test]
     public function invokeDoesNothingIfGivenSiteDoesNotExist(): void
     {
-        $this->siteFinder->method('getSiteByIdentifier')->willThrowException(
+        $this->siteFinderStub->method('getSiteByIdentifier')->willThrowException(
             new Core\Exception\SiteNotFoundException('No site found for identifier foo', 1521716628)
         );
 
@@ -131,7 +131,7 @@ final class SiteConfigurationListenerTest extends TestingFramework\Core\Function
             ],
         ]);
 
-        $this->siteFinder->method('getSiteByIdentifier')->willReturn($site);
+        $this->siteFinderStub->method('getSiteByIdentifier')->willReturn($site);
 
         ($this->subject)($event);
 
