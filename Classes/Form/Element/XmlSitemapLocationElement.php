@@ -140,7 +140,6 @@ final class XmlSitemapLocationElement extends Backend\Form\Element\AbstractFormE
         $siteLanguage = match ($tableName) {
             'site' => $site->getDefaultLanguage(),
             'site_language' => $site->getLanguageById((int)$row['languageId'][0]),
-            default => throw new Exception\TableIsNotSupported($tableName),
         };
 
         return [$site, $siteLanguage];
