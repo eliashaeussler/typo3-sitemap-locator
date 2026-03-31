@@ -208,6 +208,9 @@ final class XmlSitemapLocationElement extends Backend\Form\Element\AbstractFormE
         return $this->iconFactory->getIcon($identifier, Core\Imaging\IconSize::SMALL)->render();
     }
 
+    /**
+     * @todo Inject and use TranslatorInterface once support for TYPO3 v13 is dropped
+     */
     private function translate(string $key): string
     {
         return $this->getLanguageService()->sL('LLL:EXT:sitemap_locator/Resources/Private/Language/locallang.xlf:' . $key);
