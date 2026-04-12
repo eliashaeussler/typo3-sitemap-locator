@@ -24,7 +24,7 @@
 	"require-dev": {
 		"eliashaeussler/phpunit-attributes": "^1.2 || ^2.0",
 		"eliashaeussler/version-bumper": "^3.0",
-		"phpunit/phpcov": "^10.0 || ^11.0 || ^12.0",
+		"phpunit/phpcov": "^10.0 || ^11.0 || ^12.0 || ^13.0",
 		"phpunit/phpunit": "^11.2 || ^12.0 || ^13.0",
 		"symfony/event-dispatcher": "^7.2 || ^8.0",
 		"typo3/cms-install": "~13.4.0 || ~14.2.0",
