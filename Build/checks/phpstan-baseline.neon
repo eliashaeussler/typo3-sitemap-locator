@@ -22,16 +22,16 @@ parameters:
 			message: '#^EliasHaeussler\\Typo3SitemapLocator\\Tests\\Functional\\Fixtures\\Classes\\DummyPackageManager\:\:__construct\(\) does not call parent constructor from TYPO3\\CMS\\Core\\Package\\PackageManager\.$#'
 			identifier: constructor.missingParentCall
 			count: 1
-			path: ../Functional/Fixtures/Classes/DummyPackageManager.php
+			path: ../../Tests/Functional/Fixtures/Classes/DummyPackageManager.php
 
 		-
 			message: '#^Parameter \#4 \$providers of class EliasHaeussler\\Typo3SitemapLocator\\Sitemap\\SitemapLocator constructor expects iterable\<EliasHaeussler\\Typo3SitemapLocator\\Sitemap\\Provider\\Provider\>, array\<int, stdClass\> given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../Functional/Sitemap/SitemapLocatorTest.php
+			path: ../../Tests/Functional/Sitemap/SitemapLocatorTest.php
 
 		-
 			message: '#^Parameter \#4 \$providers of class EliasHaeussler\\Typo3SitemapLocator\\Sitemap\\SitemapLocator constructor expects iterable\<EliasHaeussler\\Typo3SitemapLocator\\Sitemap\\Provider\\Provider\>, array\<int, string\> given\.$#'
 			identifier: argument.type
 			count: 1
-			path: ../Functional/Sitemap/SitemapLocatorTest.php
+			path: ../../Tests/Functional/Sitemap/SitemapLocatorTest.php

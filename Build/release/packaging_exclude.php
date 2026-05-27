@@ -21,26 +21,30 @@ declare(strict_types=1);
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-use EliasHaeussler\PHPStanConfig;
-
-$rootPath = dirname(__DIR__, 2);
-
-return PHPStanConfig\Config\Config::create($rootPath)
-    ->in(
-        'Classes',
-        'Configuration',
-        'Tests',
-    )
-    ->not(
-        'Tests/CGL'
-    )
-    ->bootstrapFiles(
-        '.Build/vendor/autoload.php',
-    )
-    ->withBaseline(__DIR__ . '/phpstan-baseline.neon')
-    ->level(8)
-    ->withSet(static function (PHPStanConfig\Set\SymfonySet $set) {
-        $set->withConsoleApplicationLoader('Tests/Build/console-application.php');
-    })
-    ->toArray()
-;
+return [
+    'directories' => [
+        '.build',
+        '.ddev',
+        '.git',
+        '.github',
+        'bin',
+        'build',
+        'public',
+        'tailor-version-upload',
+        'tests',
+        'vendor',
+    ],
+    'files' => [
+        'DS_Store',
+        'CODE_OF_CONDUCT.md',
+        'CODEOWNERS',
+        'composer.lock',
+        'CONTRIBUTING.md',
+        'crowdin.yaml',
+        'editorconfig',
+        'gitattributes',
+        'gitignore',
+        'renovate.json',
+        'SECURITY.md',
+    ],
+];

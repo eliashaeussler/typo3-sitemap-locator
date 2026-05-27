@@ -21,20 +21,23 @@ declare(strict_types=1);
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-use Composer\Autoload;
-use ShipMonk\ComposerDependencyAnalyser;
+use EliasHaeussler\PHPStanConfig;
 
 $rootPath = dirname(__DIR__, 2);
 
-/** @var Autoload\ClassLoader $loader */
-$loader = require $rootPath . '/.Build/vendor/autoload.php';
-$loader->register();
-
-$configuration = new ComposerDependencyAnalyser\Config\Configuration();
-$configuration
-    ->addPathsToExclude([
-        $rootPath . '/Tests/CGL',
-    ])
+return PHPStanConfig\Config\Config::create($rootPath)
+    ->in(
+        'Classes',
+        'Configuration',
+        'Tests',
+    )
+    ->bootstrapFiles(
+        '.Build/vendor/autoload.php',
+    )
+    ->withBaseline(__DIR__ . '/phpstan-baseline.neon')
+    ->level(8)
+    ->withSet(static function (PHPStanConfig\Set\SymfonySet $set) {
+        $set->withConsoleApplicationLoader(__DIR__ . '/console-application.php');
+    })
+    ->toArray()
 ;
-
-return $configuration;

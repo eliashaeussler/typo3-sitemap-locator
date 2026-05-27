@@ -22,6 +22,7 @@ declare(strict_types=1);
  */
 
 use EliasHaeussler\RectorConfig\Config\Config;
+use EliasHaeussler\RectorConfig\Entity\Version;
 use Rector\Config\RectorConfig;
 use Rector\Php80\Rector\Class_\AnnotationToAttributeRector;
 use Rector\Symfony\DependencyInjection\Rector\Trait_\TraitGetByTypeToInjectRector;
@@ -38,15 +39,9 @@ return static function (RectorConfig $rectorConfig): void {
             $rootPath . '/Configuration',
             $rootPath . '/Tests',
         )
-        ->not(
-            $rootPath . '/.Build/*',
-            $rootPath . '/.github/*',
-            $rootPath . '/Tests/CGL/vendor/*',
-            $rootPath . '/var/*',
-        )
         ->withPHPUnit()
         ->withSymfony()
-        ->withTYPO3()
+        ->withTYPO3(Version::createMajor(13))
         ->skip(AnnotationToAttributeRector::class, [
             $rootPath . '/Classes/Extension.php',
             $rootPath . '/Classes/Sitemap/Provider/DefaultProvider.php',
