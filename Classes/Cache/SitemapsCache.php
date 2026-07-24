@@ -127,7 +127,7 @@ final readonly class SitemapsCache
         $cacheData = $this->cache->require($siteIdentifier);
 
         // Enforce array for cached data
-        if (!\is_array($cacheData)) {
+        if (!is_array($cacheData)) {
             $cacheData = [];
         }
 

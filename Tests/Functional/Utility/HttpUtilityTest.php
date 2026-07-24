@@ -46,7 +46,7 @@ final class HttpUtilityTest extends TestingFramework\Core\Functional\FunctionalT
     {
         parent::setUp();
 
-        $this->importCSVDataSet(\dirname(__DIR__) . '/Fixtures/Database/pages.csv');
+        $this->importCSVDataSet(dirname(__DIR__) . '/Fixtures/Database/pages.csv');
 
         $this->site = $this->createSite();
     }

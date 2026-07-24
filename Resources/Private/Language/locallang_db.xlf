@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-	<file source-language="en" datatype="plaintext" original="EXT:sitemap_locator/Resources/Private/Language/locallang_db.xlf" date="2023-10-12T12:44:27Z" product-name="sitemap_locator">
-		<header/>
-		<body>
-			<trans-unit id="palettes.xml_sitemap" resname="palettes.xml_sitemap">
-				<source>XML sitemap</source>
-			</trans-unit>
+  <file source-language="en" datatype="plaintext" original="EXT:sitemap_locator/Resources/Private/Language/locallang_db.xlf" date="2023-10-12T12:44:27Z" product-name="sitemap_locator">
+    <header/>
+    <body>
+      <trans-unit id="palettes.xml_sitemap" resname="palettes.xml_sitemap">
+        <source>XML sitemap</source>
+      </trans-unit>
 
-			<trans-unit id="site.xml_sitemap_path.label" resname="site.xml_sitemap_path.label">
-				<source>Path to XML sitemap</source>
-			</trans-unit>
-			<trans-unit id="site.xml_sitemap_path.description" resname="site.xml_sitemap_path.description">
-				<source>Specify the path to the XML sitemap, relative to the entry point of the site.</source>
-			</trans-unit>
-			<trans-unit id="site.xml_sitemap_status.label" resname="site.xml_sitemap_status.label">
-				<source>Located XML sitemaps</source>
-			</trans-unit>
-			<trans-unit id="site.xml_sitemap_status.description" resname="site.xml_sitemap_status.description">
-				<source>All located XML sitemaps for this site in the default language are listed below.
+      <trans-unit id="site.xml_sitemap_path.label" resname="site.xml_sitemap_path.label">
+        <source>Path to XML sitemap</source>
+      </trans-unit>
+      <trans-unit id="site.xml_sitemap_path.description" resname="site.xml_sitemap_path.description">
+        <source>Specify the path to the XML sitemap, relative to the entry point of the site.</source>
+      </trans-unit>
+      <trans-unit id="site.xml_sitemap_status.label" resname="site.xml_sitemap_status.label">
+        <source>Located XML sitemaps</source>
+      </trans-unit>
+      <trans-unit id="site.xml_sitemap_status.description" resname="site.xml_sitemap_status.description">
+        <source>All located XML sitemaps for this site in the default language are listed below.
 Note: Located sitemaps may be cached and not up-to-date.</source>
-			</trans-unit>
-			<trans-unit id="site_language.xml_sitemap_path.label" resname="site_language.xml_sitemap_path.label">
-				<source>Path to XML sitemap</source>
-			</trans-unit>
-			<trans-unit id="site_language.xml_sitemap_path.description" resname="site_language.xml_sitemap_path.description">
-				<source>Specify the path to the XML sitemap, relative to the entry point of the site language.</source>
-			</trans-unit>
-			<trans-unit id="site_language.xml_sitemap_status.label" resname="site_language.xml_sitemap_status.label">
-				<source>Located XML sitemaps</source>
-			</trans-unit>
-			<trans-unit id="site_language.xml_sitemap_status.description" resname="site_language.xml_sitemap_status.description">
-				<source>All located XML sitemaps for this site in the current language are listed below.
+      </trans-unit>
+      <trans-unit id="site_language.xml_sitemap_path.label" resname="site_language.xml_sitemap_path.label">
+        <source>Path to XML sitemap</source>
+      </trans-unit>
+      <trans-unit id="site_language.xml_sitemap_path.description" resname="site_language.xml_sitemap_path.description">
+        <source>Specify the path to the XML sitemap, relative to the entry point of the site language.</source>
+      </trans-unit>
+      <trans-unit id="site_language.xml_sitemap_status.label" resname="site_language.xml_sitemap_status.label">
+        <source>Located XML sitemaps</source>
+      </trans-unit>
+      <trans-unit id="site_language.xml_sitemap_status.description" resname="site_language.xml_sitemap_status.description">
+        <source>All located XML sitemaps for this site in the current language are listed below.
 Note: Located sitemaps may be cached and not up-to-date.</source>
-			</trans-unit>
-		</body>
-	</file>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>

@@ -46,7 +46,7 @@ final class SiteProvider implements Provider
         }
 
         // Early return if no sitemap path is configured
-        if (!\is_string($sitemapPath) || trim($sitemapPath) === '') {
+        if (!is_string($sitemapPath) || trim($sitemapPath) === '') {
             return [];
         }
 

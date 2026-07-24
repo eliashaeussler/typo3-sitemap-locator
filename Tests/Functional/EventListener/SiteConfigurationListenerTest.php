@@ -60,9 +60,9 @@ final class SiteConfigurationListenerTest extends TestingFramework\Core\Function
 
         $this->cache->set(
             'foo_0_42099b4af021e53fd8fd4e056c2568d7c2e3ffa8',
-            \sprintf(
+            sprintf(
                 'return %s;',
-                \var_export(
+                var_export(
                     [
                         0 => [
                             'https://www.example.com/baz',
@@ -76,9 +76,9 @@ final class SiteConfigurationListenerTest extends TestingFramework\Core\Function
 
         $this->cache->set(
             'foo_1_1c526ad1bac1b1cce895c61f4a427529c672099d',
-            \sprintf(
+            sprintf(
                 'return %s;',
-                \var_export(
+                var_export(
                     [
                         0 => [
                             'https://www.example.com/de/baz',
