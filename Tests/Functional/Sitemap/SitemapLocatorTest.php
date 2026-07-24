@@ -68,7 +68,7 @@ final class SitemapLocatorTest extends TestingFramework\Core\Functional\Function
             [new Src\Sitemap\Provider\DefaultProvider()],
         );
 
-        $this->importCSVDataSet(\dirname(__DIR__) . '/Fixtures/Database/be_users.csv');
+        $this->importCSVDataSet(dirname(__DIR__) . '/Fixtures/Database/be_users.csv');
 
         /** @var Core\Cache\Frontend\PhpFrontend $cacheFrontend */
         $cacheFrontend = $this->get('cache.sitemap_locator');

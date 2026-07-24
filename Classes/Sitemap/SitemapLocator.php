@@ -153,7 +153,7 @@ final readonly class SitemapLocator
     private function validateProviders(): void
     {
         foreach ($this->providers as $provider) {
-            if (!\is_object($provider)) {
+            if (!is_object($provider)) {
                 throw new Exception\ProviderIsNotSupported($provider);
             }
 

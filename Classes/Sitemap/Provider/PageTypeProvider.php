@@ -57,7 +57,7 @@ final class PageTypeProvider implements Provider
         $pageTypeMap = $this->fetchPageTypeMapFromSiteConfiguration($site);
 
         // Early return if no page type map is configured
-        if (!\in_array(self::EXPECTED_PAGE_TYPE, $pageTypeMap, true)) {
+        if (!in_array(self::EXPECTED_PAGE_TYPE, $pageTypeMap, true)) {
             return [];
         }
 
@@ -96,7 +96,7 @@ final class PageTypeProvider implements Provider
             }
         }
 
-        if (!\is_array($pageTypeMap)) {
+        if (!is_array($pageTypeMap)) {
             return [];
         }
 
