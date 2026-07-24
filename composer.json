@@ -74,7 +74,7 @@
 				"providesPackages": {}
 			},
 			"extension-key": "sitemap_locator",
-			"version": "1.3.2",
+			"version": "1.3.3",
 			"web-dir": ".Build/web"
 		},
 		"version-bumper": {
