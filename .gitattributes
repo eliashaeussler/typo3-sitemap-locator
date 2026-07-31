@@ -1,6 +1,7 @@
 *                            text=auto
 /.ddev                       export-ignore
 /.github                     export-ignore
+/Build                       export-ignore
 /Tests                       export-ignore
 /.crowdin.yaml               export-ignore
 /.editorconfig               export-ignore
